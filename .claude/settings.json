@@ -15,5 +15,6 @@
     "linear",
     "confluence"
   ],
-  "enableAllProjectMcpServers": true
+  "enableAllProjectMcpServers": true,
+  "alwaysThinkingEnabled": true
 }

@@ -1,0 +1,6 @@
+{
+  "files.associations": {
+    "**/.claude/skills/**/*.md": "plaintext",
+    "**/.claude/agents/**/*.md": "plaintext",
+  }
+}
