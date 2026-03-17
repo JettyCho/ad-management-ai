@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__puppeteer__*",
+      "mcp__slack__*",
+      "mcp__figma__*",
+      "mcp__linear__*",
+      "mcp__confluence__*"
+    ]
+  },
+  "enabledMcpjsonServers": [
+    "puppeteer",
+    "slack",
+    "figma",
+    "linear",
+    "confluence"
+  ],
+  "enableAllProjectMcpServers": true
+}
