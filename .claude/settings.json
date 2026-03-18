@@ -5,7 +5,11 @@
       "mcp__slack__*",
       "mcp__figma__*",
       "mcp__linear__*",
-      "mcp__confluence__*"
+      "mcp__confluence__*",
+      "mcp__github__*",
+      "mcp__datadog__*",
+      "Skill(slack-summary)",
+      "Skill(slack-summary:*)"
     ]
   },
   "enabledMcpjsonServers": [
@@ -13,7 +17,9 @@
     "slack",
     "figma",
     "linear",
-    "confluence"
+    "confluence",
+    "github",
+    "datadog"
   ],
   "enableAllProjectMcpServers": true,
   "alwaysThinkingEnabled": true

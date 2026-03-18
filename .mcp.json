@@ -24,6 +24,15 @@
     "confluence": {
       "type": "http",
       "url": "https://mcp.atlassian.com/v1/mcp"
+    },
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp",
+      "headersHelper": "python3 -c \"import os; token=open('.env').read().split('GITHUB_TOKEN=')[1].strip(); print('{\\\"Authorization\\\": \\\"Bearer ' + token + '\\\"}')\""
+    },
+    "datadog": {
+      "type": "http",
+      "url": "https://mcp.datadoghq.com/api/unstable/mcp-server/mcp"
     }
   }
 }

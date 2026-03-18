@@ -2,8 +2,8 @@
 name: slack-summary
 description: 지정한 슬랙 채널들의 대화 내용을 기간별로 분석하고 요약합니다. 주제, 진행 중인 과제, 해결된 문제, 미해결 이슈 등을 정리합니다.
 argument-hint: (자연어로 채널과 기간을 자유롭게 입력)
-disable-model-invocation: true
-context: fork
+disable-model-invocation: false
+context: compress
 allowed-tools: mcp__slack__slack_read_channel, mcp__slack__slack_read_thread, mcp__slack__slack_search_public_and_private, mcp__slack__slack_search_channels
 ---
 

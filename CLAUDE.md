@@ -1,16 +1,23 @@
-# Claude Code 프로젝트 가이드
+# ADM 팀 AI 작업 공간
 
-## MCP 연결 상태 확인 (최우선 사항)
+ADM(Ad Management) 팀이 사용하는 AI 기반 업무 자동화 프로젝트입니다.
 
-**모든 작업 시작 전, `.mcp.json`에 정의된 모든 MCP 서버가 연결되어 있는지 반드시 확인한다.**
+## 팀 자산 (`team/`)
 
-`/mcp` 명령어로 확인했을 때 `.mcp.json`의 모든 서버가 **connected** 상태여야 한다.
+`team/` 디렉토리는 ADM 팀의 자산을 관리하는 핵심 공간이다. 멤버 정보, 팀 문서, 자원 등 팀 운영에 필요한 모든 것이 이곳에서 관리된다.
 
-하나라도 연결되지 않은 상태에서는 **모든 작업을 중단**하고, 사용자에게 `/mcp`에서 해당 서버를 먼저 연결하도록 안내한다.
+- 하위 디렉토리에는 멤버 디렉토리(예: `david/`, `elle/`, `frank/`, `jetty/`)뿐 아니라, 팀 공유 문서 등 다양한 자산 디렉토리(예: `docs/`)가 존재할 수 있다.
+- 팀원 정보, 팀 공유 문서, 자원 등 팀과 관련된 맥락이 필요할 때 반드시 `team/` 디렉토리를 우선 확인한다.
 
----
+## MCP 서버 연결 확인
 
-## MCP 설정 파일 위치
+외부 도구(Slack, GitHub, Linear, Figma, Confluence, Datadog, Puppeteer 등)를 사용해야 할 때, 반드시 해당 MCP 서버가 연결되어 있는지 먼저 확인한다. 연결되지 않은 서버의 도구를 호출하면 실패하므로, 사용자에게 연결 방법을 안내한다.
 
-- 프로젝트 공유 설정: `.mcp.json` (수정하면 팀 전체에 적용)
-- 개인 OAuth 토큰: `~/.claude.json` (자동 저장)
+### 연결 방법
+
+- **Slack, Figma, Linear, Confluence, Datadog 등**: `/mcp`에서 해당 서버를 선택하면 OAuth 인증 화면이 열린다. 브라우저에서 인증을 완료하면 자동으로 연결된다.
+- **GitHub**: OAuth가 아닌 Personal Access Token 방식이다.
+  1. [GitHub 토큰 발급 페이지](https://github.com/settings/tokens)에서 토큰을 발급받는다.
+  2. 프로젝트 루트의 `.env` 파일에 `GITHUB_TOKEN=발급받은토큰` 형식으로 입력한다.
+  3. `/mcp`에서 github 서버를 재연결한다.
+- **Puppeteer**: 별도 인증 없이 자동으로 연결된다.
