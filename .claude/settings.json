@@ -4,6 +4,7 @@
       "WebFetch",
       "WebSearch",
       "Bash(curl *)",
+      "Bash(ls *)",
       "mcp__puppeteer__*",
       "mcp__slack__*",
       "mcp__figma__*",
