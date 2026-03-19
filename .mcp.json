@@ -1,9 +1,8 @@
 {
   "mcpServers": {
-    "puppeteer": {
-      "type": "stdio",
+    "playwright": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-puppeteer"]
+      "args": ["@playwright/mcp@latest"]
     },
     "slack": {
       "type": "http",
@@ -28,11 +27,19 @@
     "github": {
       "type": "http",
       "url": "https://api.githubcopilot.com/mcp",
-      "headersHelper": "python3 -c \"import os; token=open('.env').read().split('GITHUB_TOKEN=')[1].strip(); print('{\\\"Authorization\\\": \\\"Bearer ' + token + '\\\"}')\""
+      "headersHelper": "python3 -c \"token=open('.env').read().split('GITHUB_TOKEN=')[1].split('\\n')[0].strip(); print('{\\\"Authorization\\\": \\\"Bearer ' + token + '\\\"}')\""
     },
     "datadog": {
       "type": "http",
       "url": "https://mcp.datadoghq.com/api/unstable/mcp-server/mcp"
+    },
+    "sentry": {
+      "type": "http",
+      "url": "https://mcp.sentry.dev/mcp"
+    },
+    "google_workspace": {
+      "command": "bash",
+      "args": ["-c", "set -a; source .env; set +a; uvx workspace-mcp --tool-tier core"]
     }
   }
 }

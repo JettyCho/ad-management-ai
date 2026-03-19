@@ -31,16 +31,36 @@ cd ad-management-ai
 
 Claude Code를 실행한 뒤 `/mcp` 명령어에서 각 서비스를 선택하면 브라우저 OAuth 인증 화면이 열립니다. 로그인하면 자동으로 연결됩니다.
 
-**GitHub** (예외 — 토큰 방식):
+**예외 서비스** (`.env` 설정 필요):
 
-1. `.env.example`을 복사하여 `.env` 파일을 생성합니다.
-   ```bash
-   cp .env.example .env
-   ```
-2. [GitHub 토큰 발급 페이지](https://github.com/settings/tokens)에서 Personal Access Token을 발급받아 `.env`에 입력합니다.
+아래 두 서비스는 OAuth 자동 연결이 아닌 별도 설정이 필요합니다. 먼저 `.env` 파일을 생성해 주세요.
+
+```bash
+cp .env.example .env
+```
+
+**GitHub** (Personal Access Token 방식):
+
+1. [GitHub 토큰 발급 페이지](https://github.com/settings/tokens)에서 Personal Access Token을 발급받습니다.
+2. `.env`에 입력합니다.
    ```
    GITHUB_TOKEN=ghp_xxxxxxxxxxxx
    ```
+3. `/mcp`에서 github 서버를 재연결합니다.
+
+**Google Workspace** (OAuth + `.env` 방식):
+
+Gmail, Google Drive, Calendar 등 Google 서비스를 사용하기 위한 설정입니다.
+
+1. [Google Cloud Console](https://console.cloud.google.com/)에서 OAuth 2.0 Client ID를 발급받습니다.
+   - 승인된 리디렉션 URI에 `http://localhost:8000/oauth2callback`을 추가합니다.
+2. `.env`에 입력합니다.
+   ```
+   GOOGLE_OAUTH_CLIENT_ID=your_client_id
+   GOOGLE_OAUTH_CLIENT_SECRET=your_client_secret
+   ```
+3. `/mcp`에서 google_workspace 서버를 연결합니다.
+4. Google Workspace 도구를 최초 사용하면 브라우저에서 Google OAuth 인증 화면이 열립니다. 인증을 완료하면 이후 자동으로 동작합니다.
 
 ### 3. 연결 확인
 

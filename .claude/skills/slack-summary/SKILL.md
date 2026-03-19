@@ -1,6 +1,6 @@
 ---
 name: slack-summary
-description: 지정한 슬랙 채널들의 대화 내용을 기간별로 분석하고 요약합니다. 주제, 진행 중인 과제, 해결된 문제, 미해결 이슈 등을 정리합니다.
+description: 지정한 슬랙 채널들의 대화 내용을 기간별로 분석하고 요약합니다. 주제, 진행 중인 과제, 해결된 문제, 미해결 이슈 등을 정리합니다. TRIGGER when: 사용자가 슬랙 채널의 대화 내용, 근황, 요약, 무슨 일이 있는지 등을 물어볼 때. 슬랙 채널 이름이나 "슬랙"이 언급되고 내용 파악/요약이 목적일 때 사용.
 argument-hint: (자연어로 채널과 기간을 자유롭게 입력)
 disable-model-invocation: false
 context: compress

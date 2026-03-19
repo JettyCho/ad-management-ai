@@ -1,6 +1,9 @@
 {
   "permissions": {
     "allow": [
+      "WebFetch",
+      "WebSearch",
+      "Bash(curl *)",
       "mcp__puppeteer__*",
       "mcp__slack__*",
       "mcp__figma__*",
@@ -8,6 +11,8 @@
       "mcp__confluence__*",
       "mcp__github__*",
       "mcp__datadog__*",
+      "mcp__sentry__*",
+      "mcp__google_workspace__*",
       "Skill(slack-summary)",
       "Skill(slack-summary:*)"
     ]
@@ -19,7 +24,9 @@
     "linear",
     "confluence",
     "github",
-    "datadog"
+    "datadog",
+    "sentry",
+    "google_workspace"
   ],
   "enableAllProjectMcpServers": true,
   "alwaysThinkingEnabled": true
