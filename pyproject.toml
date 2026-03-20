@@ -1,0 +1,31 @@
+[project]
+name = "adm"
+version = "0.1.0"
+dependencies = [
+    "curl_cffi",
+    "filelock",
+    "matplotlib",
+    "numpy",
+    "pandas",
+    "pytz",
+    "requests",
+    "Pillow",
+    "rembg",
+    "ultralytics",
+    "easyocr",
+    "cairosvg",
+    "svgwrite",
+    "colorthief",
+    "svgpathtools",
+    "svgutils",
+    "drawsvg",
+    "vtracer",
+    "colour",
+    "colormath",
+    "haishoku",
+    "palettable",
+    "realesrgan",
+]
+
+[tool.setuptools.packages.find]
+where = ["adm"]
