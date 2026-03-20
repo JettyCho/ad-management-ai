@@ -2,7 +2,7 @@
   "mcpServers": {
     "playwright": {
       "command": "npx",
-      "args": ["@playwright/mcp@latest"]
+      "args": ["@playwright/mcp@latest", "--user-data-dir", ".playwright-mcp-profile"]
     },
     "slack": {
       "type": "http",
@@ -40,6 +40,10 @@
     "google_workspace": {
       "command": "bash",
       "args": ["-c", "set -a; source .env; set +a; uvx workspace-mcp --tool-tier core"]
+    },
+    "salesforce": {
+      "command": "npx",
+      "args": ["-y", "@salesforce/mcp", "--orgs", "ALLOW_ALL_ORGS", "--toolsets", "core,orgs,metadata,data,users"]
     }
   }
 }

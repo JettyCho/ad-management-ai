@@ -9,10 +9,14 @@
       "Bash(grep *)",
       "Bash(find *)",
       "Bash(git *)",
+      "Bash(python3 *)",
+      "Bash(aws *)",
+      "Bash(aws-vault *)",
+      "Bash(which *)",
       "Bash(cd * && git *)",
       "Bash(cd * && grep *)",
       "Bash(cd * && find *)",
-      "mcp__puppeteer__*",
+      "mcp__playwright__*",
       "mcp__slack__*",
       "mcp__figma__*",
       "mcp__linear__*",
@@ -21,12 +25,17 @@
       "mcp__datadog__*",
       "mcp__sentry__*",
       "mcp__google_workspace__*",
+      "mcp__salesforce__*",
       "Skill(slack-summary)",
-      "Skill(slack-summary:*)"
+      "Skill(slack-summary:*)",
+      "Skill(aws-manage)",
+      "Skill(aws-manage:*)",
+      "Skill(sentry-fix)",
+      "Skill(sentry-fix:*)"
     ]
   },
   "enabledMcpjsonServers": [
-    "puppeteer",
+    "playwright",
     "slack",
     "figma",
     "linear",
@@ -34,7 +43,8 @@
     "github",
     "datadog",
     "sentry",
-    "google_workspace"
+    "google_workspace",
+    "salesforce"
   ],
   "enableAllProjectMcpServers": true,
   "alwaysThinkingEnabled": true
