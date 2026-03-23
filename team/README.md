@@ -20,6 +20,7 @@ Next.js(App Router) + shadcn/ui 기반이며, 백엔드는 adserver를 사용한
 - GitHub: https://github.com/Buzzvil/ads-center
 - 웹사이트: https://ads.buzzvil.com
 - 로컬 경로: `.env`의 `ADS_CENTER_PATH`
+- 로그인 정보 `.env`의 `ADS_CENTER_ID`, `ADS_CENTER_PW`
 - 사용 가이드: https://buzzvil.gitbook.io/guide
   - 광고주/대행사 대상의 광고센터 이용 가이드. 회원가입, 비즈니스 그룹·운영 그룹 설정, 광고 상품별 캠페인 생성 및 운영 방법, 소재 가이드, 리포트 확인, 정산까지의 전체 플로우를 다룬다.
   - 주요 섹션: 시작하기(그룹 구조·생성·관리) / 광고 상품(라이브커머스, 협력광고, 웹 리타겟팅) / UA 가이드(MMP 연동) / 연동(Pixel SDK, 스크립트) / 정책(소재 심사, 블록체인) / 정산
