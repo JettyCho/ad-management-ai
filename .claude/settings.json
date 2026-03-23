@@ -1,6 +1,5 @@
 {
   "permissions": {
-    "defaultMode": "bypassPermissions",
     "allow": [
       "Bash",
       "Read",
@@ -114,6 +113,7 @@
     "google_workspace",
     "salesforce"
   ],
+  "defaultMode": "bypassPermissions",
   "enableAllProjectMcpServers": true,
   "alwaysThinkingEnabled": true
 }
