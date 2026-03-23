@@ -4,14 +4,6 @@
       "command": "npx",
       "args": ["@playwright/mcp@latest", "--user-data-dir", ".playwright-mcp-profile"]
     },
-    "slack": {
-      "type": "http",
-      "url": "https://mcp.slack.com/mcp",
-      "oauth": {
-        "clientId": "1601185624273.8899143856786",
-        "callbackPort": 3118
-      }
-    },
     "figma": {
       "type": "http",
       "url": "https://mcp.figma.com/mcp"

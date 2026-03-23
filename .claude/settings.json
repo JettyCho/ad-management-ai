@@ -31,7 +31,9 @@
       "Skill(aws-manage)",
       "Skill(aws-manage:*)",
       "Skill(sentry-fix)",
-      "Skill(sentry-fix:*)"
+      "Skill(sentry-fix:*)",
+      "Skill(slack-manage)",
+      "Skill(slack-manage:*)"
     ]
   },
   "enabledMcpjsonServers": [
