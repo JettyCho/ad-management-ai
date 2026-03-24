@@ -60,6 +60,15 @@ cp .env.example .env
    GOOGLE_OAUTH_CLIENT_SECRET=your_client_secret
    ```
 
+**DataHub** (Personal Access Token):
+
+1. [DataHub 웹 UI](https://datahub.buzzvil.dev)에서 Settings → Access Tokens → Generate Personal Access Token으로 토큰을 발급받습니다.
+2. `.env`에 입력합니다.
+   ```
+   DATAHUB_GMS_URL=https://datahub.buzzvil.dev/api/gms
+   DATAHUB_GMS_TOKEN=your_datahub_token
+   ```
+
 ### 3. MCP 서버 인증
 
 MCP 서버 목록은 `.mcp.json`에서 중앙 관리됩니다.

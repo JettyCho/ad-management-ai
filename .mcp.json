@@ -36,6 +36,10 @@
     "salesforce": {
       "command": "npx",
       "args": ["-y", "@salesforce/mcp", "--orgs", "ALLOW_ALL_ORGS", "--toolsets", "core,orgs,metadata,data,users"]
+    },
+    "datahub": {
+      "command": "bash",
+      "args": ["-c", "set -a; source .env; set +a; uvx mcp-server-datahub@latest"]
     }
   }
 }

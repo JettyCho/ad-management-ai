@@ -10,24 +10,8 @@
       "WebFetch",
       "WebSearch",
       "NotebookEdit",
-      "mcp__playwright__*",
-      "mcp__slack__*",
-      "mcp__figma__*",
-      "mcp__linear__*",
-      "mcp__confluence__*",
-      "mcp__github__*",
-      "mcp__datadog__*",
-      "mcp__sentry__*",
-      "mcp__google_workspace__*",
-      "mcp__salesforce__*",
-      "Skill(slack-summary)",
-      "Skill(slack-summary:*)",
-      "Skill(aws-manage)",
-      "Skill(aws-manage:*)",
-      "Skill(sentry-fix)",
-      "Skill(sentry-fix:*)",
-      "Skill(slack-manage)",
-      "Skill(slack-manage:*)"
+      "mcp__*",
+      "Skill(*)"
     ],
     "ask": [
       "Bash(sudo *)",
@@ -101,18 +85,10 @@
       "Bash(mv ~* *)"
     ]
   },
-  "enabledMcpjsonServers": [
-    "playwright",
-    "slack",
-    "figma",
-    "linear",
-    "confluence",
-    "github",
-    "datadog",
-    "sentry",
-    "google_workspace",
-    "salesforce"
-  ],
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
   "defaultMode": "bypassPermissions",
   "enableAllProjectMcpServers": true,
   "alwaysThinkingEnabled": true
