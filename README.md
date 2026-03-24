@@ -85,6 +85,16 @@ GRAFANA_URL=https://grafana.buzzvil.dev
 GRAFANA_SESSION_COOKIE=자동으로_저장됨
 ```
 
+**Argo Workflows** (Playwright 토큰 인증):
+
+`argo` CLI가 SSO를 지원하지 않으므로, 브라우저 SSO 로그인 후 토큰을 추출하여 사용합니다. 최초 설정 시 `/argo-workflows-manage`를 실행하면 Playwright 브라우저가 열리고 SSO 로그인 후 자동으로 토큰이 `.env`에 저장됩니다.
+```
+ARGO_WORKFLOWS_URL=https://argo.buzzvil.dev
+ARGO_WORKFLOWS_DEV_URL=https://argo-dev.buzzvil.dev
+ARGO_WORKFLOWS_TOKEN=자동으로_저장됨
+ARGO_WORKFLOWS_DEV_TOKEN=자동으로_저장됨
+```
+
 ### 3. MCP 서버 인증
 
 MCP 서버 목록은 `.mcp.json`에서 중앙 관리됩니다.
