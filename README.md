@@ -96,6 +96,14 @@ DASH_PROD_SESSION_COOKIE=자동으로_저장됨
 DASH_OTHER_SESSION_COOKIE=자동으로_저장됨
 ```
 
+**Gitploy** (쿠키 세션 인증):
+
+GitHub OAuth 로그인 세션으로 인증합니다. 최초 설정 시 `/gitploy-manage`를 실행하면 Playwright 브라우저가 열리고 GitHub 로그인 후 자동으로 쿠키가 `.env`에 저장됩니다. **env에 "prod"가 포함된 환경에는 배포/롤백이 차단됩니다.**
+```
+GITPLOY_URL=https://gitploy.buzzvil.dev
+GITPLOY_SESSION_COOKIE=자동으로_저장됨
+```
+
 **Argo Workflows** (Playwright 토큰 인증):
 
 `argo` CLI가 SSO를 지원하지 않으므로, 브라우저 SSO 로그인 후 토큰을 추출하여 사용합니다. 최초 설정 시 `/argo-workflows-manage`를 실행하면 Playwright 브라우저가 열리고 SSO 로그인 후 자동으로 토큰이 `.env`에 저장됩니다.
