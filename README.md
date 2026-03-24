@@ -85,6 +85,17 @@ GRAFANA_URL=https://grafana.buzzvil.dev
 GRAFANA_SESSION_COOKIE=자동으로_저장됨
 ```
 
+**Dash (Ad Dashboard)** (ID/PW 세션 인증):
+
+Buzzvil Ad Dashboard(dash-api-gateway)의 REST API를 curl로 직접 호출합니다. 대시보드 계정의 ID/PW로 로그인하여 세션 쿠키를 획득하며, 세션 만료 시 자동으로 재로그인합니다. 환경은 동적으로 결정됩니다 (prod가 기본, 그 외 환경명 지정 시 `dash-api-gateway-{env}` 패턴).
+```
+DASH_URL=https://dash-api-gateway.eks.buzzvil.com
+DASH_ID=your_email@buzzvil.com
+DASH_PW=your_password
+DASH_PROD_SESSION_COOKIE=자동으로_저장됨
+DASH_OTHER_SESSION_COOKIE=자동으로_저장됨
+```
+
 **Argo Workflows** (Playwright 토큰 인증):
 
 `argo` CLI가 SSO를 지원하지 않으므로, 브라우저 SSO 로그인 후 토큰을 추출하여 사용합니다. 최초 설정 시 `/argo-workflows-manage`를 실행하면 Playwright 브라우저가 열리고 SSO 로그인 후 자동으로 토큰이 `.env`에 저장됩니다.
