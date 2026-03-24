@@ -4,13 +4,14 @@
 
 각 프로젝트의 로컬 경로는 팀원마다 다르므로 `.env` 파일에서 해당 환경 변수를 읽어서 사용한다.
 
-### adserver
+### adserver (buzzad)
 
-대시(dash)와 광고센터(ads-center)의 백엔드. 광고 할당, 송출, 통계, 정산 등 광고 비즈니스의 핵심 로직을 담당한다.
+buzzad라고도 불린다. 대시(dash)와 광고센터(ads-center)의 백엔드. 광고 할당, 송출, 통계, 정산 등 광고 비즈니스의 핵심 로직을 담당한다.
 Python(Django) 기반이며, MySQL, Redis, Kafka, DynamoDB 등 다양한 인프라와 연동된다.
 
 - GitHub: https://github.com/Buzzvil/adserver
 - 로컬 경로: `.env`의 `ADSERVER_PATH`
+- **인프라 식별자**: Kubernetes namespace, container, Loki/Grafana 라벨 등 인프라에서는 `buzzad`를 사용한다. 로그 조회, 메트릭 쿼리, 모니터링 등에서는 `adserver`가 아닌 **`buzzad`**로 검색해야 한다.
 
 ### ads-center (광고센터)
 

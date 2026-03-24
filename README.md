@@ -77,6 +77,14 @@ REDASH_URL=https://redash.buzzvil.com
 REDASH_SESSION_COOKIE=자동으로_저장됨
 ```
 
+**Grafana** (쿠키 세션 인증):
+
+Redash와 동일한 방식입니다. Service Account Token 없이 브라우저 구글 로그인 세션으로 인증합니다. 최초 설정 시 `/grafana-manage`를 실행하면 Playwright 브라우저가 열리고 구글 로그인 후 자동으로 쿠키가 `.env`에 저장됩니다.
+```
+GRAFANA_URL=https://grafana.buzzvil.dev
+GRAFANA_SESSION_COOKIE=자동으로_저장됨
+```
+
 ### 3. MCP 서버 인증
 
 MCP 서버 목록은 `.mcp.json`에서 중앙 관리됩니다.

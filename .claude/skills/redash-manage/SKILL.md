@@ -54,7 +54,7 @@ curl -s -b "remember_token=$REDASH_SESSION_COOKIE" "$REDASH_URL/api/session" | p
      const token = cookies.find(c => c.name === 'remember_token');
      return token ? token.value : null;
    }
-6. .env 파일의 REDASH_SESSION_COOKIE 값 업데이트
+6. .env 파일의 REDASH_SESSION_COOKIE 값 업데이트 (값을 작은따옴표로 감싸서 저장: REDASH_SESSION_COOKIE='값')
 7. browser_close → 브라우저 닫기
 ```
 
