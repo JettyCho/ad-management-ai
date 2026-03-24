@@ -17,7 +17,7 @@ allowed-tools: Bash, Read, Grep, Glob, Edit
 source .env
 ```
 
-- `DASH_URL`: prod 환경 Base URL (`https://dash-api-gateway.eks.buzzvil.com`)
+- `DASH_API_GATEWAY_URL`: prod 환경 Base URL (`https://dash-api-gateway.eks.buzzvil.com`)
 - `DASH_ID`: 로그인 계정 (이메일) — 모든 환경 공통
 - `DASH_PW`: 로그인 비밀번호 — 모든 환경 공통
 - `DASH_PROD_SESSION_COOKIE`: prod 환경 세션 쿠키 (안정적으로 유지)
@@ -31,11 +31,11 @@ source .env
 
 ### URL 규칙
 
-`DASH_URL` (`.env`)이 prod Base URL이다. 다른 환경은 이 URL에서 파생한다:
+`DASH_API_GATEWAY_URL` (`.env`)이 prod Base URL이다. 다른 환경은 이 URL에서 파생한다:
 
 | 환경명 | Base URL |
 |--------|----------|
-| `prod` | `$DASH_URL` (= `https://dash-api-gateway.eks.buzzvil.com`) |
+| `prod` | `$DASH_API_GATEWAY_URL` (= `https://dash-api-gateway.eks.buzzvil.com`) |
 | 그 외 (`{env}`) | `https://dash-api-gateway-{env}.eks.buzzvil.com` |
 
 예: staging → `dash-api-gateway-staging`, stagingqa → `dash-api-gateway-stagingqa`, dev → `dash-api-gateway-dev`
@@ -46,7 +46,7 @@ source .env
 source .env
 
 # prod (기본)
-DASH_TARGET_URL="$DASH_URL"
+DASH_TARGET_URL="$DASH_API_GATEWAY_URL"
 DASH_COOKIE="$DASH_PROD_SESSION_COOKIE"
 
 # prod 외 (환경명을 대입)

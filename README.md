@@ -89,7 +89,7 @@ GRAFANA_SESSION_COOKIE=자동으로_저장됨
 
 Buzzvil Ad Dashboard(dash-api-gateway)의 REST API를 curl로 직접 호출합니다. 대시보드 계정의 ID/PW로 로그인하여 세션 쿠키를 획득하며, 세션 만료 시 자동으로 재로그인합니다. 환경은 동적으로 결정됩니다 (prod가 기본, 그 외 환경명 지정 시 `dash-api-gateway-{env}` 패턴).
 ```
-DASH_URL=https://dash-api-gateway.eks.buzzvil.com
+DASH_API_GATEWAY_URL=https://dash-api-gateway.eks.buzzvil.com
 DASH_ID=your_email@buzzvil.com
 DASH_PW=your_password
 DASH_PROD_SESSION_COOKIE=자동으로_저장됨
