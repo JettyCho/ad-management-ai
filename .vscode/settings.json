@@ -1,6 +1,25 @@
 {
   "files.associations": {
     "**/.claude/skills/**/*.md": "plaintext",
-    "**/.claude/agents/**/*.md": "plaintext",
-  }
+    "**/.claude/agents/**/*.md": "plaintext"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    },
+    "editor.formatOnSave": true
+  },
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.autoImportCompletions": true,
+  "python.terminal.activateEnvironment": false,
+  "black-formatter.args": ["--line-length", "222", "--skip-string-normalization"],
+  "prettier.printWidth": 200,
+  "pylint.enabled": false,
+  "mypy-type-checker.ignorePatterns": ["**/*"],
+  "terminal.integrated.env.osx": {
+    "VIRTUAL_ENV": "${workspaceFolder}/.venv",
+    "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
+  },
 }

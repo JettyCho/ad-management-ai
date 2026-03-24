@@ -10,7 +10,16 @@
       "WebFetch",
       "WebSearch",
       "NotebookEdit",
-      "mcp__*",
+      "mcp__playwright",
+      "mcp__figma",
+      "mcp__linear",
+      "mcp__confluence",
+      "mcp__github",
+      "mcp__datadog",
+      "mcp__sentry",
+      "mcp__google_workspace",
+      "mcp__salesforce",
+      "mcp__datahub",
       "Skill(*)"
     ],
     "ask": [

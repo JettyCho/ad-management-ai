@@ -27,5 +27,8 @@ dependencies = [
     "realesrgan",
 ]
 
+[project.optional-dependencies]
+upscale = ["realesrgan"]
+
 [tool.setuptools.packages.find]
 where = ["adm"]
