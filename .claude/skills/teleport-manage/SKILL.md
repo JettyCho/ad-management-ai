@@ -157,6 +157,57 @@ tsh db logout {DB명}
 tsh db logout --all
 ```
 
+### DuckDB MCP로 DB 쿼리 (권장)
+
+mysql CLI 대신 **DuckDB MCP 서버의 MySQL 확장**을 사용하면 SQL 결과를 바로 분석·가공할 수 있다. Teleport 프록시를 띄운 후 DuckDB MCP의 `execute_query`로 ATTACH하는 방식이다.
+
+> **⚠️ 핵심: DuckDB MCP는 호출 간 상태를 유지하지 않는다.**
+> 매 `execute_query` 호출마다 새로운 세션이 시작되므로, **LOAD + ATTACH + 쿼리를 반드시 하나의 SQL 문으로 합쳐서 보내야 한다.** ATTACH만 따로 호출하면 다음 호출에서 해당 DB를 찾을 수 없다.
+
+**1단계: Teleport 프록시 시작** (Bash 도구)
+```bash
+tsh db login --db-user=viewer {DB명}
+tsh proxy db --port 13306 {DB명} --db-user=viewer &
+```
+
+인증서 경로는 `tsh db config {DB명}` 출력의 CA/Cert/Key 항목을 사용한다.
+
+**2단계: DuckDB MCP에서 LOAD + ATTACH + 쿼리를 한 번에 실행** (`execute_query` 도구)
+
+> **⚠️ 필수: `mysql_query()` 함수를 사용하라.**
+> DuckDB MySQL 확장은 `SELECT ... FROM db.table ORDER BY x LIMIT 5` 같은 DuckDB SQL을 MySQL로 변환할 때 **`ORDER BY`와 `LIMIT`을 MySQL 서버로 푸시다운하지 못한다.** 즉, 전체 테이블을 먼저 가져온 뒤 DuckDB에서 정렬·제한하려 하므로, 대용량 테이블에서 **MySQL 서버의 실행 시간 제한(maximum statement execution time exceeded)에 걸려 실패한다.**
+>
+> 이를 방지하려면 **반드시 `mysql_query('{alias}', '{raw SQL}')` 함수로 쿼리를 MySQL 서버에 직접 전달해야 한다.** 이 함수는 raw SQL을 그대로 MySQL에서 실행하므로 `ORDER BY`, `LIMIT`, 인덱스 활용 등이 정상 동작한다.
+
+```sql
+-- ✅ 올바른 방법: mysql_query()로 raw SQL 직접 전달
+LOAD mysql;
+ATTACH 'host=127.0.0.1 port=13306 user=viewer database={실제DB이름} ssl_mode=required ssl_ca={CA경로} ssl_cert={Cert경로} ssl_key={Key경로}' AS db_alias (TYPE mysql, READ_ONLY);
+SELECT * FROM mysql_query('db_alias', 'SELECT * FROM {실제DB이름}.target_groups WHERE id = 18600');
+```
+
+```sql
+-- ❌ 잘못된 방법: DuckDB SQL로 직접 조회 (대용량 테이블에서 타임아웃 발생)
+SELECT * FROM db_alias.{실제DB이름}.target_groups WHERE id = 18600;
+```
+
+**PK 조건으로 소수 행만 가져오는 단순 쿼리도 `mysql_query()`를 사용하라.** DuckDB가 어떤 조건을 푸시다운할지 예측하기 어려우므로, 항상 `mysql_query()`를 기본으로 사용하는 것이 안전하다.
+
+**매번 이 패턴을 반복한다.** 쿼리를 여러 번 실행해야 하면 매 호출마다 LOAD + ATTACH를 앞에 붙인다. `INSTALL mysql`은 최초 1회만 필요하며 이미 설치되어 있으면 생략해도 된다.
+
+**주의**: Teleport 리소스 이름(예: `prod-buzzad-replica-*`)과 **실제 MySQL 데이터베이스 이름**은 다르다. 잘못된 DB 이름을 넣으면 `Unknown database` 에러가 발생한다.
+- `prod-buzzad-replica-*` → 실제 DB: **`lockjoyUS`**
+
+**`Unknown database` 에러 시 대응**: 에러가 발생해도 DuckDB MCP는 죽지 않는다. **도구를 바꾸지 말고** 아래 순서대로 DB 이름을 찾아서 재시도한다.
+1. `team/README.md`에서 해당 서비스의 실제 DB 이름을 확인한다.
+2. 없으면 DuckDB MCP에서 `information_schema`로 ATTACH하여 DB 목록을 조회한다:
+   ```sql
+   ATTACH '...database=information_schema...' AS tmp_db (TYPE mysql, READ_ONLY);
+   SELECT SCHEMA_NAME FROM tmp_db.information_schema.SCHEMATA;
+   DETACH tmp_db;
+   ```
+3. DB 이름을 확인한 후 올바른 이름으로 다시 ATTACH한다.
+
 ---
 
 ## Kubernetes 접근

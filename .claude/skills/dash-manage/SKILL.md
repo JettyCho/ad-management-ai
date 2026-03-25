@@ -228,6 +228,21 @@ curl -s -b "connect.sid=$DASH_COOKIE" \
   "$DASH_TARGET_URL/ba/unitgroups/{id}/units/{unit_id}"
 ```
 
+### 사용자 (계정)
+
+```bash
+# 사용자 상세 조회 (owner_id 등으로 누구인지 확인할 때)
+curl -s -b "connect.sid=$DASH_COOKIE" \
+  "$DASH_TARGET_URL/ba/users/{id}"
+
+# 사용자 목록 검색
+curl -s -b "connect.sid=$DASH_COOKIE" \
+  "$DASH_TARGET_URL/ba/users?search=검색어"
+```
+
+주요 응답 필드: `id`, `email`, `name`, `role_type`, `organization_id`, `is_staff`, `last_login` 등.
+adserver의 `owner_id` (라인아이템, 타겟그룹 등)는 이 사용자 ID를 참조한다.
+
 ### 조직
 
 ```bash

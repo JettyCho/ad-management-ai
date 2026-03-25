@@ -43,7 +43,7 @@
     },
     "duckdb": {
       "command": "uvx",
-      "args": ["mcp-server-motherduck", "--db-path", "local.duckdb", "--read-write", "--init-sql", "duckdb-init.sql"]
+      "args": ["mcp-server-motherduck", "--db-path", "local.duckdb", "--read-only", "--init-sql", "duckdb-init.sql"]
     }
   }
 }
