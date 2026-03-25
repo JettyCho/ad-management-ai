@@ -40,6 +40,10 @@
     "datahub": {
       "command": "bash",
       "args": ["-c", "set -a; source .env; set +a; uvx mcp-server-datahub@latest"]
+    },
+    "duckdb": {
+      "command": "uvx",
+      "args": ["mcp-server-motherduck", "--db-path", "local.duckdb", "--read-write", "--init-sql", "duckdb-init.sql"]
     }
   }
 }

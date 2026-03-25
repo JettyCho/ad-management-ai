@@ -20,6 +20,7 @@
       "mcp__google_workspace",
       "mcp__salesforce",
       "mcp__datahub",
+      "mcp__duckdb",
       "Skill(*)"
     ],
     "ask": [
