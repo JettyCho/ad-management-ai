@@ -44,9 +44,16 @@
       "command": "npx",
       "args": ["@playwright/mcp@latest", "--user-data-dir", ".playwright-mcp-profile"]
     },
+    "penpot": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "http://localhost:4401/sse", "--allow-http"]
+    },
     "duckdb": {
       "command": "uvx",
       "args": ["mcp-server-motherduck", "--db-path", "local.duckdb", "--read-only", "--init-sql", "duckdb-init.sql"]
+    },
+    "open-pencil": {
+      "command": "openpencil-mcp"
     }
   }
 }

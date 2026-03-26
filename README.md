@@ -115,6 +115,45 @@ MCP 서버 목록은 `.mcp.json`에서 중앙 관리됩니다. 인증 방식에 
    ```
 4. `/mcp`에서 salesforce 서버를 **재시작**합니다. (인증 전에 시작된 서버는 org 정보를 인식하지 못합니다.)
 
+**OpenPencil** — Bun + OpenPencil MCP/CLI + 데스크톱 앱
+
+Figma `.fig` 파일을 로컬에서 열고, 구조 탐색·디자인 토큰 분석·이미지/SVG 내보내기·프로그래밍 방식의 디자인 수정 등을 수행하는 MCP 서버입니다. CLI는 코드 변환(JSX/Tailwind), XPath 쿼리 등 MCP에 없는 기능을 제공합니다.
+
+1. Bun 런타임을 설치합니다.
+   ```bash
+   brew install oven-sh/bun/bun
+   ```
+2. 데스크톱 앱을 설치합니다. 디자인 결과물을 시각적으로 확인할 때 사용합니다.
+   ```bash
+   brew install open-pencil/tap/open-pencil
+   ```
+3. MCP 서버와 CLI를 글로벌로 설치합니다.
+   ```bash
+   bun add -g @open-pencil/mcp @open-pencil/cli
+   ```
+4. 설치 후 `openpencil-mcp`, `openpencil` 명령어를 터미널에서 사용할 수 있도록 PATH를 등록합니다.
+   - `bun add -g` 실행 시 안내되는 글로벌 bin 경로(예: `~/.bun/bin`)를 셸 설정 파일에 추가합니다.
+   ```bash
+   # ~/.zshrc 또는 ~/.bashrc에 추가
+   export PATH="$HOME/.bun/bin:$PATH"
+   ```
+   - 변경 후 터미널을 재시작하거나 `source ~/.zshrc`를 실행합니다.
+5. `/mcp`에서 open-pencil 서버를 연결합니다.
+
+**Penpot** — MCP 서버 + 브라우저 플러그인
+
+오픈소스 브라우저 기반 디자인 도구입니다. MCP로 열려 있는 디자인을 실시간 조작하고, REST API로 파일/프로젝트를 관리합니다.
+
+1. [design.penpot.app](https://design.penpot.app)에서 회원가입합니다.
+2. Access Token을 발급받습니다.
+   - 좌측 하단 프로필 → **Your account** → **Access tokens** → **Generate new token**
+3. `.env`에 입력합니다.
+   ```
+   PENPOT_TOKEN=your_penpot_token
+   ```
+4. MCP 서버는 스킬이 필요 시 자동으로 시작합니다. 서버가 시작되면 브라우저에서 플러그인을 연결합니다.
+   - `Cmd+Alt+P` → `http://localhost:4400/manifest.json` 입력 → **Connect to MCP server** 클릭
+
 ### 자동 연결
 
 | 서버 | 설명 |
@@ -237,6 +276,16 @@ GITHUB_TOKEN=ghp_xxxxxxxxxxxx
 ```
 - [GitHub 토큰 발급 페이지](https://github.com/settings/tokens)에서 Classic 토큰을 발급받습니다 (`repo` scope 필요).
 - `gh` CLI가 설치되어 있어야 합니다: `brew install gh`
+
+#### 디자인
+
+| 스킬 | 명령어 | 설명 | 인증 |
+|------|--------|------|------|
+| **Penpot 관리** | `/penpot-manage` | UI 디자인 생성/편집, CSS/HTML 추출, 디자인 토큰, 파일/프로젝트 관리 | `PENPOT_TOKEN` + MCP 서버 |
+| **OpenPencil 관리** | `/open-pencil-manage` | .fig 파일 생성/편집, JSX/Tailwind 코드 변환, XPath 쿼리 | `openpencil-mcp` (Bun) |
+
+- **Penpot**: 브라우저 기반 디자인 도구. MCP(`execute_code`)로 디자인을 실시간 조작하고 REST API로 파일을 관리합니다. 텍스트/이모지 렌더링이 정상 동작합니다.
+- **OpenPencil**: 로컬 .fig 파일 기반. `render` 도구로 JSX→디자인 변환, CLI로 디자인→JSX/Tailwind 코드 변환을 지원합니다. 현재 Figma 호환성 수정 릴리즈를 대기 중입니다.
 
 #### 코드 품질
 

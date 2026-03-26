@@ -21,6 +21,8 @@
       "mcp__datahub",
       "mcp__duckdb",
       "mcp__slack",
+      "mcp__open-pencil",
+      "mcp__penpot",
       "Skill(*)"
     ],
     "ask": [
