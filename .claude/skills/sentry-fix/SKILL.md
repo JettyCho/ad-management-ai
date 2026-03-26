@@ -4,7 +4,7 @@ description: Sentry 이슈를 분석하고 adserver 코드베이스에서 원인
 argument-hint: (Sentry URL, 이슈 ID, 또는 자연어로 오류 설명)
 disable-model-invocation: false
 context: compress
-allowed-tools: mcp__sentry__get_issue_details, mcp__sentry__search_issues, mcp__sentry__search_issue_events, mcp__sentry__search_events, mcp__github__create_pull_request, mcp__github__list_pull_requests, mcp__github__search_pull_requests, Bash, Read, Glob, Grep, Edit, Write, Agent
+allowed-tools: mcp__sentry__get_issue_details, mcp__sentry__search_issues, mcp__sentry__search_issue_events, mcp__sentry__search_events, Bash, Read, Glob, Grep, Edit, Write, Agent
 ---
 
 # Sentry 이슈 분석 및 수정
@@ -159,12 +159,20 @@ Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
 
 ### 4-4. Push 및 PR 생성
 
-GitHub MCP의 `create_pull_request`를 사용하여 PR을 생성한다:
+`gh` CLI를 사용하여 PR을 생성한다:
 
-- **owner**: `Buzzvil`
-- **repo**: `adserver`
-- **base**: `master`
-- **head**: 생성한 브랜치명
+```bash
+source .env
+git push origin {브랜치명}
+GH_TOKEN=$GITHUB_TOKEN gh pr create --repo Buzzvil/adserver \
+  --base master \
+  --head {브랜치명} \
+  --title "fix: {한 줄 요약}" \
+  --body "$(cat <<'EOF'
+PR 본문 (아래 형식 참고)
+EOF
+)"
+```
 
 PR 본문에는 반드시 아래를 포함한다:
 

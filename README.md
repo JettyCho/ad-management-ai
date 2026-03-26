@@ -66,19 +66,11 @@ MCP 서버 목록은 `.mcp.json`에서 중앙 관리됩니다. 인증 방식에 
 | **Confluence** | 페이지 조회/생성/편집, 검색 |
 | **Datadog** | 로그/메트릭/모니터/대시보드 조회 |
 | **Sentry** | 에러 이슈 조회/분석, 이벤트 검색 |
+| **Slack** | 채널 읽기, 메시지 전송, 검색, 캔버스 |
 
 ### `.env` 설정 방식
 
 `.env` 파일에 인증 정보를 입력한 뒤 `/mcp`에서 서버를 연결합니다.
-
-**GitHub** — Personal Access Token
-
-1. [GitHub 토큰 발급 페이지](https://github.com/settings/tokens)에서 토큰을 발급받습니다.
-2. `.env`에 입력합니다.
-   ```
-   GITHUB_TOKEN=ghp_xxxxxxxxxxxx
-   ```
-3. `/mcp`에서 github 서버를 연결합니다.
 
 **Google Workspace** (Gmail, Drive, Calendar 등) — OAuth Client
 
@@ -146,16 +138,10 @@ MCP 서버 목록은 `.mcp.json`에서 중앙 관리됩니다. 인증 방식에 
 
 | 스킬 | 명령어 | 설명 | 인증 |
 |------|--------|------|------|
-| **Slack 관리** | `/slack-manage` | 메시지 전송/편집/삭제, 파일 업로드, 리액션, 채널 검색 | `SLACK_USER_TOKEN` (xoxp-) |
-| **Slack 요약** | `/slack-summary` | 채널 대화 분석 및 주제/과제/이슈 요약 | `SLACK_USER_TOKEN` (xoxp-) |
+| **Slack 요약** | `/slack-summary` | 채널 대화 분석 및 주제/과제/이슈 요약 | Slack MCP (OAuth) |
 
-Slack User Token 설정:
-1. [Slack App 설정 페이지](https://api.slack.com/apps)에서 팀 Slack App을 선택합니다.
-2. **OAuth & Permissions**에서 **User OAuth Token** (`xoxp-`로 시작)을 복사합니다.
-3. `.env`에 입력합니다.
-   ```
-   SLACK_USER_TOKEN=xoxp-xxxxxxxxxxxx
-   ```
+- 메시지 전송, 채널 조회, 검색 등 일반 Slack 작업은 **Slack MCP**를 통해 자연어로 직접 요청하면 됩니다.
+- `/slack-summary`는 채널 대화를 기간별로 분석하여 구조화된 보고서를 생성하는 전용 스킬입니다.
 
 #### 광고 운영
 
@@ -239,11 +225,24 @@ GRAFANA_SESSION_COOKIE=자동으로_저장됨
 ```
 - 최초 설정 시 `/grafana-manage`를 실행하면 Playwright 브라우저가 열리고 구글 로그인 후 자동으로 쿠키가 저장됩니다.
 
+#### GitHub
+
+| 스킬 | 명령어 | 설명 | 인증 |
+|------|--------|------|------|
+| **GitHub 관리** | `/github-manage` | PR 생성/조회/리뷰, 이슈 관리, 레포 조회, Actions 확인 등 | `GITHUB_TOKEN` (`gh` CLI) |
+
+GitHub 설정:
+```
+GITHUB_TOKEN=ghp_xxxxxxxxxxxx
+```
+- [GitHub 토큰 발급 페이지](https://github.com/settings/tokens)에서 Classic 토큰을 발급받습니다 (`repo` scope 필요).
+- `gh` CLI가 설치되어 있어야 합니다: `brew install gh`
+
 #### 코드 품질
 
 | 스킬 | 명령어 | 설명 | 인증 |
 |------|--------|------|------|
-| **Sentry 수정** | `/sentry-fix` | Sentry 이슈 분석 → adserver 코드 원인 조사 → 수정 PR 생성 | Sentry MCP + GitHub MCP + `ADSERVER_PATH` |
+| **Sentry 수정** | `/sentry-fix` | Sentry 이슈 분석 → adserver 코드 원인 조사 → 수정 PR 생성 | Sentry MCP + `gh` CLI + `ADSERVER_PATH` |
 
 ---
 

@@ -14,13 +14,13 @@
       "mcp__figma",
       "mcp__linear",
       "mcp__confluence",
-      "mcp__github",
       "mcp__datadog",
       "mcp__sentry",
       "mcp__google_workspace",
       "mcp__salesforce",
       "mcp__datahub",
       "mcp__duckdb",
+      "mcp__slack",
       "Skill(*)"
     ],
     "ask": [
