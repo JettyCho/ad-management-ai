@@ -47,11 +47,17 @@ curl -s -H "Authorization: Token $PENPOT_TOKEN" \
 
 MCP 도구를 사용하기 전에 **항상** 아래 순서로 서버 상태를 확인하고 필요 시 자동으로 시작/갱신한다. 사용자에게 서버 시작을 안내하지 않고, 직접 처리한다.
 
-### 1. 서버 실행 여부 확인
+### 1. 서버 실행 여부 확인 및 기존 mcp-remote 정리
 
 ```bash
+# 기존 mcp-remote → localhost:4401 연결을 모두 종료 (다중 인스턴스 충돌 방지)
+pkill -f "mcp-remote.*localhost:4401" 2>/dev/null || true
+sleep 1
+
 curl -s -m 2 -o /dev/null -w "%{http_code}" http://localhost:4401/sse 2>/dev/null
 ```
+
+> **⚠ 다중 인스턴스 주의:** `mcp-remote` 프로세스가 여러 개 동시에 같은 서버에 연결되면, 응답이 다른 인스턴스로 전달되어 무한 대기에 빠진다. MCP 도구 호출 전에 반드시 기존 연결을 정리한다.
 
 - `200`: 서버 실행 중 → 2단계로 진행
 - 그 외: 서버 안 떠 있음 → 3단계로 서버 시작
