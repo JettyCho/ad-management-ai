@@ -76,7 +76,8 @@ pkill -f "penpot-mcp" 2>/dev/null || true
 sleep 1
 
 # 최신 버전으로 백그라운드 시작
-nohup npx @penpot/mcp > /tmp/penpot-mcp.log 2>&1 &
+nohup npx -y @penpot/mcp < /dev/null > /tmp/penpot-mcp.log 2>&1 &
+disown
 
 # 서버가 준비될 때까지 대기 (빌드 포함 최대 60초)
 for i in $(seq 1 30); do
