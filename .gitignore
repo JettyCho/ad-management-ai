@@ -6,3 +6,4 @@ __pycache__/
 .playwright-mcp/
 *.duckdb
 *.duckdb.wal
+.google_token.json
