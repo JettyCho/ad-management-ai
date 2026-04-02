@@ -29,6 +29,7 @@ dependencies = [
     "google-api-python-client",
     "pymysql",
     "simple-salesforce",
+    "python-docx",
 ]
 
 [project.optional-dependencies]

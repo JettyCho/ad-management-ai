@@ -20,6 +20,7 @@ source .env
 - `DASH_API_GATEWAY_URL`: prod 환경 Base URL (`https://dash-api-gateway.eks.buzzvil.com`)
 - `DASH_ID`: 로그인 계정 (이메일) — 모든 환경 공통
 - `DASH_PW`: 로그인 비밀번호 — 모든 환경 공통
+- `DASH_TOTP`: MFA용 TOTP secret (Base32 인코딩, 없으면 사용자에게 6자리 코드 요청)
 - `DASH_PROD_SESSION_COOKIE`: prod 환경 세션 쿠키 (안정적으로 유지)
 - `DASH_OTHER_SESSION_COOKIE`: prod 외 환경 세션 쿠키 (환경 변경 시 덮어씀)
 
@@ -68,9 +69,13 @@ RESULT=$(curl -s -w "\n%{http_code}" -b "connect.sid=$DASH_COOKIE" "$DASH_TARGET
 HTTP_CODE=$(echo "$RESULT" | tail -1)
 ```
 
-`HTTP_CODE`가 `200`이면 세션 유효. `401`이면 재로그인 필요.
+`HTTP_CODE`가 `200`이면 세션 유효. `401`이면 재로그인 필요 (아래 로그인 + MFA 절차 수행).
 
 ### 로그인 (세션 만료 시)
+
+로그인은 **2단계**로 이루어진다: 비밀번호 인증 → MFA 인증.
+
+#### Step 1: 비밀번호 로그인
 
 ```bash
 COOKIE=$(curl -s -X POST -H "Content-Type: application/json" \
@@ -79,7 +84,35 @@ COOKIE=$(curl -s -X POST -H "Content-Type: application/json" \
 echo "New cookie: $COOKIE"
 ```
 
-로그인 성공 시 `.env` 파일의 쿠키 값을 업데이트한다 (작은따옴표로 감싸서 저장):
+#### Step 2: MFA 인증 (TOTP)
+
+비밀번호 로그인만으로는 세션이 MFA 미인증 상태(`isMFAAuthed=false`)이다. MFA가 필요한 API(사용자 조회 등)는 `ERROR.AUTHZ.MFA_REQUIRED`(401)를 반환한다.
+
+**`DASH_TOTP`가 `.env`에 설정되어 있는 경우** — TOTP 코드를 자동 생성하여 인증:
+
+```bash
+CODE=$(python3 -c "
+import hmac, hashlib, struct, time, base64
+secret = base64.b32decode('$DASH_TOTP')
+counter = int(time.time()) // 30
+msg = struct.pack('>Q', counter)
+h = hmac.new(secret, msg, hashlib.sha1).digest()
+offset = h[-1] & 0x0F
+code = (struct.unpack('>I', h[offset:offset+4])[0] & 0x7FFFFFFF) % 1000000
+print(f'{code:06d}')
+")
+
+curl -s -X POST -b "connect.sid=$COOKIE" \
+  -H "Content-Type: application/json" \
+  -d "{\"code\":\"$CODE\"}" \
+  "$DASH_TARGET_URL/user/mfa/verify"
+```
+
+**`DASH_TOTP`가 없는 경우** — 사용자에게 인증 앱(Google Authenticator 등)의 6자리 코드를 요청한 뒤 위 verify API를 호출한다.
+
+#### Step 3: 쿠키 저장
+
+로그인 + MFA 완료 후 `.env` 파일의 쿠키 값을 업데이트한다 (작은따옴표로 감싸서 저장):
 - **prod** → `DASH_PROD_SESSION_COOKIE='새쿠키값'`
 - **그 외** → `DASH_OTHER_SESSION_COOKIE='새쿠키값'` (어차피 다른 환경 전환 시 덮어씌워짐)
 
