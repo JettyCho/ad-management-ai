@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>광고센터 UX 개선 프로토타입 v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Noto Sans KR', 'Inter', sans-serif; background: #e8eaed; font-size: 14px; }
+
+/* ── FLOW NAV ── */
+.flow-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+  background: #111827; height: 48px;
+  display: flex; align-items: center;
+  font-size: 12px; overflow-x: auto; white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0,0,0,.4);
+  scrollbar-width: none;
+}
+.flow-nav::-webkit-scrollbar { display: none; }
+.flow-nav-brand {
+  padding: 0 16px; font-weight: 800; font-size: 13px;
+  color: #EF4444; border-right: 1px solid #1f2937;
+  height: 100%; display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+  font-family: 'Inter', sans-serif;
+}
+.flow-nav-brand small { color: #4b5563; font-weight: 400; font-size: 10px; }
+.flow-section {
+  padding: 0 10px; height: 100%; display: flex; align-items: center;
+  color: #374151; font-size: 10px; font-weight: 700; letter-spacing: .5px; flex-shrink: 0;
+  border-right: 1px solid #1f2937; background: #0f172a;
+  text-transform: uppercase;
+}
+.flow-btn {
+  padding: 0 14px; height: 100%; border: none; background: none;
+  color: #9ca3af; cursor: pointer; font-size: 11px;
+  border-right: 1px solid #1f2937; transition: all .15s;
+  font-family: 'Noto Sans KR', sans-serif; flex-shrink: 0;
+}
+.flow-btn:hover { background: #1f2937; color: #fff; }
+.flow-btn.active { background: #EF4444; color: #fff; font-weight: 700; }
+.tobe-dot {
+  display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+  background: #f59e0b; margin-left: 4px; vertical-align: middle;
+}
+
+/* ── SCREENS ── */
+.screen { display: none; padding-top: 48px; min-height: 100vh; }
+.screen.active { display: block; }
+
+/* ── APP SHELL ── */
+.app {
+  display: flex; max-width: 1400px; margin: 0 auto; width: 100%;
+  background: #fff; box-shadow: 0 0 60px rgba(0,0,0,.12);
+  min-height: calc(100vh - 48px);
+}
+.app-col { display: flex; flex-direction: column; flex: 1; }
+
+/* ── TOPBAR ── */
+.topbar {
+  position: sticky; top: 48px; z-index: 100;
+  background: #fff; border-bottom: 1px solid #e5e7eb;
+  height: 52px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px; width: 100%; flex-shrink: 0;
+}
+.logo { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 16px; color: #111; font-family: 'Inter', sans-serif; }
+.logo-mark { width: 28px; height: 28px; background: #EF4444; border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+.logo-mark svg { width: 16px; height: 10px; }
+.topbar-right { display: flex; align-items: center; gap: 12px; }
+.user-btn { display: flex; align-items: center; gap: 8px; border: 1px solid #e5e7eb; border-radius: 8px; padding: 5px 10px; font-size: 12px; color: #333; cursor: pointer; background: none; font-family: 'Noto Sans KR', sans-serif; }
+.avatar { width: 22px; height: 22px; border-radius: 50%; background: #eff6ff; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #3b82f6; font-weight: 700; }
+
+/* ── SIDEBAR ── */
+.sidebar { width: 220px; flex-shrink: 0; background: #f9fafb; border-right: 1px solid #e5e7eb; padding: 16px 0; }
+.biz-selector { margin: 0 12px 16px; padding: 10px 12px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+.biz-label { font-size: 10px; color: #9ca3af; margin-bottom: 2px; }
+.biz-name { font-size: 13px; font-weight: 700; color: #111; }
+.nav-section-label { font-size: 10px; color: #9ca3af; font-weight: 700; padding: 12px 20px 6px; letter-spacing: .5px; }
+.nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 20px; font-size: 13px; color: #6b7280; cursor: pointer; transition: all .12s; }
+.nav-item:hover { background: #f0f0f0; color: #111; }
+.nav-item.active { background: #eff6ff; color: #2563eb; font-weight: 700; border-right: 2px solid #2563eb; }
+.nav-icon { width: 18px; text-align: center; font-size: 15px; flex-shrink: 0; }
+
+/* ── MAIN ── */
+.main { flex: 1; overflow-y: auto; }
+.page-header { padding: 28px 32px 20px; border-bottom: 1px solid #f3f4f6; }
+.page-header h1 { font-size: 20px; font-weight: 700; color: #111; margin-bottom: 4px; }
+.page-header p { font-size: 13px; color: #6b7280; }
+.content { padding: 28px 32px; }
+
+/* ── ONBOARDING ── */
+.ob-wrap { min-height: calc(100vh - 100px); display: flex; align-items: center; justify-content: center; padding: 40px 24px; }
+.ob-card { background: #fff; border-radius: 16px; padding: 44px 48px; max-width: 560px; width: 100%; box-shadow: 0 8px 40px rgba(0,0,0,.08); }
+.ob-card-wide { max-width: 640px; }
+
+.step-bar { display: flex; align-items: center; margin-bottom: 36px; }
+.step-item { display: flex; flex-direction: column; align-items: center; flex: 1; position: relative; }
+.step-item:not(:last-child)::after { content: ''; position: absolute; top: 15px; left: 50%; width: 100%; height: 2px; background: #e5e7eb; z-index: 0; }
+.step-item.done:not(:last-child)::after { background: #EF4444; }
+.step-dot { width: 30px; height: 30px; border-radius: 50%; z-index: 1; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; border: 2px solid #e5e7eb; background: #fff; color: #9ca3af; font-family: 'Inter', sans-serif; }
+.step-item.done .step-dot { background: #EF4444; border-color: #EF4444; color: #fff; cursor: pointer; }
+.step-item.done .step-dot:hover { background: #dc2626; }
+.step-item.active .step-dot { background: #EF4444; border-color: #EF4444; color: #fff; box-shadow: 0 0 0 4px rgba(239,68,68,.15); }
+.step-label { font-size: 10px; color: #9ca3af; margin-top: 6px; text-align: center; white-space: nowrap; }
+.step-item.done .step-label, .step-item.active .step-label { color: #374151; font-weight: 700; }
+
+.ob-kicker { font-size: 11px; font-weight: 700; color: #EF4444; letter-spacing: .1em; text-transform: uppercase; font-family: 'Inter', sans-serif; margin-bottom: 6px; }
+.ob-title { font-size: 22px; font-weight: 800; color: #111; margin-bottom: 10px; font-family: 'Inter', sans-serif; line-height: 1.3; }
+.ob-desc { font-size: 14px; color: #6b7280; line-height: 1.7; margin-bottom: 24px; }
+.ob-desc strong { color: #111; }
+
+/* ── TYPE SELECT ── */
+.type-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 8px; }
+.type-card { border: 2px solid #e5e7eb; border-radius: 12px; padding: 24px 20px; cursor: pointer; transition: all .2s; text-align: center; }
+.type-card:hover { border-color: #EF4444; background: #fef2f2; }
+.type-icon { font-size: 32px; margin-bottom: 12px; }
+.type-title { font-size: 15px; font-weight: 700; color: #111; margin-bottom: 6px; }
+.type-desc { font-size: 12px; color: #9ca3af; line-height: 1.5; }
+
+/* ── OPTIONS ── */
+.option-card { border: 1.5px solid #e5e7eb; border-radius: 10px; padding: 16px 18px; cursor: pointer; transition: all .2s; margin-bottom: 10px; display: flex; align-items: flex-start; gap: 14px; }
+.option-card:hover { border-color: #EF4444; background: #fef2f2; }
+.option-card.selected { border-color: #EF4444; background: #fef2f2; }
+.option-icon { width: 40px; height: 40px; border-radius: 10px; background: #f3f4f6; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.option-title { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 3px; }
+.option-desc { font-size: 12px; color: #9ca3af; }
+.tobe-badge { display: inline-block; background: #fef3c7; color: #92400e; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 4px; margin-left: 6px; vertical-align: middle; font-family: 'Inter', sans-serif; letter-spacing: .05em; }
+
+/* ── FORMS ── */
+.form-row { margin-bottom: 16px; }
+.form-label { font-size: 12px; font-weight: 700; color: #374151; margin-bottom: 6px; display: flex; align-items: center; gap: 4px; }
+.form-label .req { color: #EF4444; }
+.form-input { width: 100%; padding: 10px 13px; border: 1.5px solid #e5e7eb; border-radius: 8px; font-size: 14px; font-family: 'Noto Sans KR', sans-serif; outline: none; transition: border-color .2s; }
+.form-input:focus { border-color: #EF4444; }
+.form-input.mono { font-family: 'Inter', monospace; }
+.form-input-group { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-file { display: flex; align-items: center; gap: 10px; padding: 10px 13px; border: 1.5px dashed #d1d5db; border-radius: 8px; cursor: pointer; background: #fafafa; transition: border-color .2s; }
+.form-file:hover { border-color: #9ca3af; }
+.form-file-icon { font-size: 18px; }
+.form-file-text { font-size: 12px; color: #9ca3af; }
+.form-file.done { border-style: solid; border-color: #10b981; background: #f0fdf4; }
+.form-file.done .form-file-text { color: #059669; font-weight: 600; }
+.form-hint { font-size: 11px; color: #9ca3af; margin-top: 5px; }
+.form-section-label { font-size: 11px; font-weight: 700; color: #9ca3af; letter-spacing: .05em; text-transform: uppercase; margin: 20px 0 12px; padding-bottom: 8px; border-bottom: 1px solid #f3f4f6; font-family: 'Inter', sans-serif; }
+
+/* ── BUTTONS ── */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; border: none; transition: all .2s; font-family: 'Noto Sans KR', sans-serif; }
+.btn-full { width: 100%; }
+.btn-primary { background: #EF4444; color: #fff; }
+.btn-primary:hover { background: #dc2626; }
+.btn-secondary { background: #f3f4f6; color: #374151; }
+.btn-secondary:hover { background: #e5e7eb; }
+.btn-ghost { background: none; border: none; padding: 6px 12px; cursor: pointer; border-radius: 8px; }
+.btn-ghost:hover { background: #f3f4f6; }
+.btn-outline { background: #fff; color: #374151; border: 1.5px solid #e5e7eb; }
+.btn-row { display: flex; gap: 10px; }
+
+/* ── INFO BOXES ── */
+.info-box { border-radius: 8px; padding: 12px 14px; margin-bottom: 16px; display: flex; gap: 10px; align-items: flex-start; }
+.info-box.blue { background: #eff6ff; border: 1px solid #bfdbfe; }
+.info-box.blue p { font-size: 12px; color: #1e40af; line-height: 1.6; }
+.info-box.yellow { background: #fef9c3; border: 1px solid #fde047; }
+.info-box.yellow p { font-size: 12px; color: #713f12; line-height: 1.6; }
+.info-box.green { background: #f0fdf4; border: 1px solid #bbf7d0; }
+.info-box.green p { font-size: 12px; color: #166534; line-height: 1.6; }
+.info-box .ii { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+/* ── STAFF REQUEST FORM ── */
+.staff-form { background: #f8fafc; border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+.staff-form-title { font-size: 13px; font-weight: 700; color: #374151; margin-bottom: 4px; }
+.staff-form-desc { font-size: 12px; color: #9ca3af; margin-bottom: 16px; }
+
+/* ── PENDING STATE ── */
+.pending-wrap { min-height: calc(100vh - 100px); display: flex; align-items: center; justify-content: center; padding: 40px; background: linear-gradient(135deg, #fafafa 0%, #f0f9ff 100%); }
+.pending-card { background: #fff; border-radius: 20px; padding: 48px; text-align: center; max-width: 440px; width: 100%; box-shadow: 0 8px 40px rgba(0,0,0,.08); }
+.pending-icon { font-size: 52px; margin-bottom: 20px; }
+.pending-title { font-size: 20px; font-weight: 800; color: #111; margin-bottom: 10px; font-family: 'Inter', sans-serif; }
+.pending-desc { font-size: 13px; color: #6b7280; line-height: 1.8; margin-bottom: 24px; }
+.pending-status { display: inline-flex; align-items: center; gap: 8px; background: #fef3c7; color: #92400e; font-size: 12px; font-weight: 700; padding: 8px 16px; border-radius: 8px; margin-bottom: 24px; }
+.dot-pulse { width: 8px; height: 8px; border-radius: 50%; background: #f59e0b; animation: pulse 1.5s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.8)} }
+
+/* ── ADVERTISER INVITE ── */
+.invite-row { display: flex; gap: 10px; margin-bottom: 10px; }
+.invite-input { flex: 1; padding: 10px 13px; border: 1.5px solid #e5e7eb; border-radius: 8px; font-size: 14px; font-family: 'Noto Sans KR', sans-serif; outline: none; transition: border-color .2s; }
+.invite-input:focus { border-color: #EF4444; }
+.invite-role-select { padding: 10px 13px; border: 1.5px solid #e5e7eb; border-radius: 8px; font-size: 13px; font-family: 'Noto Sans KR', sans-serif; outline: none; background: #fff; cursor: pointer; }
+.member-list { border: 1.5px solid #e5e7eb; border-radius: 10px; overflow: hidden; margin-bottom: 16px; }
+.member-row { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid #f3f4f6; }
+.member-row:last-child { border-bottom: none; }
+.member-avatar { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+.member-name { font-size: 13px; font-weight: 700; color: #111; }
+.member-email { font-size: 11px; color: #9ca3af; }
+.role-badge { margin-left: auto; padding: 2px 8px; border-radius: 5px; font-size: 11px; font-weight: 700; }
+.role-admin { background: #eff6ff; color: #1d4ed8; }
+.role-member { background: #f3f4f6; color: #6b7280; }
+.role-pending { background: #fef3c7; color: #92400e; }
+
+/* ── MEMBER SLOTS ── */
+.slots-section { margin-bottom: 24px; }
+.slots-label { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.slots-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.slots-text { font-size: 11px; font-weight: 700; color: #6b7280; letter-spacing: .05em; text-transform: uppercase; font-family: 'Inter', sans-serif; }
+.slots-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; }
+.agency-invite-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.agency-invite-row .form-input { flex: 1; font-size: 13px; }
+.remove-row-btn { width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid #e5e7eb; background: none; color: #9ca3af; font-size: 18px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all .15s; }
+.remove-row-btn:hover { border-color: #EF4444; color: #EF4444; background: #fef2f2; }
+.assign-billing-btn { background: none; border: 1.5px solid #f59e0b; color: #92400e; font-size: 11px; font-weight: 700; padding: 4px 9px; border-radius: 5px; cursor: pointer; margin-top: 2px; font-family: 'Noto Sans KR', sans-serif; transition: all .15s; white-space: nowrap; }
+.assign-billing-btn:hover { background: #fef3c7; }
+.member-slot { border: 1.5px solid #e5e7eb; border-radius: 10px; padding: 16px 12px; display: flex; flex-direction: column; align-items: center; gap: 8px; background: #fff; text-align: center; }
+.slot-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+.slot-name { font-size: 13px; font-weight: 700; color: #111; }
+.slot-company { font-size: 11px; color: #9ca3af; }
+.empty-slot { border: 1.5px dashed #d1d5db; border-radius: 10px; padding: 16px 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; background: #fafafa; cursor: pointer; text-align: center; transition: all .2s; min-height: 120px; }
+.empty-slot:hover { border-color: #EF4444; background: #fef2f2; }
+.empty-slot:hover .empty-slot-plus { border-color: #EF4444; color: #EF4444; }
+.empty-slot-plus { width: 40px; height: 40px; border-radius: 50%; border: 2px dashed #d1d5db; display: flex; align-items: center; justify-content: center; color: #d1d5db; font-size: 22px; font-weight: 300; line-height: 1; transition: all .2s; }
+.empty-slot-text { font-size: 12px; color: #9ca3af; line-height: 1.5; }
+.slot-input-form { border: 1.5px solid #EF4444; border-radius: 10px; padding: 14px 12px; background: #fff; min-height: 120px; }
+
+/* ── CHECKLIST ── */
+.checklist { border: 1.5px solid #e5e7eb; border-radius: 10px; overflow: hidden; margin-bottom: 16px; }
+.cl-header { padding: 14px 18px; display: flex; align-items: center; gap: 12px; background: #fafafa; border-bottom: 1px solid #f3f4f6; }
+.cl-status { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #e5e7eb; display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; }
+.cl-status.done { background: #10b981; border-color: #10b981; color: #fff; }
+.cl-status.warn { background: #f59e0b; border-color: #f59e0b; color: #fff; }
+.cl-title { font-size: 13px; font-weight: 700; color: #111; }
+.cl-sub { font-size: 11px; color: #9ca3af; }
+.cl-body { padding: 12px 18px; }
+.cl-row { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid #f3f4f6; }
+.cl-row:last-child { border-bottom: none; }
+.cl-icon { font-size: 13px; width: 18px; text-align: center; flex-shrink: 0; }
+.cl-text { flex: 1; font-size: 13px; color: #374151; }
+.cl-action { font-size: 11px; color: #3b82f6; font-weight: 700; cursor: pointer; white-space: nowrap; }
+
+/* ── ACCOUNT LIST ── */
+.acct-row { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-bottom: 1px solid #f3f4f6; }
+.acct-row:last-child { border-bottom: none; }
+.acct-icon { width: 38px; height: 38px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; flex-shrink: 0; }
+.acct-info { flex: 1; min-width: 0; }
+.acct-brand { font-size: 14px; font-weight: 700; color: #111; }
+.acct-advertiser { font-size: 11px; color: #9ca3af; margin-top: 2px; }
+.acct-members { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #6b7280; flex-shrink: 0; white-space: nowrap; }
+/* Member select modal */
+.ms-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 1000; display: flex; align-items: center; justify-content: center; }
+.ms-modal { background: #fff; border-radius: 16px; padding: 28px 24px; width: 100%; max-width: 400px; box-shadow: 0 20px 60px rgba(0,0,0,0.18); }
+.ms-title { font-size: 16px; font-weight: 800; color: #111; margin-bottom: 4px; }
+.ms-sub { font-size: 13px; color: #6b7280; margin-bottom: 20px; }
+.ms-member-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+.ms-member-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1.5px solid #e5e7eb; border-radius: 10px; cursor: pointer; transition: border-color .15s, background .15s; }
+.ms-member-item:hover { border-color: #EF4444; background: #fef2f2; }
+.ms-member-item.selected { border-color: #EF4444; background: #fef2f2; }
+.ms-member-item input[type=radio] { accent-color: #EF4444; width: 16px; height: 16px; flex-shrink: 0; }
+.ms-avatar { width: 36px; height: 36px; border-radius: 50%; background: #f3f4f6; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #374151; flex-shrink: 0; }
+.ms-name { font-size: 14px; font-weight: 600; color: #111; }
+.ms-email { font-size: 11px; color: #9ca3af; margin-top: 1px; }
+.member-dots { display: flex; gap: 3px; }
+.member-dot { width: 8px; height: 8px; border-radius: 50%; background: #3b82f6; }
+
+/* ── ADMIN (DARK) ── */
+.admin-shell { background: #0f172a; min-height: calc(100vh - 48px); }
+.admin-bar { background: #1e293b; border-bottom: 1px solid #334155; height: 52px; display: flex; align-items: center; padding: 0 24px; gap: 12px; }
+.admin-badge { background: #EF4444; color: #fff; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: .1em; font-family: 'Inter', sans-serif; }
+.admin-title { color: #e2e8f0; font-size: 14px; font-weight: 700; }
+.admin-sub { font-size: 12px; color: #64748b; margin-left: auto; }
+.admin-wrap { padding: 28px 32px; max-width: 860px; }
+.admin-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; margin-bottom: 20px; overflow: hidden; }
+.admin-card-hd { padding: 14px 20px; border-bottom: 1px solid #334155; display: flex; align-items: center; justify-content: space-between; }
+.admin-card-title { color: #e2e8f0; font-size: 14px; font-weight: 700; }
+.admin-card-bd { padding: 18px 20px; }
+.admin-info-grid { display: grid; grid-template-columns: 120px 1fr; gap: 8px 0; }
+.admin-info-k { font-size: 11px; color: #64748b; padding: 5px 0; }
+.admin-info-v { font-size: 12px; color: #e2e8f0; padding: 5px 0; }
+.admin-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #1e293b; }
+.admin-row:last-child { border-bottom: none; }
+.admin-avatar { width: 32px; height: 32px; border-radius: 50%; background: #334155; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #94a3b8; flex-shrink: 0; }
+.admin-name { font-size: 13px; color: #e2e8f0; font-weight: 600; }
+.admin-email { font-size: 11px; color: #64748b; }
+.admin-role-pill { padding: 2px 8px; border-radius: 5px; font-size: 11px; font-weight: 700; }
+.arp-admin { background: #1d4ed8; color: #bfdbfe; }
+.arp-member { background: #334155; color: #94a3b8; }
+.btn-admin { background: #EF4444; color: #fff; border: none; padding: 8px 16px; border-radius: 7px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Noto Sans KR', sans-serif; }
+.btn-admin:hover { background: #dc2626; }
+.btn-admin-ghost { background: transparent; color: #94a3b8; border: 1px solid #334155; padding: 8px 16px; border-radius: 7px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'Noto Sans KR', sans-serif; }
+.link-box { background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 12px 14px; display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+.link-url { flex: 1; font-family: 'Inter', monospace; font-size: 12px; color: #94a3b8; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.link-copy { background: #334155; color: #e2e8f0; border: none; padding: 5px 10px; border-radius: 5px; font-size: 11px; cursor: pointer; font-family: 'Noto Sans KR', sans-serif; }
+.link-copy:hover { background: #475569; }
+.link-expiry { font-size: 11px; color: #475569; margin-top: 5px; }
+.request-item { background: #0f172a; border: 1px solid #334155; border-radius: 10px; padding: 16px; margin-bottom: 12px; }
+.request-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; }
+.request-avatar { width: 36px; height: 36px; border-radius: 50%; background: #1d4ed8; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #93c5fd; flex-shrink: 0; }
+.request-name { font-size: 13px; color: #e2e8f0; font-weight: 700; }
+.request-meta { font-size: 11px; color: #64748b; margin-top: 2px; }
+.request-detail { background: #1e293b; border-radius: 6px; padding: 10px 12px; margin-bottom: 12px; }
+.request-detail-row { display: flex; gap: 8px; padding: 4px 0; }
+.request-detail-k { font-size: 11px; color: #64748b; width: 100px; flex-shrink: 0; }
+.request-detail-v { font-size: 12px; color: #e2e8f0; }
+.request-actions { display: flex; gap: 8px; }
+.new-badge { display: inline-block; background: #EF4444; color: #fff; font-size: 10px; padding: 1px 6px; border-radius: 4px; font-family: 'Inter', sans-serif; font-weight: 700; margin-left: 8px; }
+
+/* ── UTIL ── */
+.hidden { display: none !important; }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 5px; font-size: 11px; font-weight: 700; }
+.tag-green { background: #dcfce7; color: #166534; }
+.tag-yellow { background: #fef3c7; color: #92400e; }
+.tag-blue { background: #dbeafe; color: #1e40af; }
+.divider { display: flex; align-items: center; gap: 10px; margin: 14px 0; }
+.divider::before, .divider::after { content:''; flex:1; height:1px; background:#e5e7eb; }
+.divider span { font-size:11px; color:#9ca3af; }
+</style>
+</head>
+<body>
+
+<!-- ── FLOW NAV ── -->
+<nav class="flow-nav">
+  <div class="flow-nav-brand">
+    <svg width="14" height="9" viewBox="0 0 14 9" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.4 2.3L0 3.8L3 3.4L2.2 6.2C1.7 7.6 2.9 9 4.4 8.9L11.7 8.1C12.6 8 13.3 7.4 13.5 6.6L14 5.1L11 5.4L11.8 2.7C12.2 1.2 11 -0.1 9.6 0L2.2 0.8C1.4 0.9 0.6 1.5 0.4 2.3ZM8.9 2.8L5.9 3.1L5.1 6L8.1 5.7L8.9 2.8Z" fill="#EF4444"/></svg>
+    광고센터 프로토타입 <small>v2</small>
+  </div>
+  <div class="flow-section">공통</div>
+  <button class="flow-btn active" onclick="show('s0')">① 가입 유형 선택</button>
+  <div class="flow-section">광고주</div>
+  <button class="flow-btn" onclick="show('s1a')">② 비즈그룹 참여</button>
+  <button class="flow-btn" onclick="show('s-profile-a')">② 본인정보 입력</button>
+  <button class="flow-btn" onclick="show('s2a')">③ 비즈그룹 신규생성</button>
+  <button class="flow-btn" onclick="show('s3a')">④ 광고계정 생성</button>
+  <button class="flow-btn" onclick="show('s4a')">⑤ 광고계정 홈</button>
+  <div class="flow-section">대행사</div>
+  <button class="flow-btn" onclick="show('s1b')">⑥ 비즈그룹 참여</button>
+  <button class="flow-btn" onclick="show('s-profile-b')">⑥ 본인정보 입력</button>
+  <button class="flow-btn" onclick="show('s2b')">⑦ 광고계정 참여 요청</button>
+  <button class="flow-btn" onclick="show('s3b')">⑧ 요청 완료 대기</button>
+  <button class="flow-btn" onclick="show('s4b')">⑨ 광고계정 홈 (대행사)</button>
+  <div class="flow-section">Staff</div>
+  <button class="flow-btn" onclick="show('s7')">⑩ 요청 처리 + 초대링크</button>
+</nav>
+
+<!-- ══════════════════════════════════════
+     S0: 가입 유형 선택
+════════════════════════════════════════ -->
+<div id="s0" class="screen active">
+  <div style="background:linear-gradient(135deg,#f8fafc,#eff6ff);min-height:calc(100vh - 48px);display:flex;align-items:center;justify-content:center;padding:40px 24px;">
+    <div style="max-width:540px;width:100%;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:32px;">
+        <div class="logo-mark" style="width:40px;height:40px;border-radius:10px;"><svg viewBox="0 0 14 9" fill="none" style="width:22px;height:14px;"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.4 2.3L0 3.8L3 3.4L2.2 6.2C1.7 7.6 2.9 9 4.4 8.9L11.7 8.1C12.6 8 13.3 7.4 13.5 6.6L14 5.1L11 5.4L11.8 2.7C12.2 1.2 11 -0.1 9.6 0L2.2 0.8C1.4 0.9 0.6 1.5 0.4 2.3ZM8.9 2.8L5.9 3.1L5.1 6L8.1 5.7L8.9 2.8Z" fill="white"/></svg></div>
+        <span style="font-size:20px;font-weight:800;color:#111;font-family:'Inter',sans-serif;">광고센터</span>
+      </div>
+      <div style="font-size:22px;font-weight:800;color:#111;margin-bottom:8px;font-family:'Inter',sans-serif;">이메일 인증이 완료됐습니다 👋</div>
+      <div style="font-size:14px;color:#6b7280;margin-bottom:32px;line-height:1.7;">시작하기 전에 회원 유형을 선택해주세요.<br>유형에 따라 설정 과정이 다릅니다.</div>
+      <div class="type-cards">
+        <div class="type-card" onclick="show('s1a')">
+          <div class="type-icon">🏢</div>
+          <div class="type-title">광고주</div>
+          <div class="type-desc">올리브영에 입점한 브랜드사·광고주로 직접 또는 대행사를 통해 광고를 운영합니다</div>
+        </div>
+        <div class="type-card" onclick="show('s1b')">
+          <div class="type-icon">📣</div>
+          <div class="type-title">대행사</div>
+          <div class="type-desc">광고주를 대신해 캠페인을 기획·운영하는 마케팅 대행사입니다</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     S1A: [광고주] 비즈그룹 참여/생성
+════════════════════════════════════════ -->
+<div id="s1a" class="screen">
+  <div style="background:linear-gradient(135deg,#f8fafc,#eff6ff);min-height:calc(100vh - 48px);">
+    <div class="ob-wrap">
+      <div class="ob-card">
+        <div class="step-bar">
+          <div class="step-item done"><div class="step-dot" onclick="show('s0')" title="가입 유형 변경">✓</div><div class="step-label">가입 완료</div></div>
+          <div class="step-item active"><div class="step-dot">2</div><div class="step-label">비즈니스그룹</div></div>
+          <div class="step-item"><div class="step-dot">3</div><div class="step-label">광고계정 생성</div></div>
+          <div class="step-item"><div class="step-dot">4</div><div class="step-label">대행사 초대</div></div>
+        </div>
+        <button onclick="show('s0')" style="background:none;border:none;color:#9ca3af;font-size:12px;cursor:pointer;padding:0;margin-bottom:14px;display:flex;align-items:center;gap:4px;">← 가입 유형 변경</button>
+        <div class="ob-kicker">광고주 · Step 2</div>
+        <div class="ob-title">비즈니스그룹에 참여하세요</div>
+        <div class="ob-desc"><strong>비즈니스그룹</strong>은 우리 회사(법인·사업자)의 광고 조직입니다. 같은 사업자의 담당자들이 함께 여러 광고계정을 관리합니다.</div>
+
+        <div class="option-card selected" id="opt1a-exist" onclick="selectOpt('a','exist')">
+          <div class="option-icon">🔗</div>
+          <div>
+            <div class="option-title">기존 비즈니스그룹에 합류하기</div>
+            <div class="option-desc">같은 회사의 담당자가 이미 있다면, 그 분에게 초대 요청을 하세요</div>
+          </div>
+        </div>
+        <div class="option-card" id="opt1a-new" onclick="selectOpt('a','new')">
+          <div class="option-icon">✨</div>
+          <div>
+            <div class="option-title">새 비즈니스그룹 만들기</div>
+            <div class="option-desc">우리 회사 최초 가입이라면 직접 생성합니다</div>
+          </div>
+        </div>
+
+        <div id="form1a-exist">
+          <div class="info-box blue" style="margin-top:16px;">
+            <div class="ii">💡</div>
+            <p>같은 회사의 <strong>기존 멤버에게 초대 이메일 발송을 요청</strong>하세요. 초대 이메일을 받으면 수락하여 합류할 수 있습니다.<br><br>
+            기존 멤버를 찾기 어려운 경우, 사업자번호로 참여 요청을 보낼 수 있습니다. <span class="tobe-badge">TOBE</span></p>
+          </div>
+          <button class="btn btn-primary btn-full" style="margin-top:4px;" onclick="show('s-profile-a')">초대 이메일을 받았습니다 →</button>
+        </div>
+
+        <div id="form1a-new" class="hidden" style="margin-top:4px;">
+          <button class="btn btn-primary btn-full" onclick="show('s2a')">새 비즈니스그룹 만들기 →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     S2A: [광고주] 비즈그룹 신규 생성
+════════════════════════════════════════ -->
+<div id="s2a" class="screen">
+  <div style="background:linear-gradient(135deg,#f8fafc,#eff6ff);min-height:calc(100vh - 48px);">
+    <div class="ob-wrap">
+      <div class="ob-card ob-card-wide">
+        <div class="step-bar">
+          <div class="step-item done"><div class="step-dot" onclick="show('s0')" title="가입 유형 변경">✓</div><div class="step-label">가입 완료</div></div>
+          <div class="step-item active"><div class="step-dot">2</div><div class="step-label">비즈니스그룹</div></div>
+          <div class="step-item"><div class="step-dot">3</div><div class="step-label">광고계정 생성</div></div>
+          <div class="step-item"><div class="step-dot">4</div><div class="step-label">대행사 초대</div></div>
+        </div>
+        <div class="ob-kicker">광고주 · Step 2 — 신규 생성</div>
+        <div class="ob-title">비즈니스그룹 정보를 입력하세요</div>
+        <div class="ob-desc">사업자 정보는 정산 및 세금계산서 발행에 사용됩니다. 정확하게 입력해주세요.</div>
+
+        <div class="form-section-label">사업자 정보</div>
+        <div class="form-row">
+          <div class="form-label">사업자명 <span class="req">*</span></div>
+          <input class="form-input" value="LG생활건강 (주)">
+        </div>
+        <div class="form-row">
+          <div class="form-label">사업자등록번호 <span class="req">*</span></div>
+          <input class="form-input mono" value="110-81-12456">
+        </div>
+        <div class="form-input-group">
+          <div class="form-row">
+            <div class="form-label">사업자등록증 <span class="req">*</span></div>
+            <div class="form-file done" onclick="this.classList.toggle('done')">
+              <div class="form-file-icon">📄</div>
+              <div>
+                <div class="form-file-text">사업자등록증_LG생활건강.pdf</div>
+                <div style="font-size:10px;color:#9ca3af;margin-top:2px;">클릭하여 변경</div>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-label">계좌사본 <span class="req">*</span></div>
+            <div class="form-file" onclick="this.classList.add('done');this.querySelector('.form-file-text').textContent='통장사본_LG생활건강.pdf'">
+              <div class="form-file-icon">🏦</div>
+              <div>
+                <div class="form-file-text">파일 선택 (PDF, JPG)</div>
+                <div style="font-size:10px;color:#9ca3af;margin-top:2px;">환불 계좌 확인용</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section-label">담당자 정보</div>
+        <div class="form-input-group">
+          <div class="form-row">
+            <div class="form-label">담당자 이름 <span class="req">*</span></div>
+            <input class="form-input" value="김담당">
+          </div>
+          <div class="form-row">
+            <div class="form-label">담당자 연락처 <span class="req">*</span></div>
+            <input class="form-input" value="010-1234-5678">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-label">비즈니스그룹 이름 <span class="req">*</span></div>
+          <input class="form-input" value="LG생활건강">
+          <div class="form-hint">그룹 이름은 추후 변경 가능합니다</div>
+        </div>
+
+        <div class="info-box yellow" style="margin-top:4px;">
+          <div class="ii">⚠️</div>
+          <p>비즈니스그룹의 사업자 정보는 <strong>정산 주체 기준</strong>으로 입력합니다. 대행사 소속이시라면 광고주 정보가 아닌 <strong>대행사 사업자 정보</strong>를 입력하세요.</p>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn btn-secondary" style="flex:0 0 auto;" onclick="show('s1a')">← 이전</button>
+          <button class="btn btn-primary" style="flex:1;" onclick="show('s3a')">비즈니스그룹 생성 →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     S3A: [광고주] 운영그룹(광고계정) 생성
+════════════════════════════════════════ -->
+<div id="s3a" class="screen">
+  <div style="background:linear-gradient(135deg,#f8fafc,#eff6ff);min-height:calc(100vh - 48px);">
+    <div class="ob-wrap">
+      <div class="ob-card ob-card-wide">
+        <div class="step-bar">
+          <div class="step-item done"><div class="step-dot" onclick="show('s0')" title="가입 유형 변경">✓</div><div class="step-label">가입 완료</div></div>
+          <div class="step-item done"><div class="step-dot" onclick="show('s1a')" title="비즈니스그룹 단계로">✓</div><div class="step-label">비즈니스그룹</div></div>
+          <div class="step-item active"><div class="step-dot">3</div><div class="step-label">광고계정 생성</div></div>
+          <div class="step-item"><div class="step-dot">4</div><div class="step-label">대행사 초대</div></div>
+        </div>
+        <div class="ob-kicker">광고주 · Step 3</div>
+        <div class="ob-title">광고계정을 생성하세요</div>
+        <div class="ob-desc"><strong>광고계정</strong>은 브랜드별 광고 집행 및 정산의 단위입니다. 브랜드가 여럿이라면 브랜드마다 별도로 생성합니다.</div>
+
+        <div class="form-row" style="margin-top:8px;">
+          <div class="form-label">광고계정 이름 <span class="req">*</span></div>
+          <input class="form-input" value="유시몰">
+          <div class="form-hint">예: 브랜드명, 제품 라인명 등</div>
+        </div>
+
+        <div class="info-box blue" style="margin-top:8px;">
+          <div class="ii">ℹ️</div>
+          <p>광고계정은 <strong>브랜드별 광고 집행 및 정산의 단위</strong>입니다. 브랜드가 여럿이라면 브랜드마다 별도로 생성합니다.<br>카탈로그, 픽셀 연동은 생성 후 설정할 수 있습니다.</p>
+        </div>
+
+        <button class="btn btn-primary btn-full" onclick="show('s4a')">광고계정 생성 →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     S4A: [광고주] 광고계정 홈 + 대행사 초대
+════════════════════════════════════════ -->
+<div id="s4a" class="screen">
+  <div class="app">
+    <div class="sidebar">
+      <div class="biz-selector">
+        <div><div class="biz-label">비즈니스그룹</div><div class="biz-name">LG생활건강</div></div>
+        <span style="color:#9ca3af;font-size:12px;">▾</span>
+      </div>
+      <div class="nav-section-label">광고계정</div>
+      <div class="nav-item active"><span class="nav-icon">📊</span> 유시몰</div>
+      <div class="nav-item"><span class="nav-icon">📊</span> 오휘</div>
+      <div class="nav-item" style="font-size:12px;color:#9ca3af;"><span class="nav-icon" style="font-size:12px;">＋</span> 광고계정 추가</div>
+      <div class="nav-section-label" style="margin-top:8px;">메뉴</div>
+      <div class="nav-item"><span class="nav-icon">📢</span> 캠페인</div>
+      <div class="nav-item"><span class="nav-icon">📈</span> 리포트</div>
+      <div class="nav-item"><span class="nav-icon">🧾</span> 정산</div>
+      <div class="nav-item active" style="margin-top:4px;"><span class="nav-icon">⚙️</span> 멤버 관리</div>
+    </div>
+    <div class="app-col">
+      <div class="topbar">
+        <div class="logo"><div class="logo-mark"><svg viewBox="0 0 14 9" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.4 2.3L0 3.8L3 3.4L2.2 6.2C1.7 7.6 2.9 9 4.4 8.9L11.7 8.1C12.6 8 13.3 7.4 13.5 6.6L14 5.1L11 5.4L11.8 2.7C12.2 1.2 11 -0.1 9.6 0L2.2 0.8C1.4 0.9 0.6 1.5 0.4 2.3ZM8.9 2.8L5.9 3.1L5.1 6L8.1 5.7L8.9 2.8Z" fill="white"/></svg></div> 광고센터</div>
+        <div class="topbar-right"><button class="user-btn"><div class="avatar" style="background:#fef2f2;color:#EF4444;">LG</div> 김담당</button></div>
+      </div>
+      <div class="main">
+        <div class="page-header">
+          <div style="font-size:11px;color:#9ca3af;margin-bottom:4px;font-family:'Inter',monospace;">ADC-2024-007821 · 유시몰</div>
+          <h1>멤버 관리</h1>
+          <p>광고계정에 접근할 수 있는 멤버를 관리합니다. 대행사 담당자를 직접 초대하세요.</p>
+        </div>
+        <div class="content">
+
+          <!-- 멤버 슬롯 UI -->
+          <div style="font-size:14px;font-weight:700;color:#111;margin-bottom:20px;">멤버 관리</div>
+
+          <!-- 광고주 담당자 섹션 -->
+          <div class="slots-section">
+            <div class="slots-label">
+              <div class="slots-dot" style="background:#EF4444;"></div>
+              <div class="slots-text">광고주 담당자</div>
+            </div>
+            <div class="slots-grid" id="adv-slots-grid">
+              <!-- 채워진 슬롯: 김담당 -->
+              <div class="member-slot">
+                <div class="slot-avatar" style="background:#fef2f2;color:#EF4444;">LG</div>
+                <div>
+                  <div class="slot-name">김담당</div>
+                  <div class="slot-company">LG생활건강</div>
+                </div>
+                <div class="role-badge role-admin">관리자</div>
+              </div>
+              <!-- 빈 슬롯 -->
+              <div class="empty-slot" id="adv-empty" onclick="openSlotInvite('adv')">
+                <div class="empty-slot-plus">+</div>
+                <div class="empty-slot-text">광고주 담당자<br>초대하기</div>
+              </div>
+              <!-- 초대 입력 슬롯 (숨김) -->
+              <div class="slot-input-form hidden" id="adv-input-slot">
+                <div style="font-size:11px;color:#9ca3af;margin-bottom:8px;">이메일 주소</div>
+                <input class="form-input" id="adv-email" placeholder="email@company.com" style="font-size:12px;padding:8px 10px;margin-bottom:8px;">
+                <select class="invite-role-select" style="width:100%;margin-bottom:8px;font-size:12px;padding:7px 10px;">
+                  <option>멤버</option>
+                  <option>관리자</option>
+                </select>
+                <button class="btn btn-primary" style="width:100%;padding:8px;font-size:12px;" onclick="confirmSlotInvite('adv','LG','광고주 담당자','#fef2f2','#EF4444')">초대</button>
+                <button onclick="closeSlotInvite('adv')" style="width:100%;background:none;border:none;color:#9ca3af;font-size:11px;cursor:pointer;margin-top:6px;padding:4px;">취소</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 대행사 담당자 섹션 -->
+          <div class="slots-section">
+            <div class="slots-label">
+              <div class="slots-dot" style="background:#3b82f6;"></div>
+              <div class="slots-text">대행사 담당자</div>
+            </div>
+
+            <!-- 계약 대행사 정보 -->
+            <div id="agency-info-card" style="background:#f8fafc;border:1.5px dashed #d1d5db;border-radius:10px;padding:14px 18px;margin-bottom:12px;display:flex;align-items:center;gap:14px;">
+              <div style="flex:1;">
+                <div style="font-size:11px;color:#9ca3af;margin-bottom:5px;font-family:'Inter',sans-serif;letter-spacing:.04em;text-transform:uppercase;font-weight:700;">계약 대행사</div>
+                <div id="agency-info-body">
+                  <div style="font-size:13px;color:#9ca3af;">아직 등록된 대행사가 없습니다</div>
+                  <div style="font-size:11px;color:#b0b7c3;margin-top:2px;">대행사 담당자를 초대하면 계약 대행사 정보가 등록됩니다</div>
+                </div>
+              </div>
+              <button id="transfer-btn" class="btn btn-outline" style="font-size:12px;padding:8px 14px;white-space:nowrap;display:none;" onclick="openTransfer()">이관 요청</button>
+            </div>
+
+            <!-- 이관 요청 패널 (숨김) -->
+            <div id="transfer-panel" class="hidden" style="border:1.5px solid #f59e0b;border-radius:10px;padding:20px 22px;margin-bottom:12px;background:#fff;">
+              <div style="font-size:14px;font-weight:700;color:#111;margin-bottom:4px;">대행사 이관 요청</div>
+              <div style="font-size:12px;color:#6b7280;margin-bottom:16px;">버즈빌에 요청하면 실제 이관 처리는 버즈빌이 진행합니다.</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+                <div>
+                  <div style="font-size:11px;font-weight:700;color:#9ca3af;letter-spacing:.04em;margin-bottom:10px;font-family:'Inter',sans-serif;">FROM (현재)</div>
+                  <div class="form-row">
+                    <div class="form-label">대행사 사업자명</div>
+                    <input class="form-input" value="BAT 퍼포먼스마케팅 (주)" style="background:#f9fafb;font-size:13px;" readonly>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-label">사업자등록번호</div>
+                    <input class="form-input mono" value="110-81-99887" style="background:#f9fafb;font-size:13px;" readonly>
+                  </div>
+                </div>
+                <div>
+                  <div style="font-size:11px;font-weight:700;color:#9ca3af;letter-spacing:.04em;margin-bottom:10px;font-family:'Inter',sans-serif;">TO (이관 대상)</div>
+                  <div class="form-row">
+                    <div class="form-label">대행사 사업자명 <span class="req">*</span></div>
+                    <input class="form-input" id="transfer-to-name" placeholder="예) Glink 퍼포먼스마케팅" style="font-size:13px;">
+                  </div>
+                  <div class="form-row">
+                    <div class="form-label">사업자등록번호 <span class="req">*</span></div>
+                    <input class="form-input mono" id="transfer-to-biz" placeholder="예) 220-87-XXXXX" style="font-size:13px;">
+                  </div>
+                </div>
+              </div>
+              <div class="form-row" style="margin-bottom:16px;">
+                <div class="form-label">이관 사유 <span class="req">*</span></div>
+                <input class="form-input" id="transfer-reason" placeholder="예) 대행사 변경 계약 완료 (2026-05-01)" style="font-size:13px;">
+              </div>
+              <div id="transfer-success" class="hidden info-box green" style="margin-bottom:12px;">
+                <div class="ii">✅</div>
+                <p>이관 요청이 접수됐습니다. 버즈빌 담당자가 확인 후 처리합니다 (1 영업일 내).</p>
+              </div>
+              <div style="display:flex;gap:10px;">
+                <button class="btn btn-primary" style="flex:1;" onclick="submitTransfer()">이관 요청 발송</button>
+                <button class="btn btn-secondary" onclick="closeTransfer()">취소</button>
+              </div>
+            </div>
+
+            <!-- 정산 담당자 미지정 배너 -->
+            <div id="billing-unset-banner" class="hidden" style="background:#fef9c3;border:1px solid #fde047;border-radius:8px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px;">
+              <div style="font-size:16px;">⚠️</div>
+              <div style="flex:1;font-size:12px;color:#713f12;line-height:1.5;">정산 담당자가 지정되지 않았습니다. 아래 멤버 중 <strong>1명을 정산 담당자로 지정</strong>해주세요.</div>
+            </div>
+
+            <!-- 초대된 멤버 슬롯 -->
+            <div class="slots-grid" id="agency-slots-grid" style="margin-bottom:12px;">
+              <div class="empty-slot" id="agency-empty" onclick="openAgencyInvite()">
+                <div class="empty-slot-plus">+</div>
+                <div class="empty-slot-text">대행사 담당자<br>초대하기</div>
+              </div>
+            </div>
+
+            <!-- 다중 초대 폼 (full-width, 숨김) -->
+            <div id="agency-invite-panel" class="hidden" style="border:1.5px solid #3b82f6;border-radius:12px;padding:22px 24px;background:#fff;">
+              <div style="font-size:14px;font-weight:700;color:#111;margin-bottom:4px;">대행사 담당자 초대</div>
+              <div style="font-size:12px;color:#6b7280;margin-bottom:18px;">이메일 주소를 입력하세요. 초대된 멤버 중 <strong>정산 담당자</strong>는 나중에 지정할 수 있습니다.</div>
+              <div id="agency-invite-rows">
+                <div class="agency-invite-row">
+                  <input class="form-input" placeholder="이메일 주소" value="sungyoun.shin@batcrew.co.kr">
+                  <button class="remove-row-btn" onclick="removeInviteRow(this)" title="삭제">×</button>
+                </div>
+                <div class="agency-invite-row">
+                  <input class="form-input" placeholder="이메일 주소" value="pm.jiwoo@batcrew.co.kr">
+                  <button class="remove-row-btn" onclick="removeInviteRow(this)" title="삭제">×</button>
+                </div>
+              </div>
+              <div id="billing-warning" class="hidden" style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:#dc2626;"></div>
+              <button onclick="addInviteRow()" style="background:none;border:none;color:#3b82f6;font-size:13px;font-weight:700;cursor:pointer;padding:6px 0;display:flex;align-items:center;gap:6px;margin-bottom:18px;">
+                <span style="font-size:20px;line-height:1;font-weight:300;">+</span> 멤버 추가
+              </button>
+              <div style="display:flex;gap:10px;">
+                <button class="btn btn-primary" style="flex:1;" onclick="confirmAgencyInvite()">초대 발송</button>
+                <button class="btn btn-secondary" onclick="closeAgencyInvite()">취소</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     S-PROFILE-A: [광고주] 본인 정보 입력
+════════════════════════════════════════ -->
+<div id="s-profile-a" class="screen">
+  <div style="background:linear-gradient(135deg,#f8fafc,#eff6ff);min-height:calc(100vh - 48px);">
+    <div class="ob-wrap">
+      <div class="ob-card ob-card-wide">
+        <div class="step-bar">
+          <div class="step-item done"><div class="step-dot" onclick="show('s0')" title="가입 유형 변경">✓</div><div class="step-label">가입 완료</div></div>
+          <div class="step-item done"><div class="step-dot" onclick="show('s1a')" title="비즈니스그룹 단계로">✓</div><div class="step-label">비즈니스그룹</div></div>
+          <div class="step-item active"><div class="step-dot">3</div><div class="step-label">본인 정보</div></div>
+          <div class="step-item"><div class="step-dot">4</div><div class="step-label">광고계정</div></div>
+        </div>
+        <button onclick="show('s1a')" style="background:none;border:none;color:#9ca3af;font-size:12px;cursor:pointer;padding:0;margin-bottom:14px;display:flex;align-items:center;gap:4px;">← 이전</button>
+        <div class="ob-kicker">광고주 · Step 3</div>
+        <div class="ob-title">본인 정보를 입력하세요</div>
+        <div class="ob-desc">멤버 관리에 필요한 정보입니다. 직급은 선택 항목입니다.</div>
+
+        <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:12px 16px;margin-bottom:20px;">
+          <div style="font-size:12px;color:#1e40af;font-weight:700;margin-bottom:6px;">📣 초대를 수락하면 이런 일을 할 수 있어요</div>
+          <div style="font-size:12px;color:#1e40af;line-height:1.7;">• <strong>LG생활건강</strong> 비즈니스그룹의 광고계정을 관리할 수 있어요<br>• 광고 성과 및 정산 정보를 확인할 수 있어요</div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-label">이름 <span class="req">*</span></div>
+          <input class="form-input" placeholder="홍길동">
+        </div>
+        <div class="form-row">
+          <div class="form-label">직급 <span style="font-size:11px;color:#9ca3af;font-weight:400;">직급 정보가 없으면 입력 안 함</span></div>
+          <input class="form-input" placeholder="대리">
+        </div>
+        <div class="form-row">
+          <div class="form-label">연락처 <span class="req">*</span></div>
+          <input class="form-input" placeholder="010-1234-5678">
+        </div>
+
+        <div class="btn-row" style="margin-top:8px;">
+          <button class="btn btn-secondary" style="flex:0 0 auto;" onclick="show('s1a')">거절</button>
+          <button class="btn btn-primary" style="flex:1;" onclick="show('s4a')">초대 수락 →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     S-PROFILE-B: [대행사] 본인 정보 입력
+════════════════════════════════════════ -->
+<div id="s-profile-b" class="screen">
+  <div style="background:linear-gradient(135deg,#f8fafc,#f0fdf4);min-height:calc(100vh - 48px);">
+    <div class="ob-wrap">
+      <div class="ob-card ob-card-wide">
+        <div class="step-bar">
+          <div class="step-item done"><div class="step-dot" onclick="show('s0')" title="가입 유형 변경">✓</div><div class="step-label">가입 완료</div></div>
+          <div class="step-item done"><div class="step-dot" onclick="show('s1b')" title="비즈니스그룹 단계로">✓</div><div class="step-label">비즈니스그룹</div></div>
+          <div class="step-item active"><div class="step-dot">3</div><div class="step-label">본인 정보</div></div>
+          <div class="step-item"><div class="step-dot">4</div><div class="step-label">광고계정 참여</div></div>
+        </div>
+        <button onclick="show('s1b')" style="background:none;border:none;color:#9ca3af;font-size:12px;cursor:pointer;padding:0;margin-bottom:14px;display:flex;align-items:center;gap:4px;">← 이전</button>
+        <div class="ob-kicker">대행사 · Step 3</div>
+        <div class="ob-title">본인 정보를 입력하세요</div>
+        <div class="ob-desc">멤버 관리에 필요한 정보입니다. 직급은 선택 항목입니다.</div>
+
+        <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:12px 16px;margin-bottom:20px;">
+          <div style="font-size:12px;color:#166534;font-weight:700;margin-bottom:6px;">📣 초대를 수락하면 이런 일을 할 수 있어요</div>
+          <div style="font-size:12px;color:#166534;line-height:1.7;">• <strong>BAT 퍼포먼스마케팅</strong> 비즈니스그룹의 멤버로 합류해요<br>• 참여 가능한 광고계정에 접근 요청을 할 수 있어요</div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-label">이름 <span class="req">*</span></div>
+          <input class="form-input" placeholder="홍길동" value="신성윤">
+        </div>
+        <div class="form-row">
+          <div class="form-label">직급 <span style="font-size:11px;color:#9ca3af;font-weight:400;">직급 정보가 없으면 입력 안 함</span></div>
+          <input class="form-input" placeholder="대리" value="과장">
+        </div>
+        <div class="form-row">
+          <div class="form-label">연락처 <span class="req">*</span></div>
+          <input class="form-input" placeholder="010-1234-5678" value="010-9876-5432">
+        </div>
+
+        <div class="btn-row" style="margin-top:8px;">
+          <button class="btn btn-secondary" style="flex:0 0 auto;" onclick="show('s1b')">거절</button>
+          <button class="btn btn-primary" style="flex:1;" onclick="show('s2b')">초대 수락 →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     S1B: [대행사] 비즈그룹 참여/생성
+════════════════════════════════════════ -->
+<div id="s1b" class="screen">
+  <div style="background:linear-gradient(135deg,#f8fafc,#f0fdf4);min-height:calc(100vh - 48px);">
+    <div class="ob-wrap">
+      <div class="ob-card">
+        <div class="step-bar">
+          <div class="step-item done"><div class="step-dot" onclick="show('s0')" title="가입 유형 변경">✓</div><div class="step-label">가입 완료</div></div>
+          <div class="step-item active"><div class="step-dot">2</div><div class="step-label">비즈니스그룹</div></div>
+          <div class="step-item"><div class="step-dot">3</div><div class="step-label">광고계정 참여</div></div>
+        </div>
+        <button onclick="show('s0')" style="background:none;border:none;color:#9ca3af;font-size:12px;cursor:pointer;padding:0;margin-bottom:14px;display:flex;align-items:center;gap:4px;">← 가입 유형 변경</button>
+        <div class="ob-kicker">대행사 · Step 2</div>
+        <div class="ob-title">비즈니스그룹에 참여하세요</div>
+        <div class="ob-desc"><strong>비즈니스그룹</strong>은 우리 대행사 조직입니다. 같은 대행사 담당자들이 함께 여러 광고계정을 관리합니다.</div>
+
+        <div class="option-card selected" id="opt1b-exist" onclick="selectOpt('b','exist')">
+          <div class="option-icon">🔗</div>
+          <div>
+            <div class="option-title">기존 비즈니스그룹에 합류하기</div>
+            <div class="option-desc">같은 팀 동료가 이미 있다면, 그 분에게 초대 이메일 발송을 요청하세요</div>
+          </div>
+        </div>
+        <div class="option-card" id="opt1b-new" onclick="selectOpt('b','new')">
+          <div class="option-icon">✨</div>
+          <div>
+            <div class="option-title">새 비즈니스그룹 만들기</div>
+            <div class="option-desc">우리 대행사의 첫 번째 멤버라면 직접 생성합니다</div>
+          </div>
+        </div>
+
+        <div id="form1b-exist">
+          <div class="info-box blue" style="margin-top:16px;">
+            <div class="ii">💡</div>
+            <p>같은 팀의 <strong>기존 멤버에게 초대 이메일 발송을 요청</strong>하세요. 초대를 받으면 수락하여 합류합니다.<br><br>
+            기존 멤버를 찾기 어렵다면, 사업자번호로 참여 요청을 보낼 수 있습니다. <span class="tobe-badge">TOBE</span></p>
+          </div>
+          <button class="btn btn-primary btn-full" style="margin-top:4px;" onclick="show('s-profile-b')">초대 이메일을 받았습니다 →</button>
+        </div>
+
+        <div id="form1b-new" class="hidden" style="margin-top:4px;">
+          <button class="btn btn-primary btn-full" onclick="show('s2a-agency')">새 비즈니스그룹 만들기 →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     S2B: [대행사] 운영그룹 참여 요청 (Staff 중개)
+════════════════════════════════════════ -->
+<div id="s2b" class="screen">
+  <div style="background:linear-gradient(135deg,#f8fafc,#f0fdf4);min-height:calc(100vh - 48px);">
+    <div class="ob-wrap">
+      <div class="ob-card ob-card-wide">
+        <div class="step-bar">
+          <div class="step-item done"><div class="step-dot" onclick="show('s0')" title="가입 유형 변경">✓</div><div class="step-label">가입 완료</div></div>
+          <div class="step-item done"><div class="step-dot" onclick="show('s1b')" title="비즈니스그룹 단계로">✓</div><div class="step-label">비즈니스그룹</div></div>
+          <div class="step-item active"><div class="step-dot">3</div><div class="step-label">광고계정 참여</div></div>
+        </div>
+
+        <!-- ── Phase 1: 우리 대행사가 이미 속한 광고계정 목록 ── -->
+        <div id="s2b-phase1">
+          <div class="ob-kicker">대행사 · Step 3 — 1단계</div>
+          <div class="ob-title">참여할 광고계정을 선택하세요</div>
+          <div class="ob-desc">우리 대행사 멤버가 이미 속해있는 광고계정입니다.<br>참여 요청을 보내면 해당 멤버가 승인 후 초대합니다.</div>
+
+          <div style="border:1.5px solid #e5e7eb;border-radius:12px;overflow:hidden;margin-bottom:20px;background:#fff;">
+            <div style="padding:12px 18px;background:#f9fafb;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;justify-content:space-between;">
+              <span style="font-size:12px;font-weight:700;color:#6b7280;">우리 대행사 멤버가 속한 광고계정 (3)</span>
+              <span style="font-size:11px;color:#9ca3af;">Glink Co.</span>
+            </div>
+
+            <div class="acct-row">
+              <div class="acct-icon" style="background:linear-gradient(135deg,#fef3c7,#fde68a);">
+                <span style="font-size:16px;">🛒</span>
+              </div>
+              <div class="acct-info">
+                <div class="acct-brand">올리브영 협력광고</div>
+                <div class="acct-advertiser">CJ올리브영 (주)</div>
+                <div class="acct-members">
+                  <div class="member-dots">
+                    <div class="member-dot" title="김민준"></div>
+                    <div class="member-dot" title="이수아"></div>
+                    <div class="member-dot" style="background:#10b981;" title="박지호 (우리 팀)"></div>
+                  </div>
+                  <span>우리 팀 1명 포함 · 총 3명</span>
+                </div>
+              </div>
+              <button class="btn btn-primary" style="white-space:nowrap;padding:8px 16px;font-size:13px;" onclick="openMemberSelectModal('올리브영 협력광고','CJ올리브영',[{name:'박지호',email:'jihoh.park@glink.co.kr'}])">참여 요청</button>
+            </div>
+
+            <div class="acct-row">
+              <div class="acct-icon" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);">
+                <span style="font-size:16px;">💄</span>
+              </div>
+              <div class="acct-info">
+                <div class="acct-brand">유시몰 봄 캠페인</div>
+                <div class="acct-advertiser">LG생활건강 (주)</div>
+                <div class="acct-members">
+                  <div class="member-dots">
+                    <div class="member-dot" style="background:#10b981;" title="이수아 (우리 팀)"></div>
+                    <div class="member-dot" style="background:#10b981;" title="최현우 (우리 팀)"></div>
+                  </div>
+                  <span>우리 팀 2명 포함 · 총 4명</span>
+                </div>
+              </div>
+              <button class="btn btn-primary" style="white-space:nowrap;padding:8px 16px;font-size:13px;" onclick="openMemberSelectModal('유시몰 봄 캠페인','LG생활건강',[{name:'이수아',email:'sua.lee@glink.co.kr'},{name:'최현우',email:'hyunwoo.choi@glink.co.kr'}])">참여 요청</button>
+            </div>
+
+            <div class="acct-row" style="border-bottom:none;">
+              <div class="acct-icon" style="background:linear-gradient(135deg,#fce7f3,#fbcfe8);">
+                <span style="font-size:16px;">👗</span>
+              </div>
+              <div class="acct-info">
+                <div class="acct-brand">무신사 퍼포먼스</div>
+                <div class="acct-advertiser">무신사 (주)</div>
+                <div class="acct-members">
+                  <div class="member-dots">
+                    <div class="member-dot" style="background:#10b981;" title="김민준 (우리 팀)"></div>
+                  </div>
+                  <span>우리 팀 1명 포함 · 총 2명</span>
+                </div>
+              </div>
+              <button class="btn btn-primary" style="white-space:nowrap;padding:8px 16px;font-size:13px;" onclick="openMemberSelectModal('무신사 퍼포먼스','무신사',[{name:'김민준',email:'minjun.kim@glink.co.kr'}])">참여 요청</button>
+            </div>
+          </div>
+
+          <div style="text-align:center;padding:4px 0 8px;">
+            <button class="btn btn-ghost" style="font-size:13px;color:#6b7280;" onclick="showS2bPhase(2)">목록에 없는 광고계정에 참여하려면 →</button>
+          </div>
+        </div>
+
+        <!-- ── Phase 2: 광고주 직접 요청 nudge ── -->
+        <div id="s2b-phase2" class="hidden">
+          <div class="ob-kicker">대행사 · Step 3 — 2단계</div>
+          <div class="ob-title">광고주에게 직접 요청하세요</div>
+          <div class="ob-desc">목록에 없는 광고계정은 <strong>광고주 담당자</strong>에게 직접 초대를 요청하는 것이 가장 빠릅니다.</div>
+
+          <div style="background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:12px;padding:20px;margin-bottom:20px;">
+            <div style="font-size:13px;font-weight:700;color:#166534;margin-bottom:12px;">광고주 담당자에게 이렇게 전달하세요</div>
+            <div style="background:#fff;border-radius:8px;padding:16px;font-size:13px;color:#374151;line-height:1.9;border:1px solid #d1fae5;">
+              안녕하세요, [광고주 담당자명]님<br><br>
+              광고센터에서 <strong>[광고계정명]</strong> 운영을 위해 멤버 초대를 부탁드립니다.<br><br>
+              <span style="font-size:12px;color:#6b7280;">초대 방법: 광고센터 → 해당 광고계정 → 멤버 관리 → 이메일 초대</span>
+            </div>
+          </div>
+
+          <div class="info-box blue" style="margin-bottom:20px;">
+            <div class="ii">💡</div>
+            <p>초대 이메일을 받으면 <strong>"초대 이메일을 받았습니다"</strong> 버튼을 눌러 계속 진행하세요.</p>
+          </div>
+
+          <button class="btn btn-primary btn-full" onclick="show('s3b')" style="margin-bottom:12px;">초대 이메일을 받았습니다 →</button>
+          <div style="text-align:center;">
+            <button class="btn btn-ghost" style="font-size:13px;color:#6b7280;" onclick="showS2bPhase(3)">광고주에게 직접 연락이 어려운 경우 →</button>
+          </div>
+          <div style="margin-top:16px;text-align:center;">
+            <button class="btn btn-ghost" style="font-size:12px;color:#9ca3af;" onclick="showS2bPhase(1)">← 광고계정 목록으로</button>
+          </div>
+        </div>
+
+        <!-- ── Phase 3: 버즈빌 중개 요청 (최후 수단) ── -->
+        <div id="s2b-phase3" class="hidden">
+          <div class="ob-kicker">대행사 · Step 3 — 3단계</div>
+          <div class="ob-title">버즈빌 담당자에게 중개 요청</div>
+          <div class="ob-desc">광고주에게 직접 연락이 어려운 경우, 버즈빌 담당자가 중개합니다.<br><span style="color:#6b7280;font-size:13px;">처리에 <strong>1 영업일</strong>이 소요됩니다.</span></div>
+
+          <div class="staff-form" style="margin-bottom:20px;">
+            <div class="form-row">
+              <div class="form-label">광고주 사업자명 <span class="req">*</span></div>
+              <input class="form-input" placeholder="예) LG생활건강 (주)" value="LG생활건강 (주)">
+            </div>
+            <div class="form-row">
+              <div class="form-label">광고주 사업자등록번호 <span class="req">*</span></div>
+              <input class="form-input mono" placeholder="예) 110-81-XXXXX" value="110-81-12456">
+            </div>
+            <div class="form-row">
+              <div class="form-label">브랜드 / 광고계정명 <span class="req">*</span></div>
+              <input class="form-input" placeholder="예) 유시몰, 오휘, 더마토리" value="유시몰">
+            </div>
+            <div class="form-row">
+              <div class="form-label">직접 연락이 어려운 사유</div>
+              <input class="form-input" placeholder="예) 광고주 담당자 미정, 협력광고로 담당자 불명확">
+            </div>
+          </div>
+
+          <button class="btn btn-primary btn-full" onclick="show('s3b')" style="margin-bottom:12px;">참여 중개 요청 보내기 →</button>
+          <div style="margin-top:8px;text-align:center;">
+            <button class="btn btn-ghost" style="font-size:12px;color:#9ca3af;" onclick="showS2bPhase(2)">← 광고주 직접 요청으로</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     S3B-COLLEAGUE: [대행사] 동료 초대 대기
+════════════════════════════════════════ -->
+<div id="s3b-colleague" class="screen">
+  <div style="background:linear-gradient(135deg,#f8fafc,#f0fdf4);min-height:calc(100vh - 48px);">
+    <div class="pending-wrap">
+      <div class="pending-card">
+        <div class="pending-icon">🤝</div>
+        <div class="pending-title">동료에게 초대를 요청하세요</div>
+        <div class="pending-desc">
+          해당 광고계정에 이미 속해있는 <strong>같은 대행사 동료</strong>에게<br>초대 이메일 발송을 요청하세요.<br><br>
+          초대 이메일을 받으면 수락하여 광고계정에 합류할 수 있습니다.
+        </div>
+        <div class="pending-status"><div class="dot-pulse"></div>초대 이메일 대기 중</div>
+        <div style="background:#f3f4f6;border-radius:10px;padding:14px 16px;margin-bottom:24px;text-align:left;">
+          <div style="font-size:11px;font-weight:700;color:#9ca3af;margin-bottom:8px;">동료에게 전달할 안내</div>
+          <div style="font-size:12px;color:#374151;line-height:1.8;">광고센터 → 해당 광고계정 → <strong>멤버 관리</strong>에서<br>이메일 주소로 초대해주세요.</div>
+        </div>
+        <button class="btn btn-secondary btn-full" onclick="show('s2b');showS2bPhase(1)">← 다른 방법으로 요청하기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     S3B: [대행사] 요청 완료 대기
+════════════════════════════════════════ -->
+<div id="s3b" class="screen">
+  <div style="background:linear-gradient(135deg,#f8fafc,#f0fdf4);min-height:calc(100vh - 48px);">
+    <div class="pending-wrap">
+      <div class="pending-card">
+        <div class="pending-icon">📨</div>
+        <div class="pending-title">요청이 접수됐습니다</div>
+        <div class="pending-status"><div class="dot-pulse"></div>처리 중 — 1 영업일 내</div>
+        <div class="pending-desc">
+          버즈빌 담당자가 <strong>LG생활건강 유시몰</strong> 광고계정 초대 링크를 확인 후 발송합니다.<br><br>
+          초대 링크가 발송되면 이메일과 광고센터 알림으로 안내드립니다.
+        </div>
+        <div style="background:#f3f4f6;border-radius:10px;padding:14px 16px;margin-bottom:24px;text-align:left;">
+          <div style="font-size:11px;font-weight:700;color:#9ca3af;margin-bottom:8px;letter-spacing:.05em;">요청 내역</div>
+          <div style="font-size:12px;color:#374151;line-height:2;">
+            광고주: <strong>LG생활건강 (주)</strong><br>
+            브랜드: <strong>유시몰</strong><br>
+            사업자번호: <strong>110-81-12456</strong><br>
+            요청자: <strong>신성윤 (BAT 퍼포먼스 1그룹)</strong>
+          </div>
+        </div>
+        <button class="btn btn-secondary btn-full" style="margin-bottom:10px;" onclick="show('s4b')">광고센터 홈으로</button>
+        <button class="btn btn-ghost btn-full" style="font-size:13px;color:#6b7280;" onclick="show('s2b');showS2bPhase(1)">← 광고계정 목록으로 돌아가기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     S4B: [대행사] 광고계정 홈
+════════════════════════════════════════ -->
+<div id="s4b" class="screen">
+  <div class="app">
+    <div class="sidebar">
+      <div class="biz-selector">
+        <div><div class="biz-label">비즈니스그룹</div><div class="biz-name">Glink Co.</div></div>
+        <span style="color:#9ca3af;font-size:12px;">▾</span>
+      </div>
+      <div class="nav-section-label">광고계정</div>
+      <div class="nav-item active"><span class="nav-icon">📊</span> 올리브영 협력광고</div>
+      <div class="nav-item"><span class="nav-icon">📊</span> 유시몰 봄 캠페인</div>
+      <div class="nav-item" style="font-size:12px;color:#9ca3af;"><span class="nav-icon" style="font-size:12px;">＋</span> 광고계정 추가</div>
+      <div class="nav-item" style="font-size:12px;color:#EF4444;margin-top:2px;" onclick="show('s2b');showS2bPhase(1)"><span class="nav-icon" style="font-size:12px;">↗</span> 광고계정 참여 요청</div>
+      <div class="nav-section-label" style="margin-top:8px;">메뉴</div>
+      <div class="nav-item"><span class="nav-icon">📢</span> 캠페인</div>
+      <div class="nav-item"><span class="nav-icon">📈</span> 리포트</div>
+      <div class="nav-item"><span class="nav-icon">🧾</span> 정산</div>
+      <div class="nav-item" style="margin-top:4px;"><span class="nav-icon">⚙️</span> 멤버 관리</div>
+    </div>
+    <div class="app-col">
+      <div class="topbar">
+        <div class="logo"><div class="logo-mark"><svg viewBox="0 0 14 9" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.4 2.3L0 3.8L3 3.4L2.2 6.2C1.7 7.6 2.9 9 4.4 8.9L11.7 8.1C12.6 8 13.3 7.4 13.5 6.6L14 5.1L11 5.4L11.8 2.7C12.2 1.2 11 -0.1 9.6 0L2.2 0.8C1.4 0.9 0.6 1.5 0.4 2.3ZM8.9 2.8L5.9 3.1L5.1 6L8.1 5.7L8.9 2.8Z" fill="white"/></svg></div> 광고센터</div>
+        <div class="topbar-right"><button class="user-btn"><div class="avatar" style="background:#f0fdf4;color:#16a34a;">GL</div> 신성윤</button></div>
+      </div>
+      <div class="main">
+        <div class="page-header">
+          <div style="font-size:11px;color:#9ca3af;margin-bottom:4px;font-family:'Inter',monospace;">ADC-2024-009103 · 올리브영 협력광고</div>
+          <h1>올리브영 협력광고</h1>
+          <p>CJ올리브영 (주) · 캠페인을 운영하거나 리포트를 확인하세요.</p>
+        </div>
+        <div class="content">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px;">
+            <div style="background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:12px;padding:20px;">
+              <div style="font-size:11px;color:#9ca3af;margin-bottom:6px;">진행 중인 캠페인</div>
+              <div style="font-size:28px;font-weight:800;color:#111;">3</div>
+            </div>
+            <div style="background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:12px;padding:20px;">
+              <div style="font-size:11px;color:#9ca3af;margin-bottom:6px;">이번 달 지출</div>
+              <div style="font-size:28px;font-weight:800;color:#111;">₩12.4M</div>
+            </div>
+            <div style="background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:12px;padding:20px;">
+              <div style="font-size:11px;color:#9ca3af;margin-bottom:6px;">멤버</div>
+              <div style="font-size:28px;font-weight:800;color:#111;">4명</div>
+            </div>
+          </div>
+          <div style="font-size:13px;color:#9ca3af;text-align:center;padding:20px 0;">
+            ← 사이드바에서 <strong style="color:#EF4444;">광고계정 참여 요청</strong>을 눌러 다른 광고계정에 참여할 수 있습니다.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     멤버 선택 모달 (S2B Phase 1)
+════════════════════════════════════════ -->
+<div id="member-select-overlay" class="ms-overlay hidden" onclick="if(event.target===this)closeMemberSelectModal()">
+  <div class="ms-modal">
+    <div class="ms-title" id="ms-acct-name"></div>
+    <div class="ms-sub" id="ms-acct-advertiser"></div>
+    <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:10px;">요청을 보낼 우리 팀 멤버를 선택하세요</div>
+    <div class="ms-member-list" id="ms-member-list"></div>
+    <div style="display:flex;gap:10px;">
+      <button class="btn btn-secondary" style="flex:1;" onclick="closeMemberSelectModal()">취소</button>
+      <button class="btn btn-primary" style="flex:2;" id="ms-confirm-btn" onclick="confirmMemberSelect()">요청 보내기 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     S7: [Staff] 요청 처리 + 초대링크
+════════════════════════════════════════ -->
+<div id="s7" class="screen">
+  <div class="admin-shell">
+    <div class="admin-bar">
+      <div class="admin-badge">STAFF ADMIN</div>
+      <div class="admin-title">광고계정 — 참여 요청 처리</div>
+      <div class="admin-sub">alex.chung@buzzvil.com</div>
+    </div>
+    <div class="admin-wrap">
+
+      <!-- 대기 중인 요청 -->
+      <div class="admin-card">
+        <div class="admin-card-hd">
+          <div class="admin-card-title">처리 대기 중인 참여 요청 <span class="new-badge">2</span></div>
+        </div>
+        <div class="admin-card-bd">
+
+          <div class="request-item">
+            <div class="request-header">
+              <div class="request-avatar">BAT</div>
+              <div>
+                <div class="request-name">신성윤 <span style="font-size:11px;color:#64748b;font-weight:400;">sungyoun.shin@batcrew.co.kr</span></div>
+                <div class="request-meta">BAT 퍼포먼스 1그룹 · 2026-05-06 09:12</div>
+              </div>
+              <span class="new-badge" style="margin-left:auto;">NEW</span>
+            </div>
+            <div class="request-detail">
+              <div class="request-detail-row"><div class="request-detail-k">광고주 사업자명</div><div class="request-detail-v">LG생활건강 (주)</div></div>
+              <div class="request-detail-row"><div class="request-detail-k">사업자번호</div><div class="request-detail-v" style="font-family:'Inter',monospace;">110-81-12456</div></div>
+              <div class="request-detail-row"><div class="request-detail-k">브랜드명</div><div class="request-detail-v">유시몰</div></div>
+              <div class="request-detail-row"><div class="request-detail-k">요청 사유</div><div class="request-detail-v">유시몰 4월 협력광고 캠페인 운영</div></div>
+            </div>
+            <div class="request-actions">
+              <button class="btn-admin" onclick="generateInvite(this)">초대 링크 생성</button>
+              <button class="btn-admin-ghost">반려</button>
+            </div>
+            <!-- 초대 링크 (숨김) -->
+            <div id="invite-result" class="hidden" style="margin-top:12px;">
+              <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:6px;">생성된 초대 링크 · 7일 유효</div>
+              <div class="link-box">
+                <div class="link-url">https://ads.buzzvil.com/invite/ADC007821-xK9pQr2m</div>
+                <button class="link-copy" onclick="copyLink(this)">복사</button>
+              </div>
+              <div class="link-expiry">만료: 2026-05-13 23:59 · 사용 횟수 제한 없음</div>
+              <div style="margin-top:10px;display:flex;gap:8px;">
+                <button class="btn-admin" style="font-size:11px;padding:7px 12px;">✉️ 이메일로 발송</button>
+                <button class="btn-admin-ghost" style="font-size:11px;padding:7px 12px;">처리 완료로 표시</button>
+              </div>
+              <div class="info-box green" style="margin-top:10px;">
+                <div class="ii">✅</div>
+                <p>초대 링크를 대행사에 전달하면 대행사가 직접 클릭하여 광고계정에 합류합니다. <strong>광고주 개입 없이</strong> 처리됩니다.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="request-item" style="opacity:.6;">
+            <div class="request-header">
+              <div class="request-avatar" style="background:#334155;color:#94a3b8;">GL</div>
+              <div>
+                <div class="request-name">이지우 <span style="font-size:11px;color:#64748b;font-weight:400;">bay@glinkmedia.co.kr</span></div>
+                <div class="request-meta">Glink 퍼포먼스마케팅 1사업본부 · 2026-05-05 14:30</div>
+              </div>
+            </div>
+            <div class="request-detail">
+              <div class="request-detail-row"><div class="request-detail-k">광고주 사업자명</div><div class="request-detail-v">㈜클리오</div></div>
+              <div class="request-detail-row"><div class="request-detail-k">브랜드명</div><div class="request-detail-v">더마토리</div></div>
+            </div>
+            <div class="request-actions">
+              <button class="btn-admin">초대 링크 생성</button>
+              <button class="btn-admin-ghost">반려</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 광고계정 멤버 현황 -->
+      <div class="admin-card">
+        <div class="admin-card-hd">
+          <div>
+            <div class="admin-card-title">유시몰 광고계정 멤버</div>
+            <div style="font-size:11px;color:#64748b;margin-top:2px;font-family:'Inter',monospace;">ADC-2024-007821</div>
+          </div>
+        </div>
+        <div class="admin-card-bd">
+          <div class="admin-row">
+            <div class="admin-avatar" style="background:#7c3aed;color:#ddd6fe;">LG</div>
+            <div><div class="admin-name">김담당 (LG생활건강)</div><div class="admin-email">manager@lghh.com</div></div>
+            <div style="margin-left:auto;"><span class="admin-role-pill arp-admin">관리자</span></div>
+          </div>
+          <div id="admin-bat-member" class="admin-row hidden">
+            <div class="admin-avatar">BAT</div>
+            <div><div class="admin-name">신성윤 (BAT)</div><div class="admin-email">sungyoun.shin@batcrew.co.kr</div></div>
+            <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+              <span class="admin-role-pill arp-member">멤버</span>
+              <button style="background:none;border:none;color:#ef4444;font-size:11px;cursor:pointer;" onclick="this.closest('.admin-row').remove()">제거</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.flow-btn').forEach(b => b.classList.remove('active'));
+  const el = document.getElementById(id);
+  if (el) el.classList.add('active');
+  const ids = ['s0','s1a','s-profile-a','s2a','s3a','s4a','s1b','s-profile-b','s2b','s3b','s4b','s7'];
+  const idx = ids.indexOf(id);
+  if (idx >= 0) document.querySelectorAll('.flow-btn')[idx].classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function selectOpt(group, type) {
+  const exist = document.getElementById('opt1' + group + '-exist');
+  const newEl = document.getElementById('opt1' + group + '-new');
+  const formExist = document.getElementById('form1' + group + '-exist');
+  const formNew = document.getElementById('form1' + group + '-new');
+  if (!exist) return;
+  exist.classList.remove('selected');
+  newEl.classList.remove('selected');
+  formExist.classList.add('hidden');
+  formNew.classList.add('hidden');
+  if (type === 'exist') { exist.classList.add('selected'); formExist.classList.remove('hidden'); }
+  else { newEl.classList.add('selected'); formNew.classList.remove('hidden'); }
+}
+
+function showS2bPhase(phase) {
+  [1,2,3].forEach(p => {
+    const el = document.getElementById('s2b-phase' + p);
+    if (el) el.classList.toggle('hidden', p !== phase);
+  });
+}
+
+function openMemberSelectModal(acctName, advertiser, members) {
+  document.getElementById('ms-acct-name').textContent = acctName;
+  document.getElementById('ms-acct-advertiser').textContent = advertiser + ' · 참여 요청할 멤버를 선택하세요';
+  const list = document.getElementById('ms-member-list');
+  list.innerHTML = members.map((m, i) => {
+    const initials = m.name.slice(0, 1);
+    return `<label class="ms-member-item" onclick="this.classList.add('selected');this.closest('.ms-member-list').querySelectorAll('.ms-member-item').forEach(el=>el!==this&&el.classList.remove('selected'))">
+      <input type="radio" name="ms-member" value="${m.email}" ${i===0?'checked':''}>
+      <div class="ms-avatar">${initials}</div>
+      <div><div class="ms-name">${m.name}</div><div class="ms-email">${m.email}</div></div>
+    </label>`;
+  }).join('');
+  if (members.length > 0) list.querySelector('.ms-member-item').classList.add('selected');
+  document.getElementById('member-select-overlay').classList.remove('hidden');
+}
+
+function closeMemberSelectModal() {
+  document.getElementById('member-select-overlay').classList.add('hidden');
+}
+
+function confirmMemberSelect() {
+  closeMemberSelectModal();
+  show('s3b-colleague');
+}
+
+function openSlotInvite(type) {
+  document.getElementById(type + '-empty').classList.add('hidden');
+  document.getElementById(type + '-input-slot').classList.remove('hidden');
+  const inp = document.getElementById(type + '-email');
+  if (inp) inp.focus();
+}
+
+function closeSlotInvite(type) {
+  document.getElementById(type + '-input-slot').classList.add('hidden');
+  document.getElementById(type + '-empty').classList.remove('hidden');
+}
+
+function confirmSlotInvite(type, initials, company, bgColor, textColor) {
+  const email = document.getElementById(type + '-email').value || '초대 대기 중';
+  const grid = document.getElementById(type + '-slots-grid');
+  const inputSlot = document.getElementById(type + '-input-slot');
+  const slot = document.createElement('div');
+  slot.className = 'member-slot';
+  slot.innerHTML = `
+    <div class="slot-avatar" style="background:${bgColor};color:${textColor};">${initials}</div>
+    <div>
+      <div class="slot-name" style="font-size:11px;word-break:break-all;">${email}</div>
+      <div class="slot-company">${company}</div>
+    </div>
+    <div class="role-badge role-pending">초대 대기 중</div>
+  `;
+  grid.insertBefore(slot, inputSlot);
+  inputSlot.classList.add('hidden');
+  document.getElementById(type + '-empty').classList.remove('hidden');
+}
+
+/* ── 대행사 다중 초대 ── */
+function openAgencyInvite() {
+  document.getElementById('agency-empty').style.display = 'none';
+  document.getElementById('agency-invite-panel').classList.remove('hidden');
+  updateBillingOptions();
+}
+
+function closeAgencyInvite() {
+  document.getElementById('agency-invite-panel').classList.add('hidden');
+  document.getElementById('agency-empty').style.display = '';
+}
+
+function addInviteRow() {
+  const rows = document.getElementById('agency-invite-rows');
+  const row = document.createElement('div');
+  row.className = 'agency-invite-row';
+  row.innerHTML = `
+    <input class="form-input" placeholder="이메일 주소">
+    <button class="remove-row-btn" onclick="removeInviteRow(this)" title="삭제">×</button>
+  `;
+  rows.appendChild(row);
+  row.querySelector('input').focus();
+}
+
+function removeInviteRow(btn) {
+  const rows = document.getElementById('agency-invite-rows');
+  if (rows.children.length > 1) btn.closest('.agency-invite-row').remove();
+}
+
+function assignBilling(btn) {
+  // 다른 슬롯에서 정산 담당자 배지 및 버튼 제거
+  document.querySelectorAll('#agency-slots-grid .assign-billing-btn').forEach(b => b.remove());
+  document.querySelectorAll('#agency-slots-grid .billing-badge').forEach(b => b.remove());
+  // 이 슬롯에 정산 담당자 배지 추가
+  const slot = btn.closest('.member-slot');
+  const badge = document.createElement('div');
+  badge.className = 'role-badge billing-badge';
+  badge.style.cssText = 'background:#fef3c7;color:#92400e;margin-top:2px;';
+  badge.textContent = '정산 담당자';
+  slot.appendChild(badge);
+  // 배너 숨김
+  document.getElementById('billing-unset-banner').classList.add('hidden');
+}
+
+function confirmAgencyInvite() {
+  const rows = document.querySelectorAll('#agency-invite-rows .agency-invite-row');
+  const hasEmail = [...rows].some(r => r.querySelector('input').value.trim());
+  if (!hasEmail) { document.getElementById('billing-warning').textContent = '⚠️ 이메일 주소를 입력해주세요.'; document.getElementById('billing-warning').classList.remove('hidden'); return; }
+  document.getElementById('billing-warning').classList.add('hidden');
+
+  const grid = document.getElementById('agency-slots-grid');
+  const emptySlot = document.getElementById('agency-empty');
+  rows.forEach(row => {
+    const email = row.querySelector('input').value.trim();
+    if (!email) return;
+    const initials = (email.split('@')[1] || 'USR').slice(0, 3).toUpperCase();
+    const slot = document.createElement('div');
+    slot.className = 'member-slot';
+    slot.innerHTML = `
+      <div class="slot-avatar" style="background:#f3f4f6;color:#6b7280;">${initials}</div>
+      <div>
+        <div class="slot-name" style="font-size:11px;word-break:break-all;">${email}</div>
+        <div class="slot-company">대행사</div>
+      </div>
+      <div class="role-badge role-member">멤버</div>
+      <button class="assign-billing-btn" onclick="assignBilling(this)">정산 담당자로 지정</button>
+      <div style="font-size:10px;color:#f59e0b;font-weight:600;margin-top:2px;">초대 대기 중</div>
+    `;
+    grid.insertBefore(slot, emptySlot);
+  });
+
+  // 정산 담당자 미지정 배너 표시
+  document.getElementById('billing-unset-banner').classList.remove('hidden');
+
+  // 계약 대행사 카드 업데이트 (초대 완료 후)
+  const firstEmail = [...rows].find(r => r.querySelector('input').value.trim())?.querySelector('input').value.trim() || '';
+  const domain = firstEmail.split('@')[1] || '';
+  const agencyMap = { 'batcrew.co.kr': ['BAT 퍼포먼스마케팅 (주)', '110-81-99887'], 'glinkmedia.co.kr': ['Glink 퍼포먼스마케팅 (주)', '220-87-11234'] };
+  const [agencyName, agencyBiz] = agencyMap[domain] || [`${domain.split('.')[0].toUpperCase()} (주)`, '사업자번호 확인 중'];
+  const card = document.getElementById('agency-info-card');
+  card.style.borderStyle = 'solid';
+  card.style.borderColor = '#e5e7eb';
+  document.getElementById('agency-info-body').innerHTML = `
+    <div style="font-size:14px;font-weight:700;color:#111;">${agencyName}</div>
+    <div style="font-size:11px;color:#6b7280;margin-top:2px;font-family:'Inter',monospace;">${agencyBiz}</div>
+  `;
+  document.getElementById('transfer-btn').style.display = '';
+
+  document.getElementById('agency-invite-rows').innerHTML = `
+    <div class="agency-invite-row">
+      <input class="form-input" placeholder="이메일 주소">
+      <button class="remove-row-btn" onclick="removeInviteRow(this)" title="삭제">×</button>
+    </div>`;
+  closeAgencyInvite();
+}
+
+function addMember() { openAgencyInvite(); }
+
+/* ── 대행사 이관 요청 ── */
+function openTransfer() {
+  document.getElementById('transfer-panel').classList.remove('hidden');
+  document.getElementById('transfer-success').classList.add('hidden');
+  document.getElementById('transfer-to-name').value = '';
+  document.getElementById('transfer-to-biz').value = '';
+  document.getElementById('transfer-reason').value = '';
+}
+
+function closeTransfer() {
+  document.getElementById('transfer-panel').classList.add('hidden');
+}
+
+function submitTransfer() {
+  const toName = document.getElementById('transfer-to-name').value.trim();
+  const toBiz = document.getElementById('transfer-to-biz').value.trim();
+  const reason = document.getElementById('transfer-reason').value.trim();
+  if (!toName || !toBiz || !reason) { alert('모든 필드를 입력해주세요.'); return; }
+  document.getElementById('transfer-success').classList.remove('hidden');
+  document.querySelector('#transfer-panel .btn-primary').disabled = true;
+  document.querySelector('#transfer-panel .btn-primary').textContent = '요청 완료 ✓';
+  document.querySelector('#transfer-panel .btn-primary').style.background = '#10b981';
+}
+
+function generateInvite(btn) {
+  btn.textContent = '링크 생성됨 ✓';
+  btn.style.background = '#10b981';
+  document.getElementById('invite-result').classList.remove('hidden');
+  document.getElementById('admin-bat-member').classList.remove('hidden');
+}
+
+function copyLink(btn) {
+  btn.textContent = '복사됨!';
+  btn.style.background = '#10b981'; btn.style.color = '#fff';
+  setTimeout(() => { btn.textContent = '복사'; btn.style.background = ''; btn.style.color = ''; }, 2000);
+}
+</script>
+</body>
+</html>
