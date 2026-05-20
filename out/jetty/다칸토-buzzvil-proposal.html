@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>다칸토 × 버즈빌 광고 제안서</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    /* === TOKENS === */
+    :root {
+      --g:      #2D5016;
+      --sage:   #7A9A5A;
+      --cream:  #F5F0E8;
+      --orange: #FF6B35;
+      --dark:   #1A1A1A;
+      --g100:   #f7f5f2;
+      --g200:   #e8e3dc;
+      --g600:   #6b6560;
+      --white:  #fff;
+      --light:  #B8D4A0;
+
+      --t-display: clamp(2rem, 4.4vw, 3.8rem);
+      --t-h2:      clamp(1.2rem, 2.4vw, 2rem);
+      --t-h3:      clamp(1rem,   1.9vw, 1.6rem);
+      --t-body:    clamp(0.72rem, 1.1vw, 0.92rem);
+      --t-small:   clamp(0.6rem,  0.88vw, 0.76rem);
+      --pad:       clamp(1.2rem, 3.8vw, 4rem);
+      --gap:       clamp(0.55rem, 1.2vw, 1.1rem);
+    }
+
+    /* === RESET + VIEWPORT BASE === */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { height: 100%; scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+    body { height: 100%; font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; color: var(--dark); overflow-x: hidden; }
+
+    /* === SLIDE BASE === */
+    .slide {
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      background: var(--white);
+    }
+
+    /* === ENTRANCE ANIMATION === */
+    .slide > * {
+      opacity: 0;
+      transform: translateY(clamp(10px, 2vh, 22px));
+      transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1),
+                  transform 0.7s cubic-bezier(0.22,1,0.36,1);
+    }
+    .slide.in-view > *:nth-child(1) { opacity:1; transform:translateY(0); transition-delay:0s; }
+    .slide.in-view > *:nth-child(2) { opacity:1; transform:translateY(0); transition-delay:0.08s; }
+    .slide.in-view > *:nth-child(3) { opacity:1; transform:translateY(0); transition-delay:0.16s; }
+    .slide.in-view > *:nth-child(4) { opacity:1; transform:translateY(0); transition-delay:0.24s; }
+    .slide.in-view > *:nth-child(5) { opacity:1; transform:translateY(0); transition-delay:0.32s; }
+
+    /* === NAV DOTS === */
+    .nav-dots {
+      position: fixed;
+      right: clamp(8px, 1.5vw, 20px);
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: clamp(5px, 0.8vh, 9px);
+      z-index: 200;
+    }
+    .nav-dot {
+      width: clamp(6px, 0.7vw, 8px);
+      height: clamp(6px, 0.7vw, 8px);
+      border-radius: 50%;
+      background: rgba(45,80,22,0.22);
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      padding: 0;
+    }
+    .nav-dot.active { background: var(--g); transform: scale(1.45); }
+
+    /* === COVER === */
+    .cover {
+      background: var(--g);
+      flex-direction: row !important;
+      position: relative;
+    }
+    .cover::before {
+      content: '';
+      position: absolute;
+      width: clamp(150px, 28vw, 400px);
+      height: clamp(150px, 28vw, 400px);
+      background: var(--sage);
+      filter: blur(clamp(60px, 11vw, 140px));
+      opacity: 0.28;
+      top: -10%;
+      left: 30%;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .cover-left {
+      flex: 1;
+      padding: clamp(2rem, 5vh, 4.5rem) var(--pad);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      z-index: 2;
+    }
+    .cover-right {
+      width: clamp(240px, 30vw, 380px);
+      background: var(--cream);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(1.5rem, 3.5vh, 3rem) clamp(1.5rem, 2.5vw, 2.5rem);
+      gap: clamp(12px, 2vh, 20px);
+      flex-shrink: 0;
+    }
+    .cover-tag {
+      display: inline-block;
+      background: var(--sage);
+      color: var(--white);
+      font-size: var(--t-small);
+      font-weight: 700;
+      letter-spacing: 3px;
+      padding: 5px 12px;
+      border-radius: 2px;
+      margin-bottom: clamp(14px, 2.5vh, 24px);
+      text-transform: uppercase;
+    }
+    .cover-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: var(--t-display);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: clamp(12px, 2vh, 18px);
+    }
+    .cover-title em { color: var(--light); font-style: normal; }
+    .cover-sub { font-size: var(--t-body); color: rgba(255,255,255,0.62); line-height: 1.7; max-width: 480px; }
+    .cover-meta { display: flex; flex-direction: column; gap: clamp(6px, 1vh, 10px); }
+    .cover-meta-item .label { font-size: var(--t-small); color: rgba(255,255,255,0.38); letter-spacing: 2px; }
+    .cover-meta-item .value { font-size: var(--t-body); color: rgba(255,255,255,0.82); font-weight: 600; }
+    .cover-product-card {
+      background: var(--g);
+      border-radius: 12px;
+      padding: clamp(12px, 2vh, 18px) clamp(14px, 2.2vw, 22px);
+      width: 100%;
+      color: var(--white);
+      text-align: center;
+    }
+    .cover-product-card .label { font-size: var(--t-small); color: rgba(255,255,255,0.48); letter-spacing: 2px; margin-bottom: 3px; }
+    .cover-product-card .val { font-size: clamp(0.9rem, 1.7vw, 1.2rem); font-weight: 800; }
+    .cover-keyword {
+      font-family: 'Noto Serif KR', serif;
+      font-size: clamp(1.3rem, 2.6vw, 2rem);
+      font-weight: 900;
+      color: var(--g);
+      text-align: center;
+      line-height: 1.3;
+    }
+    .cover-keyword em { color: var(--orange); font-style: normal; }
+
+    /* === INTRO HEADER === */
+    .intro-header {
+      background: var(--g);
+      padding: clamp(14px, 2.5vh, 30px) var(--pad);
+      flex-shrink: 0;
+    }
+    .intro-header .tag { font-size: var(--t-small); font-weight: 700; color: var(--light); letter-spacing: 3px; margin-bottom: 6px; }
+    .intro-header h2 { font-family: 'Noto Serif KR', serif; font-size: var(--t-h2); font-weight: 800; color: var(--white); line-height: 1.22; }
+    .intro-header h2 em { color: var(--light); font-style: normal; }
+    .intro-header p { font-size: var(--t-small); color: rgba(255,255,255,0.58); margin-top: 6px; line-height: 1.6; }
+
+    /* === SLIDE HEADER === */
+    .slide-header { padding: clamp(1.2rem, 2.8vh, 2.6rem) var(--pad) 0; flex-shrink: 0; }
+    .slide-tag { font-size: var(--t-small); font-weight: 700; color: var(--sage); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; }
+    .slide-title { font-family: 'Noto Serif KR', serif; font-size: var(--t-h2); font-weight: 800; color: var(--g); line-height: 1.25; }
+    .slide-title em { color: var(--orange); font-style: normal; }
+    .slide-sub { font-size: var(--t-small); color: var(--g600); margin-top: 8px; line-height: 1.6; max-width: 720px; }
+
+    /* === SLIDE BODY === */
+    .slide-body {
+      padding: clamp(0.9rem, 2vh, 2rem) var(--pad) clamp(1rem, 2vh, 2.2rem);
+      flex: 1;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap);
+      min-height: 0;
+    }
+
+    /* === CARDS === */
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(12px, 2vw, 20px); }
+    .card { background: var(--g100); border-radius: 10px; padding: clamp(12px, 2vh, 20px); border: 1px solid var(--g200); }
+    .card h4 { font-size: var(--t-body); font-weight: 700; color: var(--g); margin-bottom: 6px; }
+    .card p { font-size: var(--t-small); color: var(--g600); line-height: 1.6; }
+    .card.dark { background: var(--g); border-color: var(--g); }
+    .card.dark h4 { color: var(--light); }
+    .card.dark p { color: rgba(255,255,255,0.68); }
+    .card-icon { font-size: clamp(1.1rem, 2.2vw, 1.6rem); margin-bottom: 8px; }
+
+    /* Badge */
+    .badge { display: inline-block; background: var(--sage); color: var(--white); font-size: var(--t-small); font-weight: 700; padding: 3px 11px; border-radius: 20px; margin-right: 5px; margin-bottom: 5px; }
+    .badge.orange { background: var(--orange); }
+    .badge.outline { background: transparent; border: 1.5px solid var(--sage); color: var(--sage); }
+
+    /* Proof row */
+    .proof-row { display: flex; gap: var(--gap); flex-wrap: wrap; }
+    .proof-badge { background: var(--g); border-radius: 10px; padding: clamp(10px, 1.7vh, 16px) clamp(12px, 1.8vw, 18px); color: var(--white); display: flex; flex-direction: column; gap: 2px; }
+    .proof-badge .pb-num { font-family: 'Noto Serif KR', serif; font-size: clamp(1.2rem, 2.4vw, 1.8rem); font-weight: 900; color: var(--light); }
+    .proof-badge .pb-label { font-size: var(--t-small); color: rgba(255,255,255,0.58); }
+
+    /* App chips */
+    .app-grid { display: flex; flex-wrap: wrap; gap: clamp(5px, 0.7vw, 9px); margin: clamp(6px, 1vh, 10px) 0; }
+    .app-chip { background: var(--g100); border: 1px solid var(--g200); border-radius: 6px; padding: clamp(3px, 0.5vh, 5px) clamp(8px, 1vw, 12px); font-size: var(--t-small); font-weight: 600; color: var(--dark); }
+    .app-chip.new { border-color: var(--sage); color: var(--sage); }
+
+    /* Media card (green) */
+    .media-card-g { background: var(--g); border-radius: 10px; padding: clamp(12px, 2vh, 20px); color: var(--white); }
+    .media-card-g h4 { font-size: var(--t-body); font-weight: 700; margin-bottom: 3px; color: var(--light); }
+    .media-card-g .msub { font-size: var(--t-small); color: rgba(255,255,255,0.48); margin-bottom: clamp(8px, 1.4vh, 12px); }
+    .media-card-g .metric { margin-bottom: 5px; }
+    .media-card-g .metric span { font-size: var(--t-small); color: rgba(255,255,255,0.48); display: block; }
+    .media-card-g .metric strong { font-size: var(--t-body); color: var(--white); font-weight: 700; }
+
+    /* AS-IS TO-BE */
+    .asis-tobe { display: grid; grid-template-columns: 1fr 40px 1fr; align-items: center; flex: 1; min-height: 0; }
+    .asis-box { background: #f0ede8; border-radius: 10px; padding: clamp(12px, 2vh, 20px); }
+    .tobe-box { background: var(--g); border-radius: 10px; padding: clamp(12px, 2vh, 20px); }
+    .arrow-col { display: flex; align-items: center; justify-content: center; font-size: clamp(1rem, 2vw, 1.4rem); color: var(--orange); font-weight: 900; }
+    .asis-box h5 { font-size: var(--t-small); font-weight: 700; color: var(--g600); letter-spacing: 2px; margin-bottom: clamp(6px, 1vh, 10px); }
+    .tobe-box h5 { font-size: var(--t-small); font-weight: 700; color: var(--light); letter-spacing: 2px; margin-bottom: clamp(6px, 1vh, 10px); }
+    .asis-box li { font-size: var(--t-small); color: #555; padding: clamp(3px, 0.5vh, 5px) 0; border-bottom: 1px solid #ddd; list-style: none; line-height: 1.45; }
+    .asis-box li:last-child { border-bottom: none; }
+    .tobe-box li { font-size: var(--t-small); color: rgba(255,255,255,0.84); padding: clamp(3px, 0.5vh, 5px) 0; border-bottom: 1px solid rgba(255,255,255,0.1); list-style: none; line-height: 1.45; }
+    .tobe-box li:last-child { border-bottom: none; }
+
+    /* Budget cards */
+    .budget-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); }
+    .budget-card { border: 2px solid var(--g200); border-radius: 10px; overflow: hidden; }
+    .budget-card.rec { border-color: var(--orange); }
+    .bc-head { background: var(--g100); padding: clamp(8px, 1.3vh, 13px) clamp(10px, 1.6vw, 16px); font-size: var(--t-small); font-weight: 700; color: var(--g600); }
+    .budget-card.rec .bc-head { background: var(--orange); color: var(--white); }
+    .bc-amount { font-family: 'Noto Serif KR', serif; font-size: clamp(1rem, 2vw, 1.5rem); font-weight: 900; color: var(--g); padding: clamp(7px, 1.2vh, 11px) clamp(10px, 1.6vw, 16px) 0; }
+    .budget-card.rec .bc-amount { color: var(--orange); }
+    .bc-body { padding: clamp(6px, 1vh, 10px) clamp(10px, 1.6vw, 16px) clamp(10px, 1.6vh, 16px); }
+    .bc-row { display: flex; justify-content: space-between; padding: clamp(2px, 0.4vh, 4px) 0; border-bottom: 1px solid var(--g200); font-size: var(--t-small); }
+    .bc-row:last-child { border-bottom: none; }
+    .bc-row .bl { color: var(--g600); }
+    .bc-row .bv { font-weight: 700; color: var(--dark); }
+    .bc-row .bv.h { color: var(--orange); }
+    .rec-label { background: var(--orange); color: var(--white); font-size: var(--t-small); font-weight: 700; letter-spacing: 2px; padding: 3px; text-align: center; }
+
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; font-size: var(--t-small); }
+    th { background: var(--g); color: var(--white); padding: clamp(6px, 1vh, 10px) clamp(8px, 1.2vw, 13px); text-align: left; font-size: var(--t-small); font-weight: 700; }
+    td { padding: clamp(6px, 1vh, 9px) clamp(8px, 1.2vw, 13px); border-bottom: 1px solid var(--g200); color: #444; }
+    tr:last-child td { border-bottom: none; }
+    tr:nth-child(even) td { background: var(--g100); }
+    td.hl { color: var(--orange); font-weight: 700; }
+    .caution { font-size: var(--t-small); color: var(--g600); line-height: 1.6; flex-shrink: 0; }
+
+    /* Spec box */
+    .spec-box { background: var(--g100); border-radius: 8px; padding: clamp(10px, 1.8vh, 18px) clamp(12px, 1.8vw, 20px); }
+    .spec-box h5 { font-size: var(--t-body); font-weight: 700; color: var(--g); margin-bottom: clamp(7px, 1.2vh, 11px); }
+    .spec-row { display: flex; justify-content: space-between; font-size: var(--t-small); padding: clamp(3px, 0.5vh, 4px) 0; border-bottom: 1px solid var(--g200); }
+    .spec-row:last-child { border-bottom: none; }
+    .spec-row .sl { color: var(--g600); }
+    .spec-row .sv { font-weight: 600; color: var(--dark); }
+
+    /* Season card */
+    .season-card { background: var(--cream); border-radius: 10px; padding: clamp(10px, 1.8vh, 18px) clamp(12px, 1.8vw, 20px); border: 1.5px solid var(--g200); }
+    .season-card .s-title { font-size: var(--t-body); font-weight: 700; color: var(--g); margin-bottom: 3px; }
+    .season-card .s-date { font-size: var(--t-small); color: var(--g600); margin-bottom: 8px; }
+    .season-card .s-content { font-size: var(--t-small); color: var(--g600); line-height: 1.5; }
+
+    /* Chapter divider */
+    .chap-div {
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: var(--pad);
+      background: var(--cream);
+      gap: clamp(10px, 1.6vh, 16px);
+    }
+    .chap-div .chap-tag { font-size: var(--t-small); font-weight: 700; color: var(--orange); letter-spacing: 4px; }
+    .chap-div h2 { font-family: 'Noto Serif KR', serif; font-size: clamp(1.8rem, 3.8vw, 3.2rem); font-weight: 900; color: var(--g); line-height: 1.25; }
+    .chap-div h2 span { color: var(--orange); }
+    .chap-div p { font-size: var(--t-body); color: var(--g600); max-width: 600px; line-height: 1.7; }
+
+    /* Closing */
+    .closing {
+      background: var(--g);
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: var(--pad);
+      position: relative;
+    }
+    .closing::before {
+      content: '';
+      position: absolute;
+      width: clamp(140px, 28vw, 380px);
+      height: clamp(140px, 28vw, 380px);
+      background: var(--sage);
+      filter: blur(clamp(60px, 11vw, 130px));
+      opacity: 0.22;
+      top: -15%;
+      right: 5%;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .closing .ck { font-size: var(--t-small); font-weight: 700; color: var(--light); letter-spacing: 4px; margin-bottom: clamp(12px, 2vh, 18px); position: relative; }
+    .closing h2 { font-family: 'Noto Serif KR', serif; font-size: clamp(1.9rem, 4vw, 3.2rem); font-weight: 900; color: var(--white); line-height: 1.3; margin-bottom: clamp(12px, 2vh, 18px); position: relative; }
+    .closing h2 em { color: var(--light); font-style: normal; }
+    .closing p { font-size: var(--t-body); color: rgba(255,255,255,0.58); line-height: 1.8; margin-bottom: clamp(20px, 3.5vh, 36px); max-width: 560px; position: relative; }
+    .cta { display: inline-block; background: var(--orange); color: var(--white); font-size: var(--t-body); font-weight: 700; padding: clamp(10px, 1.8vh, 14px) clamp(28px, 4.5vw, 44px); border-radius: 8px; text-decoration: none; position: relative; }
+    .cc { margin-top: clamp(16px, 2.8vh, 28px); color: rgba(255,255,255,0.32); font-size: var(--t-small); position: relative; }
+
+    /* Print */
+    @media print {
+      html { scroll-snap-type: none; }
+      body { background: #fff; }
+      .slide { height: auto; min-height: 675px; overflow: visible; page-break-after: always; }
+      .slide > * { opacity: 1 !important; transform: none !important; }
+      .nav-dots { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .slide > * { transition: none !important; opacity: 1 !important; transform: none !important; }
+    }
+    @media (max-height: 700px) {
+      :root { --pad: clamp(0.9rem, 2.5vw, 2rem); --gap: clamp(0.4rem, 0.9vw, 0.8rem); }
+    }
+    @media (max-height: 600px) {
+      :root { --pad: clamp(0.6rem, 2vw, 1.4rem); }
+      .nav-dots { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="nav-dots" id="navDots"></div>
+
+<!-- 표지 -->
+<section class="slide cover">
+  <div class="cover-left">
+    <div>
+      <div class="cover-tag">BUZZVIL × DACCANTO 2026</div>
+      <h1 class="cover-title">발견되지 못한<br><em>진품(眞品)</em>을<br>세상에 꺼냅니다.</h1>
+      <p class="cover-sub">홍삼 특허 성분, 임상 인증 효과, 퍼퓸 바디 감각 —<br>다칸토의 제품 서사는 준비됐습니다. 이제 만날 고객만 남았습니다.</p>
+    </div>
+    <div class="cover-meta">
+      <div class="cover-meta-item"><div class="label">PREPARED FOR</div><div class="value">다칸토 (Daccanto) / (주)그리닝</div></div>
+      <div class="cover-meta-item"><div class="label">PREPARED BY</div><div class="value">버즈빌 세일즈팀</div></div>
+      <div class="cover-meta-item"><div class="label">DATE</div><div class="value">2026년 5월</div></div>
+    </div>
+  </div>
+  <div class="cover-right">
+    <div class="cover-keyword">클릭당 비용<br><em>20원</em><br>부터 시작</div>
+    <div class="cover-product-card"><div class="label">핵심 추천 상품</div><div class="val">버즈빌 뷰티 타겟 광고</div></div>
+    <div class="cover-product-card" style="background:var(--orange);"><div class="label">시작 예산</div><div class="val">월 100만원~</div></div>
+  </div>
+</section>
+
+<!-- 목차 -->
+<section class="slide" style="background:var(--cream);">
+  <div style="background:var(--g);padding:clamp(1.5rem,3.5vh,3rem) var(--pad) clamp(1.2rem,2.5vh,2.2rem);flex-shrink:0;">
+    <h2 style="font-family:'Noto Serif KR',serif;color:var(--white);font-size:var(--t-h2);font-weight:800;">INDEX</h2>
+    <p style="color:rgba(255,255,255,0.48);font-size:var(--t-small);margin-top:5px;">다칸토를 위한 버즈빌 광고 제안</p>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;flex:1;">
+    <div style="padding:clamp(14px,2.5vh,24px) clamp(20px,3.5vw,40px);border-right:1px solid var(--g200);border-bottom:1px solid var(--g200);">
+      <div style="font-size:var(--t-small);font-weight:700;color:var(--orange);letter-spacing:2px;margin-bottom:5px;">01</div>
+      <div style="font-family:'Noto Serif KR',serif;font-size:var(--t-body);font-weight:700;color:var(--g);">버즈빌 소개</div>
+      <div style="font-size:var(--t-small);color:var(--g600);margin-top:3px;">리워드 연결 모델 · 500+ 지면 · 카카오M</div>
+    </div>
+    <div style="padding:clamp(14px,2.5vh,24px) clamp(20px,3.5vw,40px);border-bottom:1px solid var(--g200);">
+      <div style="font-size:var(--t-small);font-weight:700;color:var(--orange);letter-spacing:2px;margin-bottom:5px;">02</div>
+      <div style="font-family:'Noto Serif KR',serif;font-size:var(--t-body);font-weight:700;color:var(--g);">다칸토 시장 현황</div>
+      <div style="font-size:var(--t-small);color:var(--g600);margin-top:3px;">K-뷰티 성장 · 경쟁 구도 · 발견 가능성 문제</div>
+    </div>
+    <div style="padding:clamp(14px,2.5vh,24px) clamp(20px,3.5vw,40px);border-right:1px solid var(--g200);border-bottom:1px solid var(--g200);">
+      <div style="font-size:var(--t-small);font-weight:700;color:var(--orange);letter-spacing:2px;margin-bottom:5px;">03</div>
+      <div style="font-family:'Noto Serif KR',serif;font-size:var(--t-body);font-weight:700;color:var(--g);">진단: 발견의 병목</div>
+      <div style="font-size:var(--t-small);color:var(--g600);margin-top:3px;">AS-IS → TO-BE · 지금이 모멘트인 이유</div>
+    </div>
+    <div style="padding:clamp(14px,2.5vh,24px) clamp(20px,3.5vw,40px);border-bottom:1px solid var(--g200);">
+      <div style="font-size:var(--t-small);font-weight:700;color:var(--orange);letter-spacing:2px;margin-bottom:5px;">04</div>
+      <div style="font-family:'Noto Serif KR',serif;font-size:var(--t-body);font-weight:700;color:var(--g);">버즈빌 광고 상품</div>
+      <div style="font-size:var(--t-small);color:var(--g600);margin-top:3px;">클릭당 20원 · 뷰티 고객만 · 성공 사례</div>
+    </div>
+    <div style="padding:clamp(14px,2.5vh,24px) clamp(20px,3.5vw,40px);border-right:1px solid var(--g200);">
+      <div style="font-size:var(--t-small);font-weight:700;color:var(--orange);letter-spacing:2px;margin-bottom:5px;">05</div>
+      <div style="font-family:'Noto Serif KR',serif;font-size:var(--t-body);font-weight:700;color:var(--g);">소재 전략 · 기프트 시즌</div>
+      <div style="font-size:var(--t-small);color:var(--g600);margin-top:3px;">광고 소재 가이드 · 발렌타인·추석·크리스마스</div>
+    </div>
+    <div style="padding:clamp(14px,2.5vh,24px) clamp(20px,3.5vw,40px);">
+      <div style="font-size:var(--t-small);font-weight:700;color:var(--orange);letter-spacing:2px;margin-bottom:5px;">06</div>
+      <div style="font-family:'Noto Serif KR',serif;font-size:var(--t-body);font-weight:700;color:var(--g);">예산 시나리오</div>
+      <div style="font-size:var(--t-small);color:var(--g600);margin-top:3px;">100만 / 200만 / 300만 / 500만원 4개 티어</div>
+    </div>
+  </div>
+</section>
+
+<!-- 버즈빌 소개 1 -->
+<section class="slide" style="border-top:4px solid var(--sage);">
+  <div class="intro-header">
+    <div class="tag">BUZZVIL INTRO 01</div>
+    <h2>버즈빌은 광고주와 매체, 그리고 유저를 <em>리워드</em>로 연결합니다.</h2>
+    <p>버즈빌이 보유한 프리미엄 광고 네트워크를 통해, 넓게 퍼져있는 유저층들에게 광고를 노출할 수 있습니다.</p>
+  </div>
+  <div class="slide-body">
+    <div style="display:flex;align-items:center;justify-content:space-between;background:var(--g100);border-radius:12px;padding:clamp(14px,2.5vh,24px) clamp(18px,3vw,36px);gap:8px;">
+      <div style="text-align:center;"><div style="background:var(--sage);color:#fff;border-radius:8px;padding:clamp(8px,1.4vh,12px) clamp(12px,1.8vw,18px);font-weight:800;font-size:var(--t-body);margin-bottom:5px;">광고주</div><div style="font-size:var(--t-small);color:var(--g600);">다칸토 포함</div></div>
+      <div style="font-size:clamp(1rem,2vw,1.5rem);color:var(--orange);font-weight:900;">→</div>
+      <div style="text-align:center;"><div style="background:var(--orange);color:#fff;border-radius:8px;padding:clamp(8px,1.4vh,12px) clamp(12px,1.8vw,18px);font-weight:800;font-size:var(--t-body);margin-bottom:5px;">버즈빌 광고센터</div><div style="font-size:var(--t-small);color:var(--g600);">뷰티 타겟 광고 포함</div></div>
+      <div style="font-size:clamp(1rem,2vw,1.5rem);color:var(--orange);font-weight:900;">→</div>
+      <div style="text-align:center;"><div style="background:var(--g);color:#fff;border-radius:8px;padding:clamp(8px,1.4vh,12px) clamp(12px,1.8vw,18px);font-weight:800;font-size:var(--t-body);margin-bottom:5px;">광고 네트워크</div><div style="font-size:var(--t-small);color:var(--g600);">AI 기반 타겟팅</div></div>
+      <div style="font-size:clamp(1rem,2vw,1.5rem);color:var(--orange);font-weight:900;">→</div>
+      <div style="text-align:center;"><div style="background:var(--g);color:#fff;border-radius:8px;padding:clamp(8px,1.4vh,12px) clamp(12px,1.8vw,18px);font-weight:800;font-size:var(--t-body);margin-bottom:5px;">500+ 프리미엄 매체</div><div style="font-size:var(--t-small);color:var(--g600);">리워드 지급</div></div>
+    </div>
+    <div class="grid-3">
+      <div class="card"><div class="card-icon">🎯</div><h4>다칸토에게</h4><p>뷰티 관심 고객을 정밀 타겟팅해 자사몰에서 실제 구매로 연결합니다.</p></div>
+      <div class="card dark"><div class="card-icon" style="color:var(--light);">🔗</div><h4>버즈빌이</h4><p>광고주·매체·유저를 리워드로 연결해 세 방향 모두 가치를 창출하는 선순환 구조.</p></div>
+      <div class="card"><div class="card-icon">🎁</div><h4>유저에게</h4><p>광고 참여에 리워드를 제공해 자발적 고관여 참여를 이끌어냅니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 버즈빌 소개 2 -->
+<section class="slide">
+  <div class="intro-header">
+    <div class="tag">BUZZVIL INTRO 02</div>
+    <h2>버즈빌의 강력한 <em>500여 개 제휴 지면</em></h2>
+    <p>뷰티 구매 의향 유저가 매일 사용하는 금융·커머스·라이프스타일 앱 500개 이상에 다칸토 광고를 노출합니다.</p>
+  </div>
+  <div class="slide-body">
+    <div>
+      <div class="badge">금융</div>
+      <div class="app-grid"><span class="app-chip">KB스타뱅킹</span><span class="app-chip">신한SOL</span><span class="app-chip">하나머니</span><span class="app-chip">삼성페이</span><span class="app-chip">모니모</span><span class="app-chip new">2025 신규+</span></div>
+      <div class="badge" style="background:var(--orange);">커머스</div>
+      <div class="app-grid"><span class="app-chip">티몬</span><span class="app-chip">위메프</span><span class="app-chip">이마트몰</span><span class="app-chip new">2025 신규+</span></div>
+      <div class="badge" style="background:var(--g);">라이프스타일</div>
+      <div class="app-grid"><span class="app-chip">캐시워크</span><span class="app-chip">카카오페이지</span><span class="app-chip">CJ ONE</span><span class="app-chip">키즈노트</span><span class="app-chip new">2025 신규+</span></div>
+    </div>
+    <div class="proof-row">
+      <div class="proof-badge"><span class="pb-num">500+</span><span class="pb-label">프리미엄 제휴 매체</span></div>
+      <div class="proof-badge"><span class="pb-num">39배</span><span class="pb-label">일반 광고 대비 클릭율</span></div>
+      <div class="proof-badge"><span class="pb-num">4배</span><span class="pb-label">일반 광고 대비 구매 전환율</span></div>
+      <div class="proof-badge"><span class="pb-num">2,400만+</span><span class="pb-label">월간 활성 유저 수</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 버즈빌 소개 3~5 합본 -->
+<section class="slide">
+  <div class="intro-header">
+    <div class="tag">BUZZVIL INTRO 03~05</div>
+    <h2>프리미엄 금융 지면 <em>카카오M</em> · 버즈빌 Only 독점 매체 · 주요 매체 지표</h2>
+    <p>버즈빌에서만 가능한 독점 금융 인벤토리 — 뷰티 주 구매층(2040 여성)이 밀집된 채널입니다.</p>
+  </div>
+  <div class="slide-body">
+    <div class="grid-3">
+      <div class="media-card-g"><h4>카카오뱅크</h4><div class="msub">지면: 매일 용돈 받기</div><div class="metric"><span>MAU</span><strong>1,800만</strong></div><div class="metric"><span>핵심 오디언스</span><strong>2040 여성 48%</strong></div></div>
+      <div class="media-card-g"><h4>카카오페이</h4><div class="msub">지면: 매일모으기</div><div class="metric"><span>MAU</span><strong>2,400만</strong></div><div class="metric"><span>핵심 오디언스</span><strong>2040 64%</strong></div></div>
+      <div class="media-card-g"><h4>케이뱅크</h4><div class="msub">지면: 용돈 받기</div><div class="metric"><span>당일 가입수</span><strong>1,300만</strong></div><div class="metric"><span>핵심 오디언스</span><strong>2040 78%</strong></div></div>
+    </div>
+    <div style="background:rgba(122,154,90,0.08);border:1.5px solid var(--sage);border-radius:10px;padding:clamp(10px,1.8vh,16px) clamp(12px,2vw,20px);">
+      <p style="font-size:var(--t-body);font-weight:700;color:var(--g);">다칸토 타겟 적합성</p>
+      <p style="font-size:var(--t-small);color:var(--g600);margin-top:5px;line-height:1.6;">카카오뱅크 '2040 여성 48%' 오디언스는 다칸토의 핵심 구매 타겟(약산성 클렌저·퍼퓸 바디 관심 20~40대 여성)과 정밀하게 교차합니다. 버즈빌 리워드 광고에서 뷰티 관심 유저를 집중 타겟팅하면 더욱 효율적인 광고 효과를 기대할 수 있습니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 시장 현황 챕터 구분 -->
+<section class="slide chap-div">
+  <div class="chap-tag">SECTION 02</div>
+  <h2>K-뷰티 성장 구간,<br>다칸토는 <span>지금</span> 올라타야 합니다.</h2>
+  <p>달바·어비브가 3~5년 전에 했던 일을 다칸토는 지금 시작합니다. 시장 타이밍은 완벽합니다.</p>
+</section>
+
+<!-- 시장 현황 -->
+<section class="slide">
+  <div class="slide-header">
+    <div class="slide-tag">시장 현황 분석</div>
+    <h2 class="slide-title">약산성·퍼퓸 바디 시장 <em>상승 구간</em>, 다칸토의 포지션</h2>
+    <p class="slide-sub">K-뷰티 클렌징·바디케어는 2024년 최대 실적 경신. 약산성·저자극·퍼퓸 바디가 핵심 키워드. 다칸토의 포지션과 정확히 정렬됩니다.</p>
+  </div>
+  <div class="slide-body">
+    <div class="grid-2" style="flex:1;min-height:0;">
+      <div>
+        <div class="proof-row" style="margin-bottom:var(--gap);">
+          <div class="proof-badge"><span class="pb-num">183억$</span><span class="pb-label">2025 한국 화장품 시장 규모</span></div>
+          <div class="proof-badge"><span class="pb-num">+5.4%</span><span class="pb-label">연간 성장률 전망</span></div>
+        </div>
+        <div class="card dark">
+          <h4>다칸토 경쟁 우위</h4>
+          <ul style="list-style:none;margin-top:8px;">
+            <li style="color:rgba(255,255,255,0.84);padding:clamp(3px,0.5vh,5px) 0;border-bottom:1px solid rgba(255,255,255,0.1);font-size:var(--t-small);">✅ 홍삼 부산물(사포닌) 특허 성분 — 임상 인증</li>
+            <li style="color:rgba(255,255,255,0.84);padding:clamp(3px,0.5vh,5px) 0;border-bottom:1px solid rgba(255,255,255,0.1);font-size:var(--t-small);">✅ 퍼퓸 바디·핸드크림 — 달바와 동일 세그먼트</li>
+            <li style="color:rgba(255,255,255,0.84);padding:clamp(3px,0.5vh,5px) 0;border-bottom:1px solid rgba(255,255,255,0.1);font-size:var(--t-small);">✅ 6개국 수출 + 백화점 팝업 완판 경험</li>
+            <li style="color:rgba(255,255,255,0.84);padding:clamp(3px,0.5vh,5px) 0;font-size:var(--t-small);">✅ D2C 고마진 구조 + 고객 데이터 직접 보유</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <table>
+          <thead><tr><th>경쟁사</th><th>포지션</th><th>다칸토 대비</th></tr></thead>
+          <tbody>
+            <tr><td><strong>어비브</strong></td><td>약산성 클렌저 1위, 2024 매출 1,600억+</td><td>동일 카테고리 선도자</td></tr>
+            <tr><td><strong>달바글로벌</strong></td><td>퍼퓸 바디 선도, 2024 매출 3,090억</td><td>다칸토의 3~5년 후 모델</td></tr>
+            <tr><td><strong>레이비/일리윤</strong></td><td>올영 입점 퍼퓸 바디워시</td><td>온라인 전환 직접 경쟁자</td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:var(--gap);background:rgba(255,107,53,0.07);border:1.5px solid var(--orange);border-radius:8px;padding:clamp(10px,1.7vh,14px) clamp(12px,1.8vw,18px);">
+          <p style="font-size:var(--t-body);font-weight:700;color:var(--g);">핵심 격차: 발견 가능성(Discoverability)</p>
+          <p style="font-size:var(--t-small);color:var(--g600);margin-top:4px;line-height:1.5;">경쟁사는 올리브영 진열대에서 자연 발견됩니다. 다칸토는 모든 신규 고객을 광고로 직접 획득해야 합니다. 이 구조적 격차를 메우는 것이 버즈빌의 역할입니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 진단 -->
+<section class="slide">
+  <div class="slide-header">
+    <div class="slide-tag">진단</div>
+    <h2 class="slide-title">팝업 완판, 임상 인증 — 제품은 준비됐습니다.<br><em>만날 고객만 남았습니다.</em></h2>
+    <p class="slide-sub">대전 롯데백화점 팝업에서 바디로션이 3일 만에 완판됐습니다. 수요는 실재합니다. 문제는 온라인에서 이 수요를 연결할 구조가 없다는 것입니다.</p>
+  </div>
+  <div class="slide-body">
+    <div class="asis-tobe">
+      <div class="asis-box">
+        <h5>AS-IS · 현재 상황</h5>
+        <ul>
+          <li>🚫 올리브영 미입점 → 오프라인 발견 경로 없음</li>
+          <li>📱 자사몰만 운영 → 방문 후 이탈 고객 재접촉 불가</li>
+          <li>💸 소규모 예산 → CPC 광고 단가 상승 체감</li>
+          <li>👤 대행사 없음 → 퍼포먼스 최적화 역량 부족</li>
+          <li>📦 기프트 수요 있어도 디지털 시즌 전략 부재</li>
+        </ul>
+      </div>
+      <div class="arrow-col">→</div>
+      <div class="tobe-box">
+        <h5>TO-BE · 버즈빌과 함께</h5>
+        <ul>
+          <li>✅ 뷰티 관심 고객에게 정밀 도달 — 내 제품을 살 사람만 만납니다</li>
+          <li>✅ 한번 본 고객에게 다시 보여주기 — 재방문 유도</li>
+          <li>✅ 클릭당 20원 — 실제로 클릭한 사람에게만 비용 발생</li>
+          <li>✅ 대행사 없이 직접 운영 + 실시간 현황 확인</li>
+          <li>✅ 발렌타인·추석·크리스마스 기프트 집중 전략</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 광고 상품 소개 -->
+<section class="slide">
+  <div class="slide-header">
+    <div class="slide-tag">버즈빌 광고 상품</div>
+    <h2 class="slide-title">클릭 한 번에 <em>20원</em> — 관심 있는 사람에게만</h2>
+    <p class="slide-sub">광고를 봤지만 클릭하지 않으면 0원. 실제로 클릭한 사람에게만 비용이 발생합니다. 뷰티 관심 고객만 골라 만납니다.</p>
+  </div>
+  <div class="slide-body">
+    <div class="grid-3">
+      <div class="card dark"><div class="card-icon" style="color:var(--light);">💰</div><h4>클릭당 20원</h4><p>광고를 봤지만 클릭 안 하면 0원.<br>실제로 관심 보인 사람에게만 비용이 발생합니다.</p></div>
+      <div class="card dark"><div class="card-icon" style="color:var(--light);">🎯</div><h4>뷰티 관심 고객만</h4><p>500+ 앱에서 클렌저·바디케어·핸드크림에 관심 있는 유저에게만 노출합니다.</p></div>
+      <div class="card dark"><div class="card-icon" style="color:var(--light);">📱</div><h4>월 100만원부터</h4><p>소액으로 시작해 효과를 확인하고 예산을 늘리는 구조. 낭비가 없습니다.</p></div>
+    </div>
+    <div class="grid-2">
+      <div>
+        <div style="background:var(--cream);border-radius:10px;padding:clamp(10px,1.8vh,18px) clamp(12px,1.8vw,20px);border:1.5px solid var(--g200);margin-bottom:var(--gap);">
+          <p style="font-size:var(--t-small);font-weight:700;color:var(--g600);letter-spacing:2px;margin-bottom:8px;">광고 소재 형태 (다칸토 추천 순)</p>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="display:flex;align-items:center;gap:8px;"><span style="background:var(--sage);color:#fff;border-radius:4px;padding:2px 7px;font-size:var(--t-small);font-weight:700;min-width:44px;text-align:center;">1순위</span><span style="font-size:var(--t-small);"><strong>OX퀴즈형</strong> — "약산성 클렌저, 민감 피부에 써도 될까요?" 인지</span></div>
+            <div style="display:flex;align-items:center;gap:8px;"><span style="background:var(--orange);color:#fff;border-radius:4px;padding:2px 7px;font-size:var(--t-small);font-weight:700;min-width:44px;text-align:center;">2순위</span><span style="font-size:var(--t-small);"><strong>쿠폰알림형</strong> — 기프트 세트 한정 할인 쿠폰 전환</span></div>
+            <div style="display:flex;align-items:center;gap:8px;"><span style="background:var(--g);color:#fff;border-radius:4px;padding:2px 7px;font-size:var(--t-small);font-weight:700;min-width:44px;text-align:center;">3순위</span><span style="font-size:var(--t-small);"><strong>AI리뷰형</strong> — 실구매 리뷰 기반 신뢰 구축</span></div>
+          </div>
+        </div>
+        <div class="spec-box">
+          <h5>광고 소재 규격</h5>
+          <div class="spec-row"><span class="sl">전체 화면 이미지</span><span class="sv">1080×2340px · 2MB 이하</span></div>
+          <div class="spec-row"><span class="sl">미리보기 이미지</span><span class="sv">1200×627px · 로고 320×320px</span></div>
+          <div class="spec-row"><span class="sl">제목 / 설명 / 버튼</span><span class="sv">15자 / 40자 / 7자</span></div>
+          <div class="spec-row"><span class="sl">금지어</span><span class="sv">앱·설치·다운로드·인스톨·실행</span></div>
+        </div>
+      </div>
+      <div>
+        <div style="background:rgba(255,107,53,0.07);border:1.5px solid var(--orange);border-radius:10px;padding:clamp(12px,2vh,18px) clamp(14px,2.2vw,20px);">
+          <p style="font-size:var(--t-body);font-weight:700;color:var(--g);">다칸토에 특히 유효한 이유</p>
+          <p style="font-size:var(--t-small);color:var(--g600);margin-top:6px;line-height:1.5;">버즈빌 리워드 광고는 뷰티 카테고리 관심 유저 데이터가 풍부합니다. 올리브영 미입점이라도 유사 제품(클렌저·바디케어·핸드크림) 관심 유저에게 도달할 수 있습니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 예산 시나리오 -->
+<section class="slide">
+  <div class="slide-header">
+    <div class="slide-tag">예산 시나리오</div>
+    <h2 class="slide-title">월 100만원부터 시작할 수 있습니다. <em>모든 수치를 공개합니다.</em></h2>
+    <p class="slide-sub">클릭당 20원 기준. 월 100만원부터 시작해 성과에 따라 유연하게 조정할 수 있습니다.</p>
+  </div>
+  <div class="slide-body">
+    <div class="budget-cards">
+      <div class="budget-card">
+        <div class="bc-head">TIER 1</div><div class="bc-amount">100만원/월</div>
+        <div class="bc-body">
+          <div class="bc-row"><span class="bl">집행 상품</span><span class="bv">뷰티 타겟 클릭 광고</span></div>
+          <div class="bc-row"><span class="bl">예상 클릭</span><span class="bv">45,000건</span></div>
+          <div class="bc-row"><span class="bl">기대 효과</span><span class="bv h">광고비 대비 매출 2~3배</span></div>
+          <div class="bc-row"><span class="bl">핵심 목표</span><span class="bv">첫 데이터 확인</span></div>
+        </div>
+      </div>
+      <div class="budget-card rec">
+        <div class="rec-label">★ 추천 시작점</div><div class="bc-head">TIER 2</div><div class="bc-amount">200만원/월</div>
+        <div class="bc-body">
+          <div class="bc-row"><span class="bl">뷰티 타겟 광고</span><span class="bv">150만원 (75%)</span></div>
+          <div class="bc-row"><span class="bl">SNS 팔로워 늘리기</span><span class="bv">50만원 (25%)</span></div>
+          <div class="bc-row"><span class="bl">예상 클릭</span><span class="bv">75,000건</span></div>
+          <div class="bc-row"><span class="bl">기대 효과</span><span class="bv h">광고비 대비 매출 3~4배</span></div>
+        </div>
+      </div>
+      <div class="budget-card">
+        <div class="bc-head">TIER 3 (시즌)</div><div class="bc-amount">300만원/월</div>
+        <div class="bc-body">
+          <div class="bc-row"><span class="bl">뷰티 타겟 광고</span><span class="bv">210만원 (70%)</span></div>
+          <div class="bc-row"><span class="bl">SNS 팔로워 늘리기</span><span class="bv">60만원 (20%)</span></div>
+          <div class="bc-row"><span class="bl">예상 클릭</span><span class="bv">105,000건</span></div>
+          <div class="bc-row"><span class="bl">기대 효과</span><span class="bv h">광고비 대비 매출 4~5배</span></div>
+        </div>
+      </div>
+      <div class="budget-card">
+        <div class="bc-head">TIER 4</div><div class="bc-amount">500만원/월</div>
+        <div class="bc-body">
+          <div class="bc-row"><span class="bl">뷰티 타겟 광고</span><span class="bv">300만원 (60%)</span></div>
+          <div class="bc-row"><span class="bl">SNS + 노출 광고</span><span class="bv">200만원 (40%)</span></div>
+          <div class="bc-row"><span class="bl">예상 클릭</span><span class="bv">150,000건</span></div>
+          <div class="bc-row"><span class="bl">기대 효과</span><span class="bv h">광고비 대비 매출 5~7배</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="caution">위 수치는 버즈빌 공식 단가(ver.260504) 기준 추정치입니다. 실제 성과는 광고 소재 품질과 랜딩 페이지 경험에 따라 다를 수 있으며, 범위로 제시됩니다.</p>
+    <div>
+      <p style="font-size:var(--t-body);font-weight:700;color:var(--g);margin-bottom:var(--gap);">🎁 기프트 세트 시즌 집중 전략</p>
+      <div class="grid-3">
+        <div class="season-card"><div class="s-title">발렌타인 (2월 14일)</div><div class="s-date">집행 시작: 1월 말</div><div class="s-content">퍼퓸 핸드크림 선물 소구 / 쿠폰알림형 소재 집중</div></div>
+        <div class="season-card"><div class="s-title">추석 (9월)</div><div class="s-date">집행 시작: 8월 중순</div><div class="s-content">기프트 세트 (3.5~6.5만원) / OX퀴즈형+쿠폰형 병행</div></div>
+        <div class="season-card"><div class="s-title">크리스마스 (12월)</div><div class="s-date">집행 시작: 12월 초</div><div class="s-content">퍼퓸 바디·핸드 세트 / "가장 감각적인 선물" 소구</div></div>
+      </div>
+    </div>
+    <div style="background:rgba(122,154,90,0.07);border:1.5px solid var(--sage);border-radius:10px;padding:clamp(10px,1.7vh,14px) clamp(12px,1.8vw,20px);">
+      <p style="font-size:var(--t-body);font-weight:700;color:var(--g);">🎁 Special Offer — 신규 광고주 혜택</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;">
+        <span class="badge">버즈빌 광고 소재 가이드 제공</span>
+        <span class="badge orange">셀프서빙 운영 교육 포함</span>
+        <span class="badge">실시간 현황 확인 즉시 발급</span>
+        <span class="badge outline">클릭당 20원 (2026년 2분기 프로모션)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 클로징 -->
+<section class="slide closing">
+  <div class="ck">CLOSING · 발견되지 못한 진품을 세상에 꺼낼 시간</div>
+  <h2>"좋은 제품인데 아무도 모른다"<br>— 이제 그 <em>병목을 깨겠습니다.</em></h2>
+  <p>다칸토의 홍삼 특허 성분, 임상 인증, 퍼퓸 바디 감각은 이미 준비됐습니다.<br>버즈빌 뷰티 타겟 광고가 만날 고객을 데려옵니다.<br>월 100만원으로 지금 시작하면, 다음 시즌은 달라집니다.</p>
+  <a href="mailto:ads-center@buzzvil.com" class="cta">지금 시작하기</a>
+  <div class="cc">
+    <p>버즈빌 세일즈팀 · ads-center@buzzvil.com</p>
+    <p style="margin-top:3px;font-size:clamp(0.5rem,0.7vw,0.62rem);">버즈빌 광고자료제안서 ver.260504 기준 · 2026년 5월</p>
+  </div>
+</section>
+
+<script>
+(function(){
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const navEl = document.getElementById('navDots');
+  slides.forEach((_, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'nav-dot';
+    btn.title = '슬라이드 ' + (i + 1);
+    btn.addEventListener('click', () => slides[i].scrollIntoView({ behavior: 'smooth' }));
+    navEl.appendChild(btn);
+  });
+  const dots = navEl.querySelectorAll('.nav-dot');
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in-view');
+        const idx = slides.indexOf(e.target);
+        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      }
+    });
+  }, { threshold: 0.45 });
+  slides.forEach(s => io.observe(s));
+
+  let cur = 0;
+  document.addEventListener('keydown', e => {
+    if (['ArrowDown','ArrowRight',' '].includes(e.key)) {
+      e.preventDefault();
+      cur = Math.min(cur + 1, slides.length - 1);
+      slides[cur].scrollIntoView({ behavior: 'smooth' });
+    } else if (['ArrowUp','ArrowLeft'].includes(e.key)) {
+      e.preventDefault();
+      cur = Math.max(cur - 1, 0);
+      slides[cur].scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+})();
+</script>
+</body>
+</html>
