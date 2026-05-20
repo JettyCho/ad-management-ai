@@ -27,6 +27,10 @@
   .view-toggle button.active { background: #2563eb; color: white; border-color: #2563eb; }
   .view-toggle button:not(.active):hover { background: #f5f5f5; }
 
+  .progress-bar-wrap { background: #f0f0f0; border-radius: 4px; height: 6px; margin-top: 6px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: #22c55e; border-radius: 4px; transition: width .3s; }
+  .progress-label { font-size: 11px; color: #888; margin-top: 3px; }
+
   .main-layout {
     display: grid;
     grid-template-columns: 1fr 380px;
@@ -36,7 +40,6 @@
     margin: 0 auto;
   }
 
-  /* ── 목록 뷰 ── */
   #list-view .list-panel { display: flex; flex-direction: column; gap: 12px; }
 
   .category-card {
@@ -72,10 +75,16 @@
   .subitem:last-child { border-bottom: none; }
   .subitem:hover { background: #f9fafb; }
   .subitem.selected { background: #eff6ff; }
+
+  .subitem.done { background: #f0fdf4; }
+  .subitem.done:hover { background: #dcfce7; }
+  .subitem.done .subitem-left { color: #6b7280; }
+  .subitem.done .subitem-name { text-decoration: line-through; text-decoration-color: #9ca3af; }
+  .done-check { color: #22c55e; font-size: 14px; margin-right: 2px; font-weight: 700; }
+
   .subitem-left { display: flex; align-items: center; gap: 6px; font-size: 13px; }
   .note-icon { font-size: 12px; }
 
-  /* ── 우선순위 뱃지 ── */
   .badge {
     display: inline-flex; align-items: center; justify-content: center;
     padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 700;
@@ -85,8 +94,8 @@
   .p1 { background: #f97316; color: white; }
   .p2 { background: #eab308; color: white; }
   .p3 { background: #9ca3af; color: white; }
+  .done-badge { background: #22c55e; color: white; }
 
-  /* ── 상세 패널 ── */
   .detail-panel {
     background: white; border: 1px solid #e5e5e5; border-radius: 12px;
     padding: 24px; height: fit-content;
@@ -99,8 +108,8 @@
   .detail-section-label { font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
   .detail-section-value { font-size: 13px; color: #333; }
   .detail-parent { font-size: 12px; color: #666; background: #f5f5f5; padding: 4px 10px; border-radius: 6px; margin-bottom: 12px; display: inline-block; }
+  .done-banner { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #15803d; font-weight: 500; margin-bottom: 12px; }
 
-  /* ── 우선순위 뷰 ── */
   #priority-view { display: none; }
   #priority-view .priority-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
   .priority-column { background: white; border: 1px solid #e5e5e5; border-radius: 12px; overflow: hidden; }
@@ -114,10 +123,11 @@
     background: #f9fafb; border: 1px solid #e5e5e5; border-radius: 8px;
     padding: 8px 12px; font-size: 12px;
   }
+  .priority-item.done-item { background: #f0fdf4; border-color: #bbf7d0; }
   .priority-item-name { font-weight: 500; color: #1a1a1a; }
+  .priority-item.done-item .priority-item-name { text-decoration: line-through; color: #6b7280; }
   .priority-item-parent { font-size: 11px; color: #888; margin-top: 2px; }
 
-  /* ── 범례 ── */
   .legend {
     background: white; border: 1px solid #e5e5e5; border-radius: 12px;
     padding: 16px 18px; margin-top: 16px;
@@ -126,6 +136,17 @@
   .legend-items { display: flex; gap: 12px; flex-wrap: wrap; }
   .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #555; }
   .note-legend { font-size: 12px; color: #555; margin-top: 8px; }
+
+  .summary-bar {
+    background: white; border: 1px solid #e5e5e5; border-radius: 12px;
+    padding: 16px 20px; margin-bottom: 12px;
+    display: flex; align-items: center; gap: 24px;
+  }
+  .summary-stat .num { font-size: 24px; font-weight: 700; }
+  .summary-stat .lbl { font-size: 11px; color: #888; margin-top: 2px; }
+  .summary-stat .num.green { color: #22c55e; }
+  .summary-progress { flex: 1; }
+  .summary-progress .pct { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
 </style>
 </head>
 <body>
@@ -143,8 +164,8 @@
 
 <div class="main-layout" id="list-view">
   <div>
+    <div class="summary-bar" id="summary-bar"></div>
     <div class="list-panel" id="list-panel"></div>
-
     <div class="legend">
       <h3>우선순위 범례</h3>
       <div class="legend-items">
@@ -152,11 +173,11 @@
         <div class="legend-item"><span class="badge p1">P1</span> High</div>
         <div class="legend-item"><span class="badge p2">P2</span> Medium</div>
         <div class="legend-item"><span class="badge p3">P3</span> Low</div>
+        <div class="legend-item"><span class="badge done-badge">✓</span> 완료</div>
       </div>
       <div class="note-legend">📝 = 메모 있음</div>
     </div>
   </div>
-
   <div>
     <div class="detail-panel" id="detail-panel">
       <div class="detail-placeholder">구성요소를 선택하면 상세 정보를 확인할 수 있습니다.</div>
@@ -173,105 +194,105 @@ const data = [
   {
     id: 'bizgroup', name: '비즈니스그룹', priority: 'P0', owner: 'Jetty', note: false,
     items: [
-      { name: '고객 유형', priority: 'P0', note: true },
-      { name: '조직 구조', priority: 'P0', note: true },
-      { name: '대행권 설정 및 이관', priority: 'P1', note: true },
-      { name: '권한 구조', priority: 'P1', note: true },
-      { name: '수수료 관리 체계', priority: 'P2', note: true },
-      { name: '초대 기반 계정 관리', priority: 'P0', note: true },
-      { name: '현재 권한 구조 리팩토링', priority: 'P0', note: true },
+      { name: '고객 유형', priority: 'P0', note: true, done: true },
+      { name: '조직 구조', priority: 'P0', note: true, done: true },
+      { name: '대행권 설정 및 이관', priority: 'P1', note: true, done: false },
+      { name: '권한 구조', priority: 'P1', note: true, done: false },
+      { name: '수수료 관리 체계', priority: 'P2', note: true, done: false },
+      { name: '초대 기반 계정 관리', priority: 'P0', note: true, done: true },
+      { name: '현재 권한 구조 리팩토링', priority: 'P0', note: true, done: true },
     ]
   },
   {
     id: 'billing', name: '정산', priority: 'P1', owner: 'Jetty', note: false,
     items: [
-      { name: '세일즈포스 연동', priority: 'P0', note: true },
-      { name: '계약/증빙 서류 완비', priority: 'P2', note: true },
-      { name: '후불', priority: 'P0', note: false },
-      { name: '선불', priority: 'P2', note: true },
-      { name: 'PG/은행 연동', priority: 'P2', note: true },
-      { name: '정산 페이지', priority: 'P1', note: true },
-      { name: '정산 안내 이메일', priority: 'P1', note: true },
+      { name: '세일즈포스 연동', priority: 'P0', note: true, done: true },
+      { name: '계약/증빙 서류 완비', priority: 'P2', note: true, done: false },
+      { name: '후불', priority: 'P0', note: false, done: true },
+      { name: '선불', priority: 'P2', note: true, done: false },
+      { name: 'PG/은행 연동', priority: 'P2', note: true, done: false },
+      { name: '정산 페이지', priority: 'P1', note: true, done: true },
+      { name: '정산 안내 이메일', priority: 'P1', note: true, done: true },
     ]
   },
   {
     id: 'dashboard', name: '대시보드 및 리포트', priority: 'P3', owner: 'Jetty', note: true,
     items: [
-      { name: '플랫폼', priority: 'P3', note: false },
-      { name: '광고주', priority: 'P3', note: false },
-      { name: '대행사', priority: 'P3', note: false },
+      { name: '플랫폼', priority: 'P3', note: false, done: false },
+      { name: '광고주', priority: 'P3', note: false, done: false },
+      { name: '대행사', priority: 'P3', note: false, done: false },
     ]
   },
   {
     id: 'dash-tool', name: 'Staff 운영 도구 (Dash)', priority: 'P3', owner: 'Jetty', note: false,
     items: [
-      { name: '비즈니스 정보 심사', priority: 'P3', note: true },
-      { name: '광고 심사 (개선)', priority: 'P3', note: false },
-      { name: '캠페인 모니터링', priority: 'P3', note: true },
-      { name: '정산 모니터링', priority: 'P1', note: true },
-      { name: '지표 모니터링', priority: 'P3', note: true },
+      { name: '비즈니스 정보 심사', priority: 'P3', note: true, done: false },
+      { name: '광고 심사 (개선)', priority: 'P3', note: false, done: false },
+      { name: '캠페인 모니터링', priority: 'P3', note: true, done: false },
+      { name: '정산 모니터링', priority: 'P1', note: true, done: true },
+      { name: '지표 모니터링', priority: 'P3', note: true, done: false },
     ]
   },
   {
     id: 'report', name: '리포트', priority: 'P2', owner: 'Jetty', note: false,
     items: [
-      { name: '기본 보고서', priority: 'P1', note: false },
-      { name: '플랫폼용 보고서', priority: 'P1', note: true },
-      { name: '맞춤 보고서', priority: 'P3', note: false },
-      { name: '인사이트 리포트', priority: 'P3', note: false },
-      { name: 'Public API', priority: 'P2', note: false },
-      { name: '보고서 내보내기/다운로드 관리', priority: 'P3', note: false },
+      { name: '기본 보고서', priority: 'P1', note: false, done: false },
+      { name: '플랫폼용 보고서', priority: 'P1', note: true, done: false },
+      { name: '맞춤 보고서', priority: 'P3', note: false, done: false },
+      { name: '인사이트 리포트', priority: 'P3', note: false, done: false },
+      { name: 'Public API', priority: 'P2', note: false, done: false },
+      { name: '보고서 내보내기/다운로드 관리', priority: 'P3', note: false, done: false },
     ]
   },
   {
     id: 'product', name: '상품', priority: 'P2', owner: 'Jetty, Toy', note: false,
     items: [
-      { name: '라이브커머스', priority: 'P2', note: false },
-      { name: '협력광고', priority: 'P1', note: false },
-      { name: '신규상품', priority: 'P2', note: false },
-      { name: '기존상품', priority: 'P3', note: false },
-      { name: '히스토리', priority: 'P3', note: true },
+      { name: '라이브커머스', priority: 'P2', note: false, done: false },
+      { name: '협력광고', priority: 'P1', note: false, done: false },
+      { name: '신규상품', priority: 'P2', note: false, done: false },
+      { name: '기존상품', priority: 'P3', note: false, done: false },
+      { name: '히스토리', priority: 'P3', note: true, done: false },
     ]
   },
   {
     id: 'asset', name: '광고자산', priority: 'P2', owner: 'Jetty, Toy', note: false,
     items: [
-      { name: '카탈로그', priority: 'P1', note: false },
-      { name: '픽셀 연동', priority: 'P2', note: false },
-      { name: 'MMP 연동', priority: 'P3', note: false },
-      { name: '타겟팅', priority: 'P2', note: false },
+      { name: '카탈로그', priority: 'P1', note: false, done: true },
+      { name: '픽셀 연동', priority: 'P2', note: false, done: false },
+      { name: 'MMP 연동', priority: 'P3', note: false, done: false },
+      { name: '타겟팅', priority: 'P2', note: false, done: false },
     ]
   },
   {
     id: 'promo', name: '프로모션', priority: 'P1', owner: 'Jetty', note: true,
     items: [
-      { name: '프로모션 적용 구조', priority: 'P1', note: false },
-      { name: '프로모션 정산 적용', priority: 'P1', note: false },
-      { name: '프로모션 CRM 적용', priority: 'P3', note: false },
+      { name: '프로모션 적용 구조', priority: 'P1', note: false, done: true },
+      { name: '프로모션 정산 적용', priority: 'P1', note: false, done: false },
+      { name: '프로모션 CRM 적용', priority: 'P3', note: false, done: false },
     ]
   },
   {
     id: 'notify', name: '알림', priority: 'P2', owner: 'Jetty', note: true,
     items: [
-      { name: '이메일 (운영 필수)', priority: 'P1', note: false },
-      { name: 'CRM 이메일', priority: 'P3', note: false },
-      { name: '알림센터', priority: 'P2', note: false },
+      { name: '이메일 (운영 필수)', priority: 'P1', note: false, done: true },
+      { name: 'CRM 이메일', priority: 'P3', note: false, done: false },
+      { name: '알림센터', priority: 'P2', note: false, done: false },
     ]
   },
   {
     id: 'security', name: '보안', priority: 'P2', owner: 'Jetty', note: false,
     items: [
-      { name: '개인정보취급자 접속기록 로그 보관', priority: 'P1', note: false },
-      { name: '탈퇴', priority: 'P3', note: false },
+      { name: '개인정보취급자 접속기록 로그 보관', priority: 'P1', note: false, done: true },
+      { name: '탈퇴', priority: 'P3', note: false, done: false },
     ]
   },
   {
     id: 'marketing', name: '마케팅', priority: 'P3', owner: 'Jetty', note: false,
     items: [
-      { name: 'SEO', priority: 'P2', note: false },
-      { name: 'CRM - 가입 유도 이메일', priority: 'P2', note: false },
-      { name: 'CRM - 프로모션 연계 이메일', priority: 'P3', note: false },
-      { name: '자료실', priority: 'P3', note: false },
+      { name: 'SEO', priority: 'P2', note: false, done: false },
+      { name: 'CRM - 가입 유도 이메일', priority: 'P2', note: false, done: false },
+      { name: 'CRM - 프로모션 연계 이메일', priority: 'P3', note: false, done: false },
+      { name: '자료실', priority: 'P3', note: false, done: false },
     ]
   },
 ];
@@ -279,11 +300,35 @@ const data = [
 let selectedItem = null;
 
 function pClass(p) { return p.toLowerCase(); }
+function priorityLabel(p) {
+  return { P0: 'Critical', P1: 'High', P2: 'Medium', P3: 'Low' }[p] || p;
+}
+
+function getStats() {
+  let total = 0, done = 0;
+  data.forEach(cat => cat.items.forEach(item => { total++; if (item.done) done++; }));
+  return { total, done, pct: Math.round(done / total * 100) };
+}
+
+function renderSummary() {
+  const { total, done, pct } = getStats();
+  document.getElementById('summary-bar').innerHTML = `
+    <div class="summary-stat"><div class="num green">${done}</div><div class="lbl">완료</div></div>
+    <div class="summary-stat"><div class="num">${total - done}</div><div class="lbl">진행 중</div></div>
+    <div class="summary-stat"><div class="num">${total}</div><div class="lbl">전체</div></div>
+    <div class="summary-progress">
+      <div class="pct">${pct}% 완료</div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
+    </div>
+  `;
+}
 
 function renderList() {
   const panel = document.getElementById('list-panel');
   panel.innerHTML = '';
   data.forEach((cat, ci) => {
+    const doneCount = cat.items.filter(i => i.done).length;
+    const catPct = Math.round(doneCount / cat.items.length * 100);
     const card = document.createElement('div');
     card.className = 'category-card open';
     card.innerHTML = `
@@ -295,18 +340,20 @@ function renderList() {
           ${cat.note ? '<span class="note-icon">📝</span>' : ''}
         </div>
         <div class="category-header-right">
-          <span>${cat.items.length}개 하위항목</span>
+          <span>${doneCount}/${cat.items.length} 완료</span>
           <span class="chevron">▶</span>
         </div>
       </div>
+      ${catPct > 0 ? `<div style="padding:0 18px 10px;"><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${catPct}%"></div></div><div class="progress-label">${catPct}%</div></div>` : ''}
       <div class="subitems">
         ${cat.items.map((item, ii) => `
-          <div class="subitem" onclick="selectItem(${ci}, ${ii})" id="item-${ci}-${ii}">
+          <div class="subitem${item.done ? ' done' : ''}" onclick="selectItem(${ci}, ${ii})" id="item-${ci}-${ii}">
             <div class="subitem-left">
-              <span>${item.name}</span>
+              ${item.done ? '<span class="done-check">✓</span>' : ''}
+              <span class="subitem-name">${item.name}</span>
               ${item.note ? '<span class="note-icon">📝</span>' : ''}
             </div>
-            <span class="badge ${pClass(item.priority)}">${item.priority}</span>
+            <span class="badge ${item.done ? 'done-badge' : pClass(item.priority)}">${item.done ? '완료' : item.priority}</span>
           </div>
         `).join('')}
       </div>
@@ -316,12 +363,10 @@ function renderList() {
 }
 
 function toggleCategory(header) {
-  const card = header.closest('.category-card');
-  card.classList.toggle('open');
+  header.closest('.category-card').classList.toggle('open');
 }
 
 function selectItem(ci, ii) {
-  // deselect previous
   if (selectedItem) {
     const prev = document.getElementById(`item-${selectedItem[0]}-${selectedItem[1]}`);
     if (prev) prev.classList.remove('selected');
@@ -331,12 +376,12 @@ function selectItem(ci, ii) {
 
   const cat = data[ci];
   const item = cat.items[ii];
-  const panel = document.getElementById('detail-panel');
-  panel.innerHTML = `
+  document.getElementById('detail-panel').innerHTML = `
     <div class="detail-parent">📂 ${cat.name}</div>
+    ${item.done ? '<div class="done-banner">✓ 완료된 구성요소입니다</div>' : ''}
     <div class="detail-title">${item.name}</div>
     <div class="detail-meta">
-      <span class="badge ${pClass(item.priority)}">${item.priority} — ${priorityLabel(item.priority)}</span>
+      <span class="badge ${item.done ? 'done-badge' : pClass(item.priority)}">${item.done ? '완료' : item.priority + ' — ' + priorityLabel(item.priority)}</span>
       ${item.note ? '<span style="font-size:13px">📝 메모 있음</span>' : ''}
     </div>
     <div class="detail-section">
@@ -354,31 +399,26 @@ function selectItem(ci, ii) {
   `;
 }
 
-function priorityLabel(p) {
-  return { P0: 'Critical', P1: 'High', P2: 'Medium', P3: 'Low' }[p] || p;
-}
-
 function renderPriority() {
-  const grid = document.getElementById('priority-grid');
   const buckets = { P0: [], P1: [], P2: [], P3: [] };
-  data.forEach(cat => {
-    cat.items.forEach(item => {
-      buckets[item.priority].push({ name: item.name, parent: cat.name, note: item.note });
-    });
-  });
-  grid.innerHTML = Object.entries(buckets).map(([p, items]) => `
+  data.forEach(cat => cat.items.forEach(item => {
+    buckets[item.priority].push({ name: item.name, parent: cat.name, note: item.note, done: item.done });
+  }));
+  document.getElementById('priority-grid').innerHTML = Object.entries(buckets).map(([p, items]) => {
+    const doneCount = items.filter(i => i.done).length;
+    return `
     <div class="priority-column">
-      <div class="priority-column-header ${pClass(p)}">${p} — ${priorityLabel(p)} (${items.length})</div>
+      <div class="priority-column-header ${pClass(p)}">${p} — ${priorityLabel(p)} (${items.length}) · ✓${doneCount}</div>
       <div class="priority-items">
         ${items.map(item => `
-          <div class="priority-item">
-            <div class="priority-item-name">${item.name}${item.note ? ' 📝' : ''}</div>
+          <div class="priority-item${item.done ? ' done-item' : ''}">
+            <div class="priority-item-name">${item.done ? '✓ ' : ''}${item.name}${item.note ? ' 📝' : ''}</div>
             <div class="priority-item-parent">${item.parent}</div>
           </div>
         `).join('')}
       </div>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 }
 
 function setView(view) {
@@ -399,6 +439,7 @@ function setView(view) {
   }
 }
 
+renderSummary();
 renderList();
 </script>
 </body>
