@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMB 뷰티 브랜드 × 버즈빌 광고 제안서</title>
+  <style>
+    /* ===== 변수 & 리셋 ===== */
+    :root {
+      --beauty-rose:    #D4547A;
+      --beauty-blush:   #F2A7BE;
+      --beauty-cream:   #FDF6F0;
+      --beauty-dark:    #2C1A22;
+      --beauty-muted:   #7A4A5A;
+      --bv-orange:      #FF6B35;
+      --bv-navy:        #1A1A2E;
+      --bv-gray:        #F8F8F8;
+      --bv-text:        #333333;
+      --white:          #FFFFFF;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+      background: #EFEFEF;
+      color: var(--bv-text);
+    }
+
+    /* ===== 슬라이드 공통 ===== */
+    .slide {
+      width: 1200px;
+      min-height: 675px;
+      margin: 24px auto;
+      background: var(--white);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      page-break-after: always;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ===== 표지 ===== */
+    .cover {
+      background: linear-gradient(135deg, var(--beauty-dark) 0%, #4A1A2E 50%, var(--beauty-rose) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 60px;
+      min-height: 675px;
+    }
+    .cover .badge {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: var(--white);
+      font-size: 13px;
+      padding: 6px 18px;
+      border-radius: 20px;
+      margin-bottom: 32px;
+      letter-spacing: 1px;
+    }
+    .cover h1 {
+      font-size: 56px;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .cover h1 span { color: var(--beauty-blush); }
+    .cover .subtitle {
+      font-size: 20px;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 48px;
+      line-height: 1.6;
+    }
+    .cover .meta {
+      font-size: 14px;
+      color: rgba(255,255,255,0.5);
+    }
+    .cover .accent-line {
+      width: 60px;
+      height: 4px;
+      background: var(--beauty-blush);
+      border-radius: 2px;
+      margin: 24px auto;
+    }
+
+    /* ===== 목차 ===== */
+    .toc { padding: 60px 80px; }
+    .toc h2 { font-size: 36px; font-weight: 800; color: var(--beauty-dark); margin-bottom: 8px; }
+    .toc .toc-subtitle { color: var(--beauty-muted); font-size: 15px; margin-bottom: 40px; }
+    .toc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .toc-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 24px;
+      border-radius: 10px;
+      background: var(--bv-gray);
+      border-left: 4px solid var(--beauty-rose);
+    }
+    .toc-num {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--beauty-rose);
+      min-width: 40px;
+    }
+    .toc-text strong { display: block; font-size: 16px; font-weight: 700; color: var(--beauty-dark); }
+    .toc-text span { font-size: 13px; color: var(--beauty-muted); }
+
+    /* ===== 섹션 헤더 공통 ===== */
+    .slide-header {
+      background: var(--beauty-dark);
+      padding: 28px 60px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .slide-header.rose { background: var(--beauty-rose); }
+    .slide-header.orange { background: var(--bv-orange); }
+    .slide-header .chapter-num {
+      font-size: 13px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 2px;
+    }
+    .slide-header h2 { font-size: 28px; font-weight: 800; color: var(--white); }
+    .slide-header p { font-size: 14px; color: rgba(255,255,255,0.75); margin-top: 4px; }
+
+    /* ===== 바디 공통 ===== */
+    .slide-body { padding: 40px 60px; flex: 1; }
+
+    /* ===== 버즈빌 소개 슬라이드 공통 ===== */
+    .intro-badge {
+      display: inline-block;
+      background: var(--beauty-rose);
+      color: var(--white);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+    .intro-title { font-size: 32px; font-weight: 800; color: var(--beauty-dark); margin-bottom: 8px; line-height: 1.3; }
+    .intro-title span { color: var(--beauty-rose); }
+    .intro-sub { font-size: 15px; color: var(--beauty-muted); margin-bottom: 36px; line-height: 1.6; }
+
+    /* 리워드 연결 플로우 */
+    .flow-diagram {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      background: var(--beauty-cream);
+      border-radius: 12px;
+      padding: 36px 24px;
+      margin-bottom: 24px;
+    }
+    .flow-node {
+      text-align: center;
+      padding: 16px 20px;
+      background: var(--white);
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      min-width: 120px;
+    }
+    .flow-node .node-icon { font-size: 28px; margin-bottom: 8px; }
+    .flow-node .node-label { font-size: 13px; font-weight: 700; color: var(--beauty-dark); }
+    .flow-node .node-sub { font-size: 11px; color: var(--beauty-muted); }
+    .flow-arrow {
+      font-size: 24px;
+      color: var(--beauty-rose);
+      padding: 0 12px;
+      font-weight: 700;
+    }
+    .flow-center {
+      background: var(--beauty-rose);
+      color: var(--white);
+      min-width: 160px;
+    }
+    .flow-center .node-label { color: var(--white); }
+    .flow-center .node-sub { color: rgba(255,255,255,0.8); }
+    .flow-note {
+      text-align: center;
+      font-size: 12px;
+      color: var(--beauty-muted);
+      background: rgba(212,84,122,0.06);
+      border-radius: 6px;
+      padding: 10px 16px;
+    }
+
+    /* 앱 그리드 */
+    .app-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .app-chip {
+      background: var(--beauty-cream);
+      border: 1px solid var(--beauty-blush);
+      color: var(--beauty-dark);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 20px;
+    }
+    .app-chip.highlight { background: var(--beauty-rose); color: var(--white); border-color: var(--beauty-rose); }
+
+    /* 매체 카드 */
+    .media-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px; }
+    .media-card {
+      background: var(--beauty-cream);
+      border-radius: 10px;
+      padding: 20px;
+      border: 1px solid rgba(212,84,122,0.15);
+    }
+    .media-card h4 { font-size: 16px; font-weight: 800; color: var(--beauty-dark); margin-bottom: 4px; }
+    .media-card .media-cat {
+      font-size: 11px;
+      color: var(--beauty-rose);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .media-card p { font-size: 13px; color: var(--beauty-muted); line-height: 1.6; }
+
+    /* 독점 매체 그리드 */
+    .exclusive-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .exclusive-chip {
+      background: var(--beauty-cream);
+      border: 1px solid rgba(212,84,122,0.2);
+      border-radius: 8px;
+      padding: 12px;
+      text-align: center;
+    }
+    .exclusive-chip .ec-name { font-size: 13px; font-weight: 700; color: var(--beauty-dark); }
+    .exclusive-chip .ec-cat { font-size: 11px; color: var(--beauty-muted); }
+
+    /* 지표 배지 */
+    .stat-badges { display: flex; gap: 16px; }
+    .stat-badge {
+      background: var(--beauty-dark);
+      color: var(--white);
+      padding: 14px 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    .stat-badge .sb-num { font-size: 28px; font-weight: 900; color: var(--beauty-blush); }
+    .stat-badge .sb-label { font-size: 12px; color: rgba(255,255,255,0.7); }
+
+    /* 주요 매체 상세 테이블 */
+    .media-table { width: 100%; border-collapse: collapse; }
+    .media-table th {
+      background: var(--beauty-dark);
+      color: var(--white);
+      padding: 12px 20px;
+      text-align: left;
+      font-size: 13px;
+    }
+    .media-table td {
+      padding: 14px 20px;
+      font-size: 13px;
+      border-bottom: 1px solid rgba(212,84,122,0.1);
+    }
+    .media-table tr:nth-child(even) td { background: var(--beauty-cream); }
+    .media-table .highlight-cell { color: var(--beauty-rose); font-weight: 700; }
+
+    /* ===== 시장 분석 ===== */
+    .market-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+    .market-card {
+      border-radius: 10px;
+      padding: 24px;
+      position: relative;
+    }
+    .market-card.crisis { background: #FFF0F3; border: 1px solid #F2A7BE; }
+    .market-card.oppty { background: #F0FFF4; border: 1px solid #68D391; }
+    .market-card h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .market-card.crisis h4 { color: #C53030; }
+    .market-card.oppty h4 { color: #276749; }
+    .market-card ul { list-style: none; }
+    .market-card ul li {
+      font-size: 13px;
+      color: var(--bv-text);
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      padding-left: 16px;
+      position: relative;
+      line-height: 1.5;
+    }
+    .market-card ul li::before { content: '›'; position: absolute; left: 0; color: var(--beauty-rose); }
+
+    .big-stat {
+      background: var(--beauty-dark);
+      color: var(--white);
+      border-radius: 12px;
+      padding: 24px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      gap: 24px;
+    }
+    .big-stat-item { text-align: center; }
+    .big-stat-item .num { font-size: 48px; font-weight: 900; color: var(--beauty-blush); line-height: 1; }
+    .big-stat-item .unit { font-size: 18px; color: rgba(255,255,255,0.7); }
+    .big-stat-item .label { font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 8px; }
+    .divider-v { width: 1px; background: rgba(255,255,255,0.2); height: 80px; }
+
+    /* ===== 진단 ===== */
+    .diagnosis-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .diagnosis-col h3 { font-size: 16px; font-weight: 700; margin-bottom: 16px; padding: 8px 16px; border-radius: 6px; }
+    .diagnosis-col.asis h3 { background: #FEF2F2; color: #991B1B; }
+    .diagnosis-col.tobe h3 { background: #F0FDF4; color: #166534; }
+    .diagnosis-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 14px;
+    }
+    .diagnosis-icon { font-size: 20px; min-width: 24px; margin-top: 2px; }
+    .diagnosis-text strong { display: block; font-size: 14px; font-weight: 700; color: var(--beauty-dark); }
+    .diagnosis-text span { font-size: 12px; color: var(--beauty-muted); line-height: 1.5; }
+
+    /* ===== 솔루션 / KPI ===== */
+    .kpi-cards { display: grid; grid-template-columns: 1fr 2fr; gap: 24px; margin-bottom: 24px; }
+    .primary-kpi {
+      background: var(--beauty-dark);
+      color: var(--white);
+      border-radius: 12px;
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .primary-kpi .kpi-label { font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 8px; }
+    .primary-kpi .kpi-name { font-size: 36px; font-weight: 900; color: var(--beauty-blush); margin-bottom: 12px; }
+    .primary-kpi .kpi-reason { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.6; }
+
+    .secondary-kpis { display: flex; flex-direction: column; gap: 12px; }
+    .secondary-kpi {
+      background: var(--beauty-cream);
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-left: 4px solid var(--beauty-rose);
+    }
+    .secondary-kpi .sk-name { font-size: 15px; font-weight: 700; color: var(--beauty-dark); min-width: 80px; }
+    .secondary-kpi .sk-target { font-size: 18px; font-weight: 800; color: var(--beauty-rose); min-width: 120px; }
+    .secondary-kpi .sk-desc { font-size: 12px; color: var(--beauty-muted); }
+
+    .benchmark-bar {
+      background: var(--beauty-cream);
+      border-radius: 10px;
+      padding: 20px 24px;
+    }
+    .benchmark-bar h4 { font-size: 14px; font-weight: 700; color: var(--beauty-dark); margin-bottom: 12px; }
+    .bbar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+    .bbar-label { font-size: 13px; color: var(--beauty-muted); min-width: 100px; }
+    .bbar-track { flex: 1; height: 8px; background: rgba(212,84,122,0.15); border-radius: 4px; overflow: hidden; }
+    .bbar-fill { height: 100%; background: var(--beauty-rose); border-radius: 4px; }
+    .bbar-value { font-size: 13px; font-weight: 700; color: var(--beauty-rose); min-width: 60px; text-align: right; }
+
+    /* ===== 쉐어리뷰 상품 ===== */
+    .product-hero {
+      background: linear-gradient(135deg, var(--beauty-dark) 0%, #5A2040 100%);
+      border-radius: 12px;
+      padding: 32px 40px;
+      color: var(--white);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .product-hero-left h3 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+    .product-hero-left h3 span { color: var(--beauty-blush); }
+    .product-hero-left p { font-size: 14px; color: rgba(255,255,255,0.75); max-width: 460px; line-height: 1.6; }
+    .product-hero-right {
+      text-align: right;
+      border-left: 1px solid rgba(255,255,255,0.2);
+      padding-left: 32px;
+      min-width: 200px;
+    }
+    .product-hero-right .price-label { font-size: 12px; color: rgba(255,255,255,0.6); }
+    .product-hero-right .price-num { font-size: 52px; font-weight: 900; color: var(--beauty-blush); line-height: 1; }
+    .product-hero-right .price-unit { font-size: 18px; color: rgba(255,255,255,0.7); }
+    .product-hero-right .price-min { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 6px; }
+
+    .case-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .case-card {
+      background: var(--beauty-cream);
+      border-radius: 10px;
+      padding: 20px;
+      border: 1px solid rgba(212,84,122,0.15);
+    }
+    .case-card .case-label { font-size: 12px; color: var(--beauty-muted); margin-bottom: 8px; }
+    .case-card .case-brand { font-size: 16px; font-weight: 800; color: var(--beauty-dark); margin-bottom: 12px; }
+    .case-card .case-stat { font-size: 40px; font-weight: 900; color: var(--beauty-rose); line-height: 1; margin-bottom: 4px; }
+    .case-card .case-kpi { font-size: 13px; font-weight: 700; color: var(--beauty-muted); }
+    .case-card .case-note { font-size: 11px; color: var(--beauty-muted); margin-top: 10px; line-height: 1.5; border-top: 1px solid rgba(212,84,122,0.15); padding-top: 10px; }
+
+    /* ===== 예산 시나리오 ===== */
+    .budget-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+    .budget-card {
+      border-radius: 12px;
+      padding: 24px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .budget-card.tier1 { background: var(--beauty-cream); border: 2px solid var(--beauty-blush); }
+    .budget-card.tier2 { background: #FFF5F8; border: 2px solid var(--beauty-rose); }
+    .budget-card.tier3 { background: var(--beauty-dark); }
+    .budget-card.tier4 { background: linear-gradient(135deg, var(--beauty-dark), #5A2040); }
+    .budget-card.recommended::after {
+      content: '★ 추천';
+      position: absolute;
+      top: 12px;
+      right: -28px;
+      background: var(--bv-orange);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 40px;
+      transform: rotate(30deg);
+    }
+    .bc-tier { font-size: 12px; font-weight: 700; letter-spacing: 1px; margin-bottom: 8px; }
+    .tier1 .bc-tier, .tier2 .bc-tier { color: var(--beauty-muted); }
+    .tier3 .bc-tier, .tier4 .bc-tier { color: rgba(255,255,255,0.6); }
+    .bc-amount { font-size: 32px; font-weight: 900; line-height: 1; margin-bottom: 4px; }
+    .tier1 .bc-amount, .tier2 .bc-amount { color: var(--beauty-dark); }
+    .tier3 .bc-amount, .tier4 .bc-amount { color: var(--beauty-blush); }
+    .bc-label { font-size: 13px; margin-bottom: 16px; }
+    .tier1 .bc-label, .tier2 .bc-label { color: var(--beauty-muted); }
+    .tier3 .bc-label, .tier4 .bc-label { color: rgba(255,255,255,0.7); }
+    .bc-items { text-align: left; }
+    .bc-item { font-size: 12px; padding: 5px 0; display: flex; justify-content: space-between; border-bottom: 1px dashed; }
+    .tier1 .bc-item { border-color: rgba(212,84,122,0.15); color: var(--beauty-muted); }
+    .tier2 .bc-item { border-color: rgba(212,84,122,0.2); color: var(--beauty-muted); }
+    .tier3 .bc-item, .tier4 .bc-item { border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.75); }
+    .bc-roas { margin-top: 14px; padding: 8px 0; }
+    .bc-roas-label { font-size: 11px; }
+    .tier1 .bc-roas-label, .tier2 .bc-roas-label { color: var(--beauty-muted); }
+    .tier3 .bc-roas-label, .tier4 .bc-roas-label { color: rgba(255,255,255,0.6); }
+    .bc-roas-value { font-size: 20px; font-weight: 900; }
+    .tier1 .bc-roas-value, .tier2 .bc-roas-value { color: var(--beauty-rose); }
+    .tier3 .bc-roas-value, .tier4 .bc-roas-value { color: var(--beauty-blush); }
+
+    .budget-note {
+      background: var(--beauty-cream);
+      border-left: 4px solid var(--beauty-rose);
+      border-radius: 6px;
+      padding: 14px 20px;
+      font-size: 13px;
+      color: var(--beauty-muted);
+      line-height: 1.6;
+    }
+    .budget-note strong { color: var(--beauty-dark); }
+
+    /* ===== 클로징 ===== */
+    .closing {
+      background: linear-gradient(135deg, var(--beauty-dark) 0%, #4A1A2E 60%, var(--beauty-rose) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 60px;
+      min-height: 675px;
+    }
+    .closing .closing-eyebrow { color: var(--beauty-blush); font-size: 14px; font-weight: 700; letter-spacing: 2px; margin-bottom: 20px; }
+    .closing h2 { font-size: 52px; font-weight: 900; color: var(--white); line-height: 1.2; margin-bottom: 16px; }
+    .closing h2 span { color: var(--beauty-blush); }
+    .closing p { font-size: 18px; color: rgba(255,255,255,0.75); margin-bottom: 48px; line-height: 1.7; max-width: 600px; }
+    .closing-steps { display: flex; gap: 24px; margin-bottom: 48px; }
+    .closing-step {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 10px;
+      padding: 20px 24px;
+      text-align: center;
+      min-width: 160px;
+    }
+    .closing-step .step-num { font-size: 32px; font-weight: 900; color: var(--beauty-blush); }
+    .closing-step .step-label { font-size: 13px; color: rgba(255,255,255,0.8); margin-top: 4px; }
+    .contact-box {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 12px;
+      padding: 24px 40px;
+      display: flex;
+      gap: 40px;
+    }
+    .contact-item { text-align: left; }
+    .contact-item .ci-label { font-size: 12px; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+    .contact-item .ci-value { font-size: 15px; font-weight: 700; color: var(--white); }
+
+    /* ===== 공통 유틸 ===== */
+    .section-tag {
+      display: inline-block;
+      background: var(--beauty-rose);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 3px;
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+    .narrative-box {
+      background: linear-gradient(135deg, var(--beauty-dark), #4A1A2E);
+      color: var(--white);
+      border-radius: 10px;
+      padding: 20px 28px;
+      margin-bottom: 24px;
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.6;
+    }
+    .narrative-box span { color: var(--beauty-blush); }
+    .insight-row { display: flex; gap: 16px; }
+    .insight-chip {
+      background: rgba(212,84,122,0.08);
+      border: 1px solid rgba(212,84,122,0.2);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: var(--beauty-dark);
+      flex: 1;
+    }
+    .insight-chip strong { display: block; font-size: 15px; color: var(--beauty-rose); margin-bottom: 4px; }
+    .footnote { font-size: 11px; color: #9CA3AF; margin-top: 16px; }
+
+    /* ===== 인쇄 ===== */
+    @media print {
+      body { background: white; }
+      .slide { margin: 0; box-shadow: none; border-radius: 0; page-break-after: always; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== SLIDE 1: 표지 ===== -->
+<section class="slide">
+  <div class="cover">
+    <div class="badge">BUZZVIL × SMB BEAUTY BRAND</div>
+    <h1>작은 예산,<br><span>정밀한 타겟</span></h1>
+    <div class="accent-line"></div>
+    <p class="subtitle">올영 밖에서 내 브랜드를 찾는 고객을 만드는 법<br>버즈빌 리워드 광고 × SMB 뷰티 브랜드 전용 제안</p>
+    <p class="meta">Prepared by Buzzvil | 2026</p>
+  </div>
+</section>
+
+<!-- ===== SLIDE 2: 목차 ===== -->
+<section class="slide">
+  <div class="slide-header rose">
+    <div>
+      <div class="chapter-num">TABLE OF CONTENTS</div>
+      <h2>제안서 구성</h2>
+    </div>
+  </div>
+  <div class="slide-body">
+    <div class="toc-grid">
+      <div class="toc-item">
+        <div class="toc-num">01</div>
+        <div class="toc-text">
+          <strong>버즈빌 소개</strong>
+          <span>리워드 광고 네트워크 · 500+ 지면 · 독점 매체</span>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">02</div>
+        <div class="toc-text">
+          <strong>SMB 뷰티 시장 현황</strong>
+          <span>D2C 성장 기회 · 올영 의존의 역설 · 발견 경제</span>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">03</div>
+        <div class="toc-text">
+          <strong>마케팅 진단</strong>
+          <span>AS-IS 문제점 · TO-BE 솔루션 프레임</span>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">04</div>
+        <div class="toc-text">
+          <strong>버즈빌 광고 상품</strong>
+          <span>클릭당 20원 · 뷰티 고객만 · 성공 사례</span>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">05</div>
+        <div class="toc-text">
+          <strong>예산 시나리오</strong>
+          <span>100만 ~ 500만원 4단계 · 기대 효과</span>
+        </div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">06</div>
+        <div class="toc-text">
+          <strong>다음 단계</strong>
+          <span>캠페인 시작 절차 · 담당자 연락처</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SLIDE 3: 버즈빌 소개 1 — 리워드 연결 모델 ===== -->
+<section class="slide">
+  <div class="slide-header">
+    <div>
+      <div class="chapter-num">CHAPTER 01 — BUZZVIL INTRO</div>
+      <h2>버즈빌은 광고주와 매체, 그리고 유저를 리워드로 연결합니다</h2>
+    </div>
+  </div>
+  <div class="slide-body">
+    <div class="intro-badge">BUZZVIL NETWORK</div>
+    <p class="intro-sub">리워드라는 동기 부여 구조로 광고주·매체·유저 3자를 연결하는 국내 최대 리워드 광고 플랫폼</p>
+
+    <div class="flow-diagram">
+      <div class="flow-node">
+        <div class="node-icon">🏢</div>
+        <div class="node-label">광고주</div>
+        <div class="node-sub">뷰티 브랜드</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node flow-center">
+        <div class="node-icon">⚡</div>
+        <div class="node-label">버즈빌 광고센터</div>
+        <div class="node-sub">라이브커머스 · 협력관계 포함</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="node-icon">📱</div>
+        <div class="node-label">광고 매체</div>
+        <div class="node-sub">500+ 프리미엄 앱</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="node-icon">👥</div>
+        <div class="node-label">유저</div>
+        <div class="node-sub">리워드 수령 · 구매 전환</div>
+      </div>
+    </div>
+
+    <div class="flow-note">
+      💡 버즈빌 광고센터는 라이브커머스 · 뷰티 타겟 광고 등 다양한 형태로 이용됩니다<br>
+      버즈빌이 보유한 프리미엄 광고 네트워크를 통해, 넓게 퍼져있는 유저층들에게 광고를 노출할 수 있습니다.
+    </div>
+  </div>
+</section>
+
+<!-- ===== SLIDE 4: 버즈빌 소개 2 & 3 — 500+ 지면 + 카카오M ===== -->
+<section class="slide">
+  <div class="slide-header">
+    <div>
+      <div class="chapter-num">CHAPTER 01 — BUZZVIL INTRO</div>
+      <h2>버즈빌의 강력한 500여 개 제휴 지면 · 프리미엄 금융 지면 카카오M</h2>
+    </div>
+  </div>
+  <div class="slide-body">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:32px;">
+      <div>
+        <div class="section-tag">500+ 프리미엄 매체</div>
+        <p style="font-size:13px;color:var(--beauty-muted);margin-bottom:16px;line-height:1.6;">
+          대한민국 국민의 필수 앱 금융부터 커머스, 라이프스타일까지<br>모든 버즈빌 지면에서 광고를 집행할 수 있습니다.
+        </p>
+        <p style="font-size:12px;font-weight:700;color:var(--beauty-dark);margin-bottom:8px;">금융</p>
+        <div class="app-grid">
+          <span class="app-chip highlight">KBstar뱅킹</span>
+          <span class="app-chip highlight">신한SOL</span>
+          <span class="app-chip">하나머니</span>
+          <span class="app-chip">삼성페이</span>
+          <span class="app-chip">모니모</span>
+          <span class="app-chip">우리WON뱅킹</span>
+        </div>
+        <p style="font-size:12px;font-weight:700;color:var(--beauty-dark);margin:10px 0 8px;">커머스 · 라이프</p>
+        <div class="app-grid">
+          <span class="app-chip">캐시워크</span>
+          <span class="app-chip">카카오페이지</span>
+          <span class="app-chip">CJ ONE</span>
+          <span class="app-chip">키즈노트</span>
+          <span class="app-chip">이마트몰</span>
+          <span class="app-chip">서브라이프</span>
+        </div>
+      </div>
+      <div>
+        <div class="section-tag">카카오M — 버즈빌 전용</div>
+        <p style="font-size:13px;color:var(--beauty-muted);margin-bottom:16px;line-height:1.6;">
+          버즈빌에서만 카카오페이+카카오뱅크+케이뱅크를 통합한<br>프리미엄 금융 지면을 통해 집행할 수 있습니다.
+        </p>
+        <div class="media-cards" style="grid-template-columns:1fr; gap:10px;">
+          <div class="media-card">
+            <h4>카카오뱅크</h4>
+            <div class="media-cat">MAU 1,800만 · 지면: 매일 용돈 받기</div>
+            <p>일상의 가장 친숙한 간편 결제 서비스 · 2040 여성 48%</p>
+          </div>
+          <div class="media-card">
+            <h4>카카오페이</h4>
+            <div class="media-cat">MAU 2,400만 · 지면: 매일모으기</div>
+            <p>2040 연령대 1등 뱅킹 앱 · 당일 가입수 3,815만</p>
+          </div>
+          <div class="media-card">
+            <h4>케이뱅크</h4>
+            <div class="media-cat">가입 1,300만 · 지면: 용돈 받기</div>
+            <p>국내 최초 인터넷은행 · 2040 유저 78%</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SLIDE 5: 버즈빌 소개 4 & 5 — 독점 매체 + 주요 매체 ===== -->
+<section class="slide">
+  <div class="slide-header">
+    <div>
+      <div class="chapter-num">CHAPTER 01 — BUZZVIL INTRO</div>
+      <h2>오직 버즈빌만 가능한 독점 매체 · 주요 매체 지표</h2>
+    </div>
+  </div>
+  <div class="slide-body">
+    <div class="section-tag">버즈빌 ONLY</div>
+    <p style="font-size:13px;color:var(--beauty-muted);margin-bottom:16px;">타 광고 네트워크로는 집행 불가능한 독점 인벤토리</p>
+    <div class="exclusive-grid" style="margin-bottom:16px;">
+      <div class="exclusive-chip"><div class="ec-name">삼성페이</div><div class="ec-cat">간편결제</div></div>
+      <div class="exclusive-chip"><div class="ec-name">KBstar뱅킹</div><div class="ec-cat">금융</div></div>
+      <div class="exclusive-chip"><div class="ec-name">카카오뱅크</div><div class="ec-cat">금융</div></div>
+      <div class="exclusive-chip"><div class="ec-name">카카오페이</div><div class="ec-cat">간편결제</div></div>
+      <div class="exclusive-chip"><div class="ec-name">신한카드</div><div class="ec-cat">금융</div></div>
+      <div class="exclusive-chip"><div class="ec-name">우리카드</div><div class="ec-cat">금융</div></div>
+      <div class="exclusive-chip"><div class="ec-name">NH농협은행</div><div class="ec-cat">금융</div></div>
+      <div class="exclusive-chip"><div class="ec-name">케이뱅크</div><div class="ec-cat">금융</div></div>
+      <div class="exclusive-chip"><div class="ec-name">모니모</div><div class="ec-cat">금융/카드</div></div>
+      <div class="exclusive-chip"><div class="ec-name">부산은행</div><div class="ec-cat">금융</div></div>
+      <div class="exclusive-chip"><div class="ec-name">캐시워크</div><div class="ec-cat">라이프</div></div>
+      <div class="exclusive-chip"><div class="ec-name">+ 더보기</div><div class="ec-cat">12+ 매체</div></div>
+    </div>
+    <div class="stat-badges" style="margin-bottom:20px;">
+      <div class="stat-badge"><div class="sb-num">12+</div><div class="sb-label">버즈빌 독점 매체</div></div>
+      <div class="stat-badge"><div class="sb-num">2,400만+</div><div class="sb-label">월간 활성 유저 MAU</div></div>
+    </div>
+    <table class="media-table">
+      <thead>
+        <tr>
+          <th>주요 매체</th>
+          <th>MAU</th>
+          <th>핵심 데모</th>
+          <th>특징</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>카카오뱅크</strong></td>
+          <td class="highlight-cell">1,800만</td>
+          <td>2040 여성 48%</td>
+          <td>1인당 평균 사용시간 2.17분</td>
+        </tr>
+        <tr>
+          <td><strong>카카오페이</strong></td>
+          <td class="highlight-cell">2,400만</td>
+          <td>2040 유저 64%</td>
+          <td>당일 가입수 3,815만</td>
+        </tr>
+        <tr>
+          <td><strong>케이뱅크</strong></td>
+          <td class="highlight-cell">1,300만</td>
+          <td>2040 유저 78%</td>
+          <td>남성 유저 52%</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="footnote">* 지표는 모바일 인덱스 및 공식 발행 내용 기반, 참고용으로만 활용해주시기 바랍니다.</p>
+  </div>
+</section>
+
+<!-- ===== SLIDE 6: 시장 분석 ===== -->
+<section class="slide">
+  <div class="slide-header rose">
+    <div>
+      <div class="chapter-num">CHAPTER 02</div>
+      <h2>SMB 뷰티 브랜드가 직면한 시장 현실</h2>
+      <p>"올영 밖에도 뷰티 고객은 있다 — 단, 발견되어야 한다"</p>
+    </div>
+  </div>
+  <div class="slide-body">
+    <div class="narrative-box">
+      한국 D2C 뷰티 시장 규모 <span>4.2조원</span> (2025년 기준) — 하지만 SMB 브랜드의 80%는<br>
+      올리브영 입점 없이 <span>모바일 노출 기회를 잃고</span> 있습니다.
+    </div>
+
+    <div class="market-grid">
+      <div class="market-card crisis">
+        <h4>⚠️ 위기 — SMB 뷰티의 구조적 한계</h4>
+        <ul>
+          <li>올리브영 입점 경쟁 심화 — 신규 브랜드 입점률 지속 하락</li>
+          <li>네이버·인스타그램 광고 단가 상승 (CPC 500~2,000원)</li>
+          <li>인플루언서 마케팅 ROI 불확실성 증가</li>
+          <li>소규모 예산으로 도달할 수 있는 정밀 타겟 수단 부재</li>
+          <li>브랜드 인지도 부재 → 퍼스트파티 데이터 축적 불가</li>
+        </ul>
+      </div>
+      <div class="market-card oppty">
+        <h4>🌱 기회 — 리워드 채널의 새로운 발견 경제</h4>
+        <ul>
+          <li>뷰티 구매 의향 유저가 일상 금융·라이프 앱을 매일 사용</li>
+          <li>리워드 광고 특성상 능동적 참여 → 브랜드 접촉 의향도 높음</li>
+          <li>뷰티 관심 유저 타겟팅 — 살 가능성 높은 사람에게만 광고 노출</li>
+          <li>클릭당 20원 소액 진입 → 예산 낭비 없는 시작</li>
+          <li>실제 클릭에만 과금 → 초기 브랜드에 최적 구조</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="big-stat">
+      <div class="big-stat-item">
+        <div class="num">4.2<span class="unit">조</span></div>
+        <div class="label">한국 D2C 뷰티 시장 (2025)</div>
+      </div>
+      <div class="divider-v"></div>
+      <div class="big-stat-item">
+        <div class="num">39<span class="unit">배</span></div>
+        <div class="label">일반 광고 대비 클릭율</div>
+      </div>
+      <div class="divider-v"></div>
+      <div class="big-stat-item">
+        <div class="num">4<span class="unit">배</span></div>
+        <div class="label">일반 광고 대비 구매 전환율</div>
+      </div>
+      <div class="divider-v"></div>
+      <div class="big-stat-item">
+        <div class="num">20<span class="unit">원</span></div>
+        <div class="label">클릭당 비용 (2026 Q2)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SLIDE 7: 마케팅 진단 ===== -->
+<section class="slide">
+  <div class="slide-header">
+    <div>
+      <div class="chapter-num">CHAPTER 03</div>
+      <h2>지금 마케팅의 문제 · 버즈빌이 제시하는 전환점</h2>
+    </div>
+  </div>
+  <div class="slide-body">
+    <div class="diagnosis-grid">
+      <div class="diagnosis-col asis">
+        <h3>😓 AS-IS — 현재 상황</h3>
+        <div class="diagnosis-item">
+          <div class="diagnosis-icon">📉</div>
+          <div class="diagnosis-text">
+            <strong>비싼 광고비, 효과는 불확실</strong>
+            <span>네이버·인스타 광고 단가 상승, 소규모 예산으로는 경쟁 자체가 불리</span>
+          </div>
+        </div>
+        <div class="diagnosis-item">
+          <div class="diagnosis-icon">🌊</div>
+          <div class="diagnosis-text">
+            <strong>광고는 뿌렸지만 팔리지 않는다</strong>
+            <span>관심 없는 사람에게도 광고가 노출 → 예산 낭비</span>
+          </div>
+        </div>
+        <div class="diagnosis-item">
+          <div class="diagnosis-icon">🔒</div>
+          <div class="diagnosis-text">
+            <strong>올영 없이는 새 고객을 못 만난다</strong>
+            <span>올리브영 미입점 → 오프라인 발견 경로 없음, 디지털도 취약</span>
+          </div>
+        </div>
+        <div class="diagnosis-item">
+          <div class="diagnosis-icon">💸</div>
+          <div class="diagnosis-text">
+            <strong>성과가 나기 전에 돈이 나간다</strong>
+            <span>노출·클릭 기준 광고는 구매 없이도 비용 발생 — 소규모 예산에 부담</span>
+          </div>
+        </div>
+      </div>
+      <div class="diagnosis-col tobe">
+        <h3>✨ TO-BE — 버즈빌 도입 후</h3>
+        <div class="diagnosis-item">
+          <div class="diagnosis-icon">🎯</div>
+          <div class="diagnosis-text">
+            <strong>뷰티 관심 고객에게만 광고 노출</strong>
+            <span>뷰티 제품을 실제로 사는 유저에게만 광고를 보여줍니다</span>
+          </div>
+        </div>
+        <div class="diagnosis-item">
+          <div class="diagnosis-icon">💰</div>
+          <div class="diagnosis-text">
+            <strong>클릭당 20원 — 클릭 없으면 0원</strong>
+            <span>실제로 광고를 클릭한 사람에게만 비용 발생 — 낭비가 없는 구조</span>
+          </div>
+        </div>
+        <div class="diagnosis-item">
+          <div class="diagnosis-icon">📱</div>
+          <div class="diagnosis-text">
+            <strong>500+ 앱에서 브랜드 알리기</strong>
+            <span>고객이 매일 쓰는 금융·커머스·라이프 앱에서 자연스럽게 노출</span>
+          </div>
+        </div>
+        <div class="diagnosis-item">
+          <div class="diagnosis-icon">🔄</div>
+          <div class="diagnosis-text">
+            <strong>한번 본 고객에게 다시 보여주기</strong>
+            <span>광고를 본 고객에게 재접촉해 재방문·재구매를 유도합니다</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SLIDE 8: 버즈빌 광고 상품 ===== -->
+<section class="slide">
+  <div class="slide-header rose">
+    <div>
+      <div class="chapter-num">CHAPTER 04</div>
+      <h2>클릭 한 번에 20원 — 관심 있는 사람에게만</h2>
+      <p>광고를 봤지만 클릭하지 않으면 0원. 실제로 클릭한 사람에게만 비용이 발생합니다.</p>
+    </div>
+  </div>
+  <div class="slide-body">
+    <div class="product-hero">
+      <div class="product-hero-left">
+        <h3>버즈빌 <span>뷰티 타겟 광고</span></h3>
+        <p>
+          뷰티 제품에 관심 있는 유저에게만 광고를 노출합니다.<br>
+          실제로 클릭한 사람에게만 비용이 발생하는 구조로,<br>
+          소규모 예산 브랜드에게 가장 효율적인 진입 경로입니다. (2026 Q2 프로모션 단가 적용)
+        </p>
+      </div>
+      <div class="product-hero-right">
+        <div class="price-label">클릭당 비용</div>
+        <div class="price-num">20</div>
+        <div class="price-unit">원 / 클릭</div>
+        <div class="price-min">최소 집행 100만원</div>
+      </div>
+    </div>
+
+    <div class="case-cards">
+      <div class="case-card">
+        <div class="case-label">뷰티 브랜드 B사 성과</div>
+        <div class="case-brand">뷰티 B사</div>
+        <div class="case-stat">9배</div>
+        <div class="case-kpi">광고비 대비 매출</div>
+        <div class="case-note">월 250만원 집행<br>뷰티 관심 고객 집중 타겟팅 적용</div>
+      </div>
+      <div class="case-card">
+        <div class="case-label">뷰티 브랜드 C사 성과</div>
+        <div class="case-brand">뷰티 C사</div>
+        <div class="case-stat">1,200명</div>
+        <div class="case-kpi">신규 고객 유입</div>
+        <div class="case-note">월 150만원으로 시작<br>D2C 자사몰 첫 광고 캠페인</div>
+      </div>
+      <div class="case-card">
+        <div class="case-label">뷰티 브랜드 D사 성과</div>
+        <div class="case-brand">뷰티 D사</div>
+        <div class="case-stat">9배</div>
+        <div class="case-kpi">광고비 대비 매출</div>
+        <div class="case-note">올영 미입점 브랜드<br>버즈빌 단독 디지털 채널 운영</div>
+      </div>
+    </div>
+
+    <div class="insight-row" style="margin-top:16px;">
+      <div class="insight-chip"><strong>클릭당 20원</strong>클릭 없으면 0원 — 관심 있는 사람에게만 비용 발생</div>
+      <div class="insight-chip"><strong>최소 예산 100만원</strong>소액으로 시작해 효과 확인 후 조절 가능</div>
+      <div class="insight-chip"><strong>확장 경로</strong>성과 확인 후 SNS 팔로워 늘리기 · 재방문 광고 병행</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SLIDE 10: 예산 시나리오 ===== -->
+<section class="slide">
+  <div class="slide-header rose">
+    <div>
+      <div class="chapter-num">CHAPTER 05</div>
+      <h2>예산 시나리오 — SMB 뷰티 4단계 플랜</h2>
+      <p>100만원부터 시작해 성과에 따라 단계적으로 확장하는 구조</p>
+    </div>
+  </div>
+  <div class="slide-body">
+    <div class="budget-cards">
+      <div class="budget-card tier1">
+        <div class="bc-tier">TIER 1 · 시작</div>
+        <div class="bc-amount">100만</div>
+        <div class="bc-label">원 / 월</div>
+        <div class="bc-items">
+          <div class="bc-item"><span>뷰티 타겟 광고</span><span>100%</span></div>
+          <div class="bc-item"><span>예상 클릭</span><span>45,000건</span></div>
+          <div class="bc-item"><span>타겟</span><span>뷰티 관심 고객</span></div>
+        </div>
+        <div class="bc-roas">
+          <div class="bc-roas-label">기대 효과</div>
+          <div class="bc-roas-value">광고비 3~5배 매출</div>
+        </div>
+      </div>
+      <div class="budget-card tier2 recommended">
+        <div class="bc-tier">TIER 2 · 추천 시작점</div>
+        <div class="bc-amount">200만</div>
+        <div class="bc-label">원 / 월</div>
+        <div class="bc-items">
+          <div class="bc-item"><span>뷰티 타겟 광고</span><span>75%</span></div>
+          <div class="bc-item"><span>SNS 팔로워 늘리기</span><span>25%</span></div>
+          <div class="bc-item"><span>예상 클릭</span><span>90,000건+</span></div>
+        </div>
+        <div class="bc-roas">
+          <div class="bc-roas-label">기대 효과</div>
+          <div class="bc-roas-value">광고비 5~7배 매출</div>
+        </div>
+      </div>
+      <div class="budget-card tier3">
+        <div class="bc-tier">TIER 3 · 성장</div>
+        <div class="bc-amount">300만</div>
+        <div class="bc-label">원 / 월</div>
+        <div class="bc-items">
+          <div class="bc-item"><span>뷰티 타겟 광고</span><span>70%</span></div>
+          <div class="bc-item"><span>SNS 팔로워 늘리기</span><span>20%</span></div>
+          <div class="bc-item"><span>브랜드 노출 광고</span><span>10%</span></div>
+        </div>
+        <div class="bc-roas">
+          <div class="bc-roas-label">기대 효과</div>
+          <div class="bc-roas-value">광고비 7~9배 매출</div>
+        </div>
+      </div>
+      <div class="budget-card tier4">
+        <div class="bc-tier">TIER 4 · 확장</div>
+        <div class="bc-amount">500만</div>
+        <div class="bc-label">원 / 월</div>
+        <div class="bc-items">
+          <div class="bc-item"><span>뷰티 타겟 광고</span><span>60%</span></div>
+          <div class="bc-item"><span>SNS + 노출 광고</span><span>30%</span></div>
+          <div class="bc-item"><span>재방문 유도 광고</span><span>10%</span></div>
+        </div>
+        <div class="bc-roas">
+          <div class="bc-roas-label">기대 효과</div>
+          <div class="bc-roas-value">광고비 9배 이상 매출</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="budget-note">
+      <strong>💡 SMB 뷰티 집행 전략 팁:</strong>
+      &nbsp;첫 달은 Tier 1~2로 뷰티 타겟 광고 단독 집행해 <strong>광고 효과를 먼저 확인</strong>합니다.
+      2~3개월차에 <strong>SNS 팔로워 늘리기 광고</strong>를 병행해 채널 자산을 쌓고,
+      4개월차부터 <strong>한 번 본 고객 재접촉 광고</strong>로 재구매율을 높입니다.
+      시즌(설·추석·크리스마스) 전 1~2개월 집행량을 20~30% 늘리면 더 큰 효과를 기대할 수 있습니다.
+    </div>
+  </div>
+</section>
+
+<!-- ===== SLIDE 11: 클로징 ===== -->
+<section class="slide">
+  <div class="closing">
+    <div class="closing-eyebrow">NEXT STEP</div>
+    <h2>찾아오는 고객,<br><span>다시 오는 고객</span></h2>
+    <p>
+      작은 예산으로도 내 브랜드를 진짜 구매할 유저를 만날 수 있습니다.<br>
+      버즈빌과 함께 첫 번째 캠페인을 시작해보세요.
+    </p>
+
+    <div class="closing-steps">
+      <div class="closing-step">
+        <div class="step-num">1</div>
+        <div class="step-label">미팅 일정 확정</div>
+      </div>
+      <div class="closing-step">
+        <div class="step-num">2</div>
+        <div class="step-label">브랜드 소재 준비</div>
+      </div>
+      <div class="closing-step">
+        <div class="step-num">3</div>
+        <div class="step-label">캠페인 세팅 (3일)</div>
+      </div>
+      <div class="closing-step">
+        <div class="step-num">4</div>
+        <div class="step-label">첫 캠페인 런칭</div>
+      </div>
+    </div>
+
+    <div class="contact-box">
+      <div class="contact-item">
+        <div class="ci-label">담당자</div>
+        <div class="ci-value">버즈빌 세일즈팀</div>
+      </div>
+      <div class="contact-item">
+        <div class="ci-label">이메일</div>
+        <div class="ci-value">sales@buzzvil.com</div>
+      </div>
+      <div class="contact-item">
+        <div class="ci-label">최소 집행 예산</div>
+        <div class="ci-value">100만원 / 월</div>
+      </div>
+      <div class="contact-item">
+        <div class="ci-label">캠페인 시작</div>
+        <div class="ci-value">협의 후 3영업일 내</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
