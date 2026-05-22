@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>광고센터 주간 문의 분석 — 2026-W20</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+    background: #f5f6f8;
+    color: #1a1a2e;
+    line-height: 1.65;
+    font-size: 15px;
+  }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  .page-header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+    color: #fff;
+    border-radius: 16px;
+    padding: 40px 48px;
+    margin-bottom: 32px;
+  }
+  .page-header h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; }
+  .page-header p { margin-top: 8px; color: #a0aec0; font-size: 14px; }
+  .meta-row { display: flex; gap: 32px; margin-top: 24px; flex-wrap: wrap; }
+  .meta-item { text-align: center; }
+  .meta-item .num { font-size: 36px; font-weight: 800; color: #e94560; }
+  .meta-item .lbl { font-size: 12px; color: #a0aec0; margin-top: 2px; }
+
+  h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; color: #1a1a2e; }
+
+  .section { background: #fff; border-radius: 12px; padding: 28px 32px; margin-bottom: 24px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+
+  .badge {
+    display: inline-block;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    white-space: nowrap;
+  }
+  .badge-red    { background: #fee2e2; color: #b91c1c; }
+  .badge-blue   { background: #dbeafe; color: #1d4ed8; }
+  .badge-green  { background: #dcfce7; color: #15803d; }
+  .badge-orange { background: #ffedd5; color: #c2410c; }
+  .badge-purple { background: #ede9fe; color: #6d28d9; }
+  .badge-gray   { background: #f1f5f9; color: #475569; }
+
+  /* Issue table */
+  .issue-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .issue-table th { background: #f8f9fc; padding: 10px 14px; text-align: left; font-weight: 700; color: #666; font-size: 12px; border-bottom: 2px solid #e8eaf0; }
+  .issue-table td { padding: 12px 14px; border-bottom: 1px solid #f0f2f5; vertical-align: top; }
+  .issue-table tr:last-child td { border-bottom: none; }
+  .issue-table tr:hover td { background: #fafbfc; }
+
+  /* Trend table */
+  .trend-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .trend-table th { background: #f8f9fc; padding: 10px 12px; text-align: center; font-weight: 700; color: #666; font-size: 12px; border-bottom: 2px solid #e8eaf0; border-right: 1px solid #e8eaf0; }
+  .trend-table th:first-child { text-align: left; }
+  .trend-table td { padding: 10px 12px; border-bottom: 1px solid #f0f2f5; border-right: 1px solid #f5f6f8; text-align: center; }
+  .trend-table td:first-child { text-align: left; font-weight: 500; }
+  .trend-table tr:last-child td { border-bottom: none; }
+  .trend-table .highlight { font-weight: 800; color: #e94560; }
+  .trend-table .current-week { background: #fff8f9; }
+  .trend-table .total-col { font-weight: 700; background: #f8f9fc; }
+  .trend-table tfoot td { background: #f8f9fc; font-weight: 700; }
+  .footnote { font-size: 12px; color: #888; margin-top: 10px; }
+  .footnote sup { color: #e94560; font-weight: 700; }
+
+  /* Weekly tab section */
+  .tab-bar { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+  .tab-btn {
+    padding: 7px 16px;
+    border-radius: 20px;
+    border: 1.5px solid #e8eaf0;
+    background: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .tab-btn:hover { border-color: #0f3460; color: #0f3460; }
+  .tab-btn.active { background: #0f3460; border-color: #0f3460; color: #fff; }
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; }
+
+  /* pre-analysis summary in tab */
+  .pre-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  @media (max-width: 600px) { .pre-summary { grid-template-columns: 1fr 1fr; } }
+  .pre-card { background: #f8f9fc; border-radius: 8px; padding: 14px 16px; }
+  .pre-card .cat-name { font-size: 12px; color: #555; margin-bottom: 6px; }
+  .pre-card .cat-count { font-size: 24px; font-weight: 800; color: #1a1a2e; }
+  .pre-card .cat-examples { font-size: 11px; color: #888; margin-top: 4px; line-height: 1.5; }
+  .pre-note { font-size: 12px; color: #888; margin-top: 14px; }
+  .one-time-tag { background: #fef3c7; color: #92400e; border-radius: 3px; font-size: 10px; padding: 1px 5px; margin-left: 4px; }
+
+  /* Conversation excerpts */
+  .conv-list { display: flex; flex-direction: column; gap: 20px; }
+  .conv-item { border: 1px solid #e8eaf0; border-radius: 10px; overflow: hidden; }
+  .conv-header { background: #f8f9fc; padding: 12px 20px; border-bottom: 1px solid #e8eaf0; }
+  .conv-title { font-size: 14px; font-weight: 700; color: #1a1a2e; }
+  .conv-meta { font-size: 12px; color: #888; margin-top: 2px; }
+  .conv-body { padding: 16px 20px; }
+  .msg { margin-bottom: 12px; }
+  .msg:last-child { margin-bottom: 0; }
+  .msg-from { font-size: 12px; font-weight: 700; color: #666; margin-bottom: 4px; }
+  .msg-from.buzzvil { color: #0f3460; }
+  .msg-text { font-size: 13px; color: #333; background: #f5f6f8; border-radius: 6px; padding: 10px 14px; line-height: 1.6; }
+  .msg-text.reply { background: #eef2ff; }
+  .issue-badge { display: inline-block; background: #e94560; color: #fff; border-radius: 4px; font-size: 11px; padding: 2px 8px; margin-left: 8px; vertical-align: middle; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Header -->
+  <div class="page-header">
+    <h1>광고센터 주간 문의 분석</h1>
+    <p>sales@buzzvil.com 수신 이메일 기준 · 광고센터(셀프서빙) 관련 이슈만 집계</p>
+    <div class="meta-row">
+      <div class="meta-item">
+        <div class="num">8</div>
+        <div class="lbl">이번 주 문의 (W20)</div>
+      </div>
+      <div class="meta-item">
+        <div class="num">27</div>
+        <div class="lbl">누적 문의 (일회성 제외)</div>
+      </div>
+      <div class="meta-item">
+        <div class="num" style="font-size:22px;letter-spacing:-1px">2026-05-11 ~ 05-15</div>
+        <div class="lbl">분석 기간</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Weekly Tab Section -->
+  <div class="section">
+    <h2>주별 문의 현황</h2>
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('w20')">W20 · 05/11~05/15</button>
+      <button class="tab-btn" onclick="switchTab('pre')">사전 분석 (2025-11~2026-05-11)</button>
+    </div>
+
+    <!-- pre-analysis tab -->
+    <div id="tab-pre" class="tab-pane">
+      <div class="pre-summary">
+        <div class="pre-card">
+          <div class="cat-name"><span class="badge badge-red">소재/캠페인 삭제 불가</span></div>
+          <div class="cat-count">3</div>
+          <div class="cat-examples">웨이브스튜디오(x2), 그립클라우드</div>
+        </div>
+        <div class="pre-card">
+          <div class="cat-name"><span class="badge badge-blue">계정/멤버 관리 오류</span></div>
+          <div class="cat-count">2</div>
+          <div class="cat-examples">뉴트리원, PFDC</div>
+        </div>
+        <div class="pre-card">
+          <div class="cat-name"><span class="badge badge-green">협력광고 구조/온보딩 불명확</span></div>
+          <div class="cat-count">6</div>
+          <div class="cat-examples">스마일드래곤, 모비데이즈, 와이톤, 애드이피션시, 메조미디어(x2)</div>
+        </div>
+        <div class="pre-card">
+          <div class="cat-name"><span class="badge badge-orange">성과 지표 정의 불명확</span></div>
+          <div class="cat-count">3</div>
+          <div class="cat-examples">KT나스미디어, 올리브영 컨설팅파트, 매드업</div>
+        </div>
+        <div class="pre-card">
+          <div class="cat-name"><span class="badge badge-purple">소재 검수 속도/절차</span></div>
+          <div class="cat-count">4</div>
+          <div class="cat-examples">센트럴팜, PTKOREA(x3)</div>
+        </div>
+        <div class="pre-card">
+          <div class="cat-name"><span class="badge badge-gray">정산/가상계좌 시스템</span></div>
+          <div class="cat-count">1 <span class="one-time-tag">일회성 4건 별도</span></div>
+          <div class="cat-examples">이프로애드, 그립클라우드<br><span style="color:#b45309">* 드림인사이트 외 4개사는 4/1 수수료율 오류로 인한 일괄 발생 — 반복 이슈 아님</span></div>
+        </div>
+      </div>
+      <p class="pre-note">사전 분석 기간(2025-11-01~2026-05-11)은 수동 집계. 일회성 이벤트(4/1 정산 오류)는 반복 이슈 집계에서 제외.</p>
+    </div>
+
+    <!-- W20 tab -->
+    <div id="tab-w20" class="tab-pane active">
+      <table class="issue-table">
+        <thead>
+          <tr>
+            <th style="width:160px">카테고리</th>
+            <th style="width:120px">회사</th>
+            <th>내용 요약</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge badge-red">소재/캠페인 삭제 불가</span></td>
+            <td>DMC미디어</td>
+            <td>테스트용으로 생성한 캠페인 삭제 희망. 광고센터에서 삭제 기능 미제공으로 "빠른 시일 내 제공 예정" 안내함.</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-blue">계정/멤버 관리 오류</span></td>
+            <td>나스미디어</td>
+            <td>광고센터에서 카탈로그 연동 시 "이미 등록된 사업자" 에러 발생. 어떤 멤버에게 초대를 요청해야 하는지 안내 없음.</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-blue">계정/멤버 관리 오류</span></td>
+            <td>매드업</td>
+            <td>어노브 협력광고 카탈로그 연동 정상 여부 및 운영 가능 컨디션 확인 요청. 일반 버즈빌 계정 권한 구조 불명확.</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-green">협력광고 구조/온보딩 불명확</span></td>
+            <td>나스미디어(KT)</td>
+            <td>"광고센터/매니지드 차이가 무엇인지? 셀프서빙 형태인지?" 질문. 코웨이 얼음정수기 라이브커머스 검토 중 기본 구조 혼선.</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-green">협력광고 구조/온보딩 불명확</span></td>
+            <td>M2 Digital (로레알파리)</td>
+            <td>올리브영 협력광고 셀프서빙 여부, 계정 생성 방법, 사전 모수 확인 가능 여부 문의.</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-green">협력광고 구조/온보딩 불명확</span></td>
+            <td>M2 Digital (케라스타즈)</td>
+            <td>6월 올영 세일 대비 올리브영 협력광고 고려 중. 1day 캠페인 최소 예산, 이전 히스토리 확인 문의.</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-green">협력광고 구조/온보딩 불명확</span></td>
+            <td>플레이디(데이팩)</td>
+            <td>라이브커머스 부킹 요청 → "예산 100만원 이하는 셀프서빙으로 진행" 안내받음. 셀프서빙 진입 기준을 사전에 인지하지 못함.</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-orange">성과 지표 정의 불명확</span></td>
+            <td>톤28</td>
+            <td>클릭수와 참여수의 데이터 정의 문의. 두 지표의 차이가 광고센터 UI에 명확히 설명되어 있지 않음.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Trend Table -->
+  <div class="section">
+    <h2>카테고리별 누적 트렌드</h2>
+    <p style="font-size:13px;color:#888;margin-bottom:16px">pre: 2025-11 ~ 2026-05-11 수동 집계 / W20: 2026-05-11~05-15</p>
+    <table class="trend-table">
+      <thead>
+        <tr>
+          <th>카테고리</th>
+          <th>pre</th>
+          <th class="current-week">W20</th>
+          <th class="total-col">누적 합계</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="badge badge-red" style="font-size:11px">소재/캠페인 삭제 불가</span></td>
+          <td>3</td>
+          <td class="current-week highlight">1</td>
+          <td class="total-col">4</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-blue" style="font-size:11px">계정/멤버 관리 오류</span></td>
+          <td>2</td>
+          <td class="current-week highlight">2</td>
+          <td class="total-col">4</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-green" style="font-size:11px">협력광고 구조/온보딩 불명확</span></td>
+          <td>6</td>
+          <td class="current-week highlight">4</td>
+          <td class="total-col">10</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-orange" style="font-size:11px">성과 지표 정의 불명확</span></td>
+          <td>3</td>
+          <td class="current-week highlight">1</td>
+          <td class="total-col">4</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-purple" style="font-size:11px">소재 검수 속도/절차</span></td>
+          <td>4</td>
+          <td class="current-week">0</td>
+          <td class="total-col">4</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-gray" style="font-size:11px">정산/가상계좌 시스템</span></td>
+          <td>1 <sup>*</sup></td>
+          <td class="current-week">0</td>
+          <td class="total-col">1</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>합계</td>
+          <td>19</td>
+          <td class="current-week highlight">8</td>
+          <td class="total-col">27</td>
+        </tr>
+      </tfoot>
+    </table>
+    <p class="footnote"><sup>*</sup> 일회성 4건 별도 집계 제외 — 2026-04-01 수수료율 일괄 오류로 인한 드림인사이트 외 4개사 동시 발생. 반복 패턴 아님.</p>
+  </div>
+
+  <!-- Key Conversations -->
+  <div class="section">
+    <h2>주요 대화 발췌 (W20)</h2>
+    <div class="conv-list">
+
+      <div class="conv-item">
+        <div class="conv-header">
+          <div class="conv-title">나스미디어(KT) — 광고센터/매니지드 차이 질문
+            <span class="issue-badge">협력광고 구조/온보딩 불명확</span>
+          </div>
+          <div class="conv-meta">2026-05-15 · to: sales@buzzvil.com</div>
+        </div>
+        <div class="conv-body">
+          <div class="msg">
+            <div class="msg-from">나스미디어 옥다빈 (KT나스미디어)</div>
+            <div class="msg-text">저 광고센터/매니지드 차이가 무엇일지 알수 있을까요? 셀프서버 형태일지요? 집행 플랫폼에 따른 상품간 차이는 없을지도 문의 드립니다!</div>
+          </div>
+          <div class="msg">
+            <div class="msg-from buzzvil">버즈빌 백지환</div>
+            <div class="msg-text reply">광고센터는 셀프서빙 형태로 진행되며, 예산 100만원 이하일 경우 해당됩니다. 광고센터를 통해 집행 시, '유니크 클릭' 기준으로 단가를 적용하는 이점이 있습니다.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="conv-item">
+        <div class="conv-header">
+          <div class="conv-title">M2 Digital — 올리브영 협력광고 셀프서빙 여부 및 계정 생성 문의
+            <span class="issue-badge">협력광고 구조/온보딩 불명확</span>
+          </div>
+          <div class="conv-meta">2026-05-15 · to: sales@buzzvil.com</div>
+        </div>
+        <div class="conv-body">
+          <div class="msg">
+            <div class="msg-from">M2 Digital 정수현</div>
+            <div class="msg-text">1) 올리브영 협력광고는 셀프서빙으로 진행되는 것일지요~? 셀프서빙으로 진행이 된다면 계정 생성 방법 확인 부탁드립니다.<br>2) 아직 운영을 하지 않았지만, 올리브영 조회 모수 확인 가능할 지 문의드립니다.</div>
+          </div>
+          <div class="msg">
+            <div class="msg-from buzzvil">버즈빌 이채은</div>
+            <div class="msg-text reply">말씀주신 것처럼 협력광고는 셀프서빙으로 진행됩니다! 올리브영 협력광고 계정 생성 가이드 전달드립니다.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="conv-item">
+        <div class="conv-header">
+          <div class="conv-title">나스미디어 — 광고센터 카탈로그 연동 '이미 등록된 사업자' 에러
+            <span class="issue-badge">계정/멤버 관리 오류</span>
+          </div>
+          <div class="conv-meta">2026-05-15 · to: sales@buzzvil.com</div>
+        </div>
+        <div class="conv-body">
+          <div class="msg">
+            <div class="msg-from">나스미디어 박진경</div>
+            <div class="msg-text">버즈빌 광고센터에서 카탈로그 연동하려는데 나스미디어는 이미 등록된 사업자로 알럿이 뜹니다. 어떤 멤버에게 초대를 요청해야될지요?</div>
+          </div>
+          <div class="msg">
+            <div class="msg-from buzzvil">버즈빌 백지환</div>
+            <div class="msg-text reply">현재 타 담당자를 통해 나스미디어 비즈니스 그룹 계정이 생성되어 있어서, 가입하신 이메일 주소 공유 주시면 나스미디어 그룹에 매핑 하겠습니다.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <p style="text-align:center;font-size:12px;color:#aaa;margin-top:8px">생성일: 2026-05-15 · 다음 리포트: 2026-05-22 (금 08:00 자동 실행)</p>
+
+</div>
+
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+</script>
+</body>
+</html>

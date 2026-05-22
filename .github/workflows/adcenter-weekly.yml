@@ -1,0 +1,73 @@
+name: 광고센터 주간 문의 분석
+
+on:
+  schedule:
+    # 매주 금요일 08:30 KST = 목요일 23:30 UTC
+    - cron: '30 23 * * 4'
+  workflow_dispatch:  # 수동 실행 버튼
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: scripts/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Run analysis
+        env:
+          GOOGLE_OAUTH_CLIENT_ID: ${{ secrets.GOOGLE_OAUTH_CLIENT_ID }}
+          GOOGLE_OAUTH_CLIENT_SECRET: ${{ secrets.GOOGLE_OAUTH_CLIENT_SECRET }}
+          GOOGLE_OAUTH_REFRESH_TOKEN: ${{ secrets.GOOGLE_OAUTH_REFRESH_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/adcenter_weekly.py
+
+      - name: Commit data files to ad-management-ai
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add out/jetty/adcenter_weekly_data.json out/jetty/adcenter_weekly_*.html
+          git diff --staged --quiet || git commit -m "chore: 광고센터 주간 리포트 자동 업데이트 $(date +'%Y-%m-%d')"
+          git push
+
+      - name: Deploy index.html to GitHub Pages (adcenter-analysis)
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
+          # 최신 HTML 파일 경로 확인
+          HTML_FILE=$(ls out/jetty/adcenter_weekly_*.html | sort | tail -1)
+          CONTENT=$(base64 -w0 "$HTML_FILE")
+
+          # 현재 SHA 조회
+          SHA=$(curl -s -H "Authorization: token $GH_PAT" \
+            "https://api.github.com/repos/JettyCho/adcenter-analysis/contents/index.html" \
+            | python3 -c "import sys,json; print(json.load(sys.stdin).get('sha',''))")
+
+          # 업데이트
+          PAYLOAD=$(python3 -c "
+          import json
+          print(json.dumps({
+            'message': 'chore: 광고센터 주간 리포트 자동 배포 $(date +%Y-%m-%d)',
+            'content': '$CONTENT',
+            'sha': '$SHA'
+          }))
+          ")
+
+          curl -s -X PUT \
+            -H "Authorization: token $GH_PAT" \
+            -H "Content-Type: application/json" \
+            -d "$PAYLOAD" \
+            "https://api.github.com/repos/JettyCho/adcenter-analysis/contents/index.html" \
+            | python3 -c "import sys,json; r=json.load(sys.stdin); print('배포 완료:', r.get('commit',{}).get('sha',''))"
