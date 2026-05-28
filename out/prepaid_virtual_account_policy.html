@@ -345,7 +345,7 @@
     <h3>역할별 권한</h3>
     <div class="role-grid">
       <div class="role-card advertiser">
-        <div class="rc-head"><span class="rc-icon">🏢</span>계정 책임자</div>
+        <div class="rc-head"><span class="rc-icon">🏢</span><div><div>계정 책임자</div><div style="font-size:11px;font-weight:400;opacity:0.75;margin-top:1px;">광고계정의 소유주</div></div></div>
         <div class="rc-body">
           <div class="rc-item"><span class="rc-owner">★</span>가상계좌 발급</div>
           <div class="rc-item"><span class="rc-ok">✓</span>충전</div>
@@ -873,6 +873,7 @@
 <script>
   document.querySelectorAll('.tip-icon').forEach(icon => {
     const box = icon.nextElementSibling;
+    document.body.appendChild(box); // body로 이동 — stacking context 완전 우회
     icon.addEventListener('mouseenter', () => {
       box.style.display = 'block';
       const ir = icon.getBoundingClientRect();
