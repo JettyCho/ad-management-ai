@@ -166,9 +166,11 @@
       border: 2px solid;
     }
     .gate-item.required { border-color: var(--primary); background: var(--primary-light); }
+    .gate-item.important { border-color: var(--warning); background: var(--warning-light); }
     .gate-item.optional { border-color: var(--gray-200); background: white; }
     .gate-item .gt-label { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
     .gate-item.required .gt-label { color: var(--primary); }
+    .gate-item.important .gt-label { color: var(--warning); }
     .gate-item.optional .gt-label { color: var(--gray-400); }
     .gate-item .gt-text { font-size: 14px; font-weight: 600; color: var(--gray-900); }
     .gate-item .gt-sub { font-size: 12px; color: var(--gray-500); margin-top: 4px; }
@@ -351,10 +353,10 @@
 
     <h3>광고 집행 게이팅 조건</h3>
     <div class="gate-box">
-      <div class="gate-item required">
-        <div class="gt-label">필수</div>
+      <div class="gate-item important">
+        <div class="gt-label">중요</div>
         <div class="gt-text">세금계산서 수신처 설정</div>
-        <div class="gt-sub">미설정 시 광고 집행 불가</div>
+        <div class="gt-sub">미설정 시 세금계산서 발행 불가</div>
       </div>
       <div class="gate-item optional">
         <div class="gt-label">선택</div>
@@ -467,11 +469,11 @@
       </div>
     </div>
 
-    <div class="callout callout-danger">
-      <div class="co-icon">🚫</div>
+    <div class="callout callout-warn">
+      <div class="co-icon">📋</div>
       <div class="co-body">
-        <strong>세금계산서 수신처 미설정 시 광고 집행 차단</strong>
-        <p>월 말일까지 ①②③이 완료되지 않으면 해당 광고계정의 광고 집행이 차단된다. 세금계산서 수신처(②)는 필수 조건이며, 환불 계좌(④)는 선택 사항이다.</p>
+        <strong>세금계산서 수신처 미설정 시 세금계산서 발행 불가</strong>
+        <p>월 말일까지 ①②③이 완료되지 않으면 해당 월의 세금계산서를 발행할 수 없다. 광고 집행이 별도로 차단되지는 않는다. 환불 계좌(④)는 선택 사항으로, 환불 신청 전까지만 등록하면 된다.</p>
       </div>
     </div>
   </section>
