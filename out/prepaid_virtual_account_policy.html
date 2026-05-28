@@ -265,6 +265,28 @@
 
     ul.plist { padding-left: 18px; margin: 6px 0; }
     ul.plist li { font-size: 13px; color: var(--gray-700); margin-bottom: 3px; }
+
+    /* 타사 비교 툴팁 */
+    .tip { display: inline-flex; align-items: center; position: relative; vertical-align: middle; }
+    .tip-icon {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: var(--primary); color: white;
+      font-size: 11px; font-weight: 700; cursor: help;
+      flex-shrink: 0; margin-left: 5px; line-height: 1; user-select: none;
+    }
+    .tip-box {
+      position: absolute; bottom: calc(100% + 8px); left: 0;
+      width: 264px; background: white;
+      border: 1px solid var(--gray-200); border-radius: 8px;
+      padding: 10px 13px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.13);
+      font-size: 13px; line-height: 1.6; color: var(--gray-700);
+      z-index: 300; display: none; pointer-events: none;
+      text-align: left; font-weight: 400; white-space: normal;
+    }
+    .tip-box .tq { color: var(--primary); font-weight: 700; margin-bottom: 5px; font-size: 12px; display: block; }
+    .tip:hover .tip-box { display: block; }
   </style>
 </head>
 <body>
@@ -392,8 +414,8 @@
       <tr><th>항목</th><th>내용</th></tr>
       <tr><td>발급 권한</td><td><strong>계정 책임자만</strong> 가능</td></tr>
       <tr><td>발급 단위</td><td>광고계정 1개 = 가상계좌 1개</td></tr>
-      <tr><td>변경 가능 여부</td><td><strong>변경 불가</strong> (발급 후 고정)</td></tr>
-      <tr><td>예금주</td><td>(주)버즈빌 — 신한은행 벌크 발급 시 고정. 정산 담당자 식별 목적으로만 활용</td></tr>
+      <tr><td>변경 가능 여부</td><td><strong>변경 불가</strong><span class="tip"><span class="tip-icon">ⓘ</span><span class="tip-box"><span class="tq">❓ 계좌 번호를 바꿀 수 없나요?</span>신한은행 벌크 풀에서 1회 할당 후 고정됩니다. PG 실시간 발급 방식이었다면 재발급이 가능했겠지만, 현재 구조에서는 변경 불가입니다.</span></span> (발급 후 고정)</td></tr>
+      <tr><td>예금주</td><td>(주)버즈빌<span class="tip"><span class="tip-icon">ⓘ</span><span class="tip-box"><span class="tq">❓ 영수증에 '버즈빌'로 표시돼도 되나요?</span>신한은행 벌크 발급 구조상 계약 주체인 버즈빌로 고정됩니다. 향후 PG 가상계좌 전환 시 광고주명 표시로 변경 가능합니다.</span></span> — 신한은행 벌크 발급 시 고정. 정산 담당자 식별 목적으로만 활용</td></tr>
       <tr><td>사전 조건</td><td>계정 책임자의 비즈니스 정보(사업자등록증) 승인 완료</td></tr>
     </table>
 
@@ -414,7 +436,7 @@
 
     <table>
       <tr><th>항목</th><th>내용</th></tr>
-      <tr><td>충전 주체</td><td>광고계정 내 <strong>누구나</strong> — 계정 책임자, 대행사, 정산 담당자 모두 가능</td></tr>
+      <tr><td>충전 주체</td><td>광고계정 내 <strong>누구나</strong><span class="tip"><span class="tip-icon">ⓘ</span><span class="tip-box"><span class="tq">❓ 계정 책임자가 아니어도 충전할 수 있나요?</span>네이버 GFA도 동일 구조입니다 — 계좌 발급은 계정 책임자만, 이후 충전은 운영관리 권한이면 누구나 가능합니다.</span></span> — 계정 책임자, 대행사, 정산 담당자 모두 가능</td></tr>
       <tr><td>충전 방법</td><td>발급된 신한은행 가상계좌로 은행 이체</td></tr>
       <tr><td>충전 즉시 반영</td><td>신한은행 웹훅 → 광고머니 자동 반영</td></tr>
     </table>
@@ -505,7 +527,7 @@
       <div class="flow-row">
         <div class="fc-left"><div class="fc-circle">3</div><div class="fc-line"></div></div>
         <div class="fc-content">
-          <div class="fc-title">계정 책임자 승인</div>
+          <div class="fc-title">계정 책임자 승인<span class="tip"><span class="tip-icon">ⓘ</span><span class="tip-box"><span class="tq">❓ 대행사가 직접 설정·변경할 수 없나요?</span>네이버 GFA는 계정 책임자만 환불 계좌 설정 가능 (대행사 신청 자체 불가). 버즈빌은 대행사 신청 + 계정 책임자 승인으로 더 유연한 구조입니다.</span></span></div>
           <div class="fc-body">이메일 알림 수신 → 광고센터에서 승인/거부</div>
         </div>
       </div>
@@ -524,7 +546,7 @@
         <div class="rm-dot active">P1</div>
         <div class="rm-tag now">현재</div>
         <div class="rm-label active">Phase 1</div>
-        <div class="rm-desc">계좌사본 인증<br>(서류 수동 확인)</div>
+        <div class="rm-desc">계좌사본 인증<br>(서류 수동 확인)<span class="tip"><span class="tip-icon">ⓘ</span><span class="tip-box"><span class="tq">❓ 왜 자동 검증이 안 되나요?</span>네이버 GFA는 API로 즉시 예금주 검증. 버즈빌은 신한은행 계좌실명조회 API 계약 전이므로 서류 방식으로 시작, 단계적 자동화 예정입니다.</span></span></div>
       </div>
       <div style="color:var(--gray-300);font-size:21px;padding-top:10px;flex-shrink:0;">→</div>
       <div class="rm-phase">
@@ -598,7 +620,7 @@
     <table>
       <tr><th>항목</th><th>정책</th></tr>
       <tr><td>환불 신청 주체</td><td>광고계정 내 <strong>누구나</strong> 신청 가능</td></tr>
-      <tr><td>환불 단위</td><td><strong>전액 환불만</strong> — 부분 환불 불가</td></tr>
+      <tr><td>환불 단위</td><td><strong>전액 환불만</strong><span class="tip"><span class="tip-icon">ⓘ</span><span class="tip-box"><span class="tq">❓ 일부만 환불할 수 없나요?</span>네이버는 이관 등 이벤트 시 광고 연속성을 위해 부분 환불 지원. 버즈빌은 광고 일시 중단이 큰 문제 없으므로 전액 환불로 프로세스를 단순화했습니다.</span></span> — 부분 환불 불가</td></tr>
       <tr><td>환불 계좌</td><td>사전 등록된 환불 계좌로만 지급 (다른 계좌 지정 불가)</td></tr>
       <tr><td>광고 집행</td><td>환불 신청 즉시 <strong>광고 집행 중단</strong></td></tr>
       <tr><td>무상 광고머니</td><td>버즈빌 제공 크레딧은 환불 불가 — 만료 시 소멸 <span class="tag tag-pend">만료 기준일 협의</span></td></tr>
@@ -626,7 +648,7 @@
       </div>
     </div>
 
-    <h3>Phase 1 — 신한은행 가상계좌</h3>
+    <h3>Phase 1 — 신한은행 가상계좌<span class="tip"><span class="tip-icon">ⓘ</span><span class="tip-box"><span class="tq">❓ 왜 PG 가상계좌가 아닌가요?</span>PG사가 광고업 특성(비가시적 상품·고금액·환불 다수)을 이유로 거절하였습니다. 이에 신한은행과 직계약으로 전환. 카드결제(KISPG)는 별도 연동 예정입니다.</span></span></h3>
     <ul class="plist">
       <li>BM팀이 신한은행으로부터 300개 단위 벌크 발급 → 시스템 풀에 등록</li>
       <li>계정 책임자 최초 신청 시 풀에서 자동 할당</li>
