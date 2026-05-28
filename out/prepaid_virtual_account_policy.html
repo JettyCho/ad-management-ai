@@ -322,23 +322,23 @@
     <h3>역할별 권한</h3>
     <div class="role-grid">
       <div class="role-card advertiser">
-        <div class="rc-head"><span class="rc-icon">🏢</span>광고주</div>
+        <div class="rc-head"><span class="rc-icon">🏢</span>계정 책임자</div>
         <div class="rc-body">
           <div class="rc-item"><span class="rc-owner">★</span>가상계좌 발급</div>
           <div class="rc-item"><span class="rc-ok">✓</span>충전</div>
           <div class="rc-item"><span class="rc-owner">★</span>환불 계좌 등록·승인</div>
           <div class="rc-item"><span class="rc-ok">✓</span>환불 신청</div>
-          <div class="rc-owner" style="font-size:11px;padding:8px 0 2px;display:block;">★ 광고주 단독 권한</div>
+          <div class="rc-owner" style="font-size:11px;padding:8px 0 2px;display:block;">★ 계정 책임자 단독 권한</div>
         </div>
       </div>
       <div class="role-card agency">
-        <div class="rc-head"><span class="rc-icon">🤝</span>대행사</div>
+        <div class="rc-head"><span class="rc-icon">🤝</span>초대받은 대행사</div>
         <div class="rc-body">
           <div class="rc-item"><span class="rc-no">—</span>가상계좌 발급 불가</div>
           <div class="rc-item"><span class="rc-ok">✓</span>충전</div>
           <div class="rc-item"><span class="rc-ok">✓</span>환불 계좌 등록 신청</div>
           <div class="rc-item"><span class="rc-ok">✓</span>환불 신청</div>
-          <div style="font-size:11px;color:var(--gray-400);padding-top:8px;">환불 계좌 등록은 광고주 승인 필요</div>
+          <div style="font-size:11px;color:var(--gray-400);padding-top:8px;">환불 계좌 등록은 계정 책임자 승인 필요</div>
         </div>
       </div>
       <div class="role-card billing">
@@ -346,7 +346,7 @@
         <div class="rc-body">
           <div class="rc-item"><span class="rc-owner">★</span>정산금액 검토 및 확정 (고유 권한)</div>
           <div class="rc-item" style="border-bottom:none;color:var(--gray-500);">그 외 권한은 소속 그룹과 동일</div>
-          <div style="font-size:11px;color:var(--gray-400);padding-top:8px;">광고주·대행사 중 누구든 1명 지정<br>별도 위계가 아닌 역할 구분</div>
+          <div style="font-size:11px;color:var(--gray-400);padding-top:8px;">계정 책임자·초대받은 대행사 중 누구든 1명 지정<br>별도 위계가 아닌 역할 구분</div>
         </div>
       </div>
     </div>
@@ -373,11 +373,11 @@
     <h3>정책 한눈에 보기</h3>
     <table>
       <tr><th>항목</th><th>정책</th></tr>
-      <tr><td>가상계좌 발급</td><td><strong>광고주만</strong> 가능 / 광고계정당 1개, 변경 불가</td></tr>
+      <tr><td>가상계좌 발급</td><td><strong>계정 책임자만</strong> 가능 / 광고계정당 1개, 변경 불가</td></tr>
       <tr><td>가상계좌 예금주</td><td><strong>(주)버즈빌</strong> (신한은행 벌크 발급 고정)</td></tr>
-      <tr><td>충전 주체</td><td>광고계정 내 <strong>누구나</strong> 가능 (광고주·대행사)</td></tr>
-      <tr><td>환불 계좌 등록</td><td>대행사 신청 → <strong>광고주 승인</strong> / 신한은행 계좌실명조회 API 인증 필수</td></tr>
-      <tr><td>환불 계좌 변경</td><td><strong>변경도 승인제</strong> (광고주 승인 필수)</td></tr>
+      <tr><td>충전 주체</td><td>광고계정 내 <strong>누구나</strong> 가능 (계정 책임자·초대받은 대행사)</td></tr>
+      <tr><td>환불 계좌 등록</td><td>대행사 신청 → 계좌 인증 → <strong>계정 책임자 승인</strong> / 인증 방식 단계별 고도화 예정</td></tr>
+      <tr><td>환불 계좌 변경</td><td><strong>변경도 승인제</strong> (계정 책임자 승인 필수)</td></tr>
       <tr><td>환불 방식</td><td><strong>전액 환불만</strong> (부분 환불 불가) / 환불 즉시 광고 중단</td></tr>
       <tr><td>세금계산서</td><td>계정 단위 사전 설정 / <strong>위임발행 지원</strong> (대행사 앞으로 발행 가능)</td></tr>
       <tr><td>입금 감지</td><td>신한은행 실시간 웹훅 콜백 <span class="tag tag-impl">구현 완료</span></td></tr>
@@ -390,11 +390,11 @@
 
     <table>
       <tr><th>항목</th><th>내용</th></tr>
-      <tr><td>발급 권한</td><td><strong>광고주만</strong> 가능</td></tr>
+      <tr><td>발급 권한</td><td><strong>계정 책임자만</strong> 가능</td></tr>
       <tr><td>발급 단위</td><td>광고계정 1개 = 가상계좌 1개</td></tr>
       <tr><td>변경 가능 여부</td><td><strong>변경 불가</strong> (발급 후 고정)</td></tr>
       <tr><td>예금주</td><td>(주)버즈빌 — 신한은행 벌크 발급 시 고정. 정산 담당자 식별 목적으로만 활용</td></tr>
-      <tr><td>사전 조건</td><td>광고주의 비즈니스 정보(사업자등록증) 승인 완료</td></tr>
+      <tr><td>사전 조건</td><td>계정 책임자의 비즈니스 정보(사업자등록증) 승인 완료</td></tr>
     </table>
 
     <div class="callout callout-warn">
@@ -414,7 +414,7 @@
 
     <table>
       <tr><th>항목</th><th>내용</th></tr>
-      <tr><td>충전 주체</td><td>광고계정 내 <strong>누구나</strong> — 광고주, 대행사, 정산 담당자 모두 가능</td></tr>
+      <tr><td>충전 주체</td><td>광고계정 내 <strong>누구나</strong> — 계정 책임자, 대행사, 정산 담당자 모두 가능</td></tr>
       <tr><td>충전 방법</td><td>발급된 신한은행 가상계좌로 은행 이체</td></tr>
       <tr><td>충전 즉시 반영</td><td>신한은행 웹훅 → 광고머니 자동 반영</td></tr>
     </table>
@@ -423,7 +423,7 @@
       <div class="co-icon">💡</div>
       <div class="co-body">
         <strong>실무 관행</strong>
-        <p>대행사가 운영을 대행하는 경우 일반적으로 대행사가 대행사 자금으로 충전하고 환불도 대행사가 수령한다. 광고주가 직접 충전하는 것도 기술적으로 가능하나, 환불은 등록된 환불 계좌로만 나간다.</p>
+        <p>대행사가 운영을 대행하는 경우 일반적으로 대행사가 대행사 자금으로 충전하고 환불도 대행사가 수령한다. 계정 책임자가 직접 충전하는 것도 기술적으로 가능하나, 환불은 등록된 환불 계좌로만 나간다.</p>
       </div>
     </div>
   </section>
@@ -432,7 +432,7 @@
   <section id="s5">
     <h2><span class="sn">5</span>대행권 설정 <span class="tag tag-new">신규 기능</span></h2>
 
-    <p>대행사와 함께 광고계정을 운영하고 선불충전을 사용할 때, 정산에 필요한 정보를 설정하는 기능이다. <strong>세금계산서 수신처 설정이 완료되어야 광고 집행이 가능하다.</strong></p>
+    <p>대행사와 함께 광고계정을 운영하고 선불충전을 사용할 때, 정산에 필요한 정보를 설정하는 기능이다. 세금계산서 수신처 미설정 시 광고 집행은 가능하지만 <strong>해당 월 세금계산서를 발행할 수 없다.</strong></p>
 
     <div class="flow-box">
       <div class="flow-row">
@@ -446,9 +446,9 @@
         <div class="fc-left"><div class="fc-circle">②</div><div class="fc-line"></div></div>
         <div class="fc-content">
           <div class="fc-title">세금계산서 수신처 설정 <span class="tag tag-req">필수</span></div>
-          <div class="fc-body">광고주 직접 수신 또는 대행사 위임발행 선택</div>
+          <div class="fc-body">계정 책임자 직접 수신 또는 대행사 위임발행 선택</div>
           <div class="fc-branch">
-            <div class="bi">광고주 직접 수신 → 광고주 앞으로 발행</div>
+            <div class="bi">계정 책임자 직접 수신 → 계정 책임자 앞으로 발행</div>
             <div class="bi">대행사 위임발행 → 대행사 앞으로 발행</div>
           </div>
         </div>
@@ -457,14 +457,14 @@
         <div class="fc-left"><div class="fc-circle">③</div><div class="fc-line"></div></div>
         <div class="fc-content">
           <div class="fc-title">정산 담당자 지정</div>
-          <div class="fc-body">광고주 또는 대행사 중 1명 지정 — 정산금액 검토 및 확정 담당</div>
+          <div class="fc-body">계정 책임자 또는 대행사 중 1명 지정 — 정산금액 검토 및 확정 담당</div>
         </div>
       </div>
       <div class="flow-row">
         <div class="fc-left"><div class="fc-circle gray">④</div></div>
         <div class="fc-content">
           <div class="fc-title">환불 계좌 등록 <span class="tag tag-opt">선택</span></div>
-          <div class="fc-body">대행사가 신청 → 광고주 승인 → 신한은행 계좌실명조회 인증 (환불 신청 전까지 등록)</div>
+          <div class="fc-body">대행사가 신청 → 계정 책임자 승인 → 신한은행 계좌실명조회 인증 (환불 신청 전까지 등록)</div>
         </div>
       </div>
     </div>
@@ -494,18 +494,18 @@
       <div class="flow-row">
         <div class="fc-left"><div class="fc-circle">2</div><div class="fc-line"></div></div>
         <div class="fc-content">
-          <div class="fc-title">신한은행 계좌실명조회 API 자동 인증 <span class="tag tag-new">신규 개발</span></div>
-          <div class="fc-body">입력한 계좌의 예금주명 조회 → 등록 신청자 비즈그룹 사업자명/대표자명과 일치 확인</div>
+          <div class="fc-title">계좌 인증 <span class="tag tag-new">단계별 고도화</span></div>
+          <div class="fc-body">등록 신청자 비즈그룹 사업자명/대표자명과 계좌 일치 확인 (인증 방식은 아래 로드맵 참조)</div>
           <div class="fc-branch">
-            <div class="bi">일치 → 인증 통과, 광고주 승인 요청으로 진행</div>
-            <div class="bi">불일치 → 등록 불가 안내</div>
+            <div class="bi">인증 통과 → 계정 책임자 승인 요청으로 진행</div>
+            <div class="bi">인증 실패 → 등록 불가 안내</div>
           </div>
         </div>
       </div>
       <div class="flow-row">
         <div class="fc-left"><div class="fc-circle">3</div><div class="fc-line"></div></div>
         <div class="fc-content">
-          <div class="fc-title">광고주 승인</div>
+          <div class="fc-title">계정 책임자 승인</div>
           <div class="fc-body">이메일 알림 수신 → 광고센터에서 승인/거부</div>
         </div>
       </div>
@@ -518,22 +518,46 @@
       </div>
     </div>
 
+    <h3>계좌 인증 단계별 로드맵</h3>
+    <div style="display:flex;align-items:flex-start;gap:0;margin:16px 0;">
+      <div class="rm-phase">
+        <div class="rm-dot active">P1</div>
+        <div class="rm-tag now">현재</div>
+        <div class="rm-label active">Phase 1</div>
+        <div class="rm-desc">계좌사본 인증<br>(서류 수동 확인)</div>
+      </div>
+      <div style="color:var(--gray-300);font-size:21px;padding-top:10px;flex-shrink:0;">→</div>
+      <div class="rm-phase">
+        <div class="rm-dot pending">P2</div>
+        <div class="rm-tag cond">예정</div>
+        <div class="rm-label pending">Phase 2</div>
+        <div class="rm-desc">계좌실명조회 API<br>(신한은행 자동 인증)</div>
+      </div>
+      <div style="color:var(--gray-300);font-size:21px;padding-top:10px;flex-shrink:0;">→</div>
+      <div class="rm-phase">
+        <div class="rm-dot pending">P3</div>
+        <div class="rm-tag cond">장기</div>
+        <div class="rm-label pending">Phase 3</div>
+        <div class="rm-desc">유저 실명인증 +<br>계좌실명조회 API</div>
+      </div>
+    </div>
+
     <h3>변경 정책</h3>
     <div class="callout callout-danger">
       <div class="co-icon">🔒</div>
       <div class="co-body">
-        <strong>환불 계좌 변경도 광고주 승인 필수</strong>
-        <p>변경 시 동일한 승인 절차를 반복한다. 변경 이벤트 발생 시 광고주에게 이메일 + SMS로 즉시 통보. 본인이 요청하지 않은 경우 즉시 고객센터에 연락하도록 안내.</p>
+        <strong>환불 계좌 변경도 계정 책임자 승인 필수</strong>
+        <p>변경 시 동일한 승인 절차를 반복한다. 변경 이벤트 발생 시 계정 책임자에게 이메일 + SMS로 즉시 통보. 본인이 요청하지 않은 경우 즉시 고객센터에 연락하도록 안내.</p>
       </div>
     </div>
 
     <h3>알림 정책</h3>
     <table>
       <tr><th>이벤트</th><th>알림 대상</th><th>채널</th></tr>
-      <tr><td>환불 계좌 등록 신청</td><td>광고주</td><td>이메일 + 광고센터 알림</td></tr>
+      <tr><td>환불 계좌 등록 신청</td><td>계정 책임자</td><td>이메일 + 광고센터 알림</td></tr>
       <tr><td>등록 승인 완료</td><td>대행사(신청자)</td><td>이메일</td></tr>
-      <tr><td>환불 계좌 <strong>변경</strong></td><td>광고주 + 기존 등록자</td><td><strong>이메일 + SMS</strong><span class="alert-sms">SMS 미구현</span></td></tr>
-      <tr><td>환불 실행</td><td>광고주 + 정산 담당자</td><td>이메일</td></tr>
+      <tr><td>환불 계좌 <strong>변경</strong></td><td>계정 책임자 + 기존 등록자</td><td><strong>이메일 + SMS</strong><span class="alert-sms">SMS 미구현</span></td></tr>
+      <tr><td>환불 실행</td><td>계정 책임자 + 정산 담당자</td><td>이메일</td></tr>
     </table>
 
     <div class="callout callout-warn">
@@ -562,7 +586,7 @@
       <div class="co-icon">📋</div>
       <div class="co-body">
         <strong>위임발행 구조</strong>
-        <p>대행사 앞으로 위임발행 선택 시, 버즈빌이 대행사 사업자등록번호로 세금계산서를 발행한다. 대행사가 이를 광고주에게 재청구하거나 자사 비용으로 처리한다. 위임발행의 세법 적합성은 법무팀 확인 필요.</p>
+        <p>대행사 앞으로 위임발행 선택 시, 버즈빌이 대행사 사업자등록번호로 세금계산서를 발행한다. 대행사가 이를 계정 책임자에게 재청구하거나 자사 비용으로 처리한다. 위임발행의 세법 적합성은 법무팀 확인 필요.</p>
       </div>
     </div>
   </section>
@@ -605,7 +629,7 @@
     <h3>Phase 1 — 신한은행 가상계좌</h3>
     <ul class="plist">
       <li>BM팀이 신한은행으로부터 300개 단위 벌크 발급 → 시스템 풀에 등록</li>
-      <li>광고주 최초 신청 시 풀에서 자동 할당</li>
+      <li>계정 책임자 최초 신청 시 풀에서 자동 할당</li>
       <li>입금 감지: 신한은행 실시간 웹훅 <span class="tag tag-impl">구현 완료</span></li>
     </ul>
 
@@ -621,10 +645,10 @@
   <section id="s10">
     <h2><span class="sn">10</span>이관(Transfer) 정책</h2>
 
-    <p>대행사 교체, 대행사 → 광고주 직접 전환 등 정산 담당자 또는 세금계산서 수신처가 변경되는 경우 이관 기능을 통해 처리한다.</p>
+    <p>대행사 교체, 대행사 → 계정 책임자 직접 전환 등 정산 담당자 또는 세금계산서 수신처가 변경되는 경우 이관 기능을 통해 처리한다.</p>
 
     <div class="transfer-steps">
-      <div class="ts"><div class="tn">1</div><div class="tt">이관 신청<br>광고주 동의<br>ADM팀 확인</div></div>
+      <div class="ts"><div class="tn">1</div><div class="tt">이관 신청<br>이관 유형 선택<br>(대행사 교체/<br>직접 운영)</div></div>
       <div class="ts-arrow">→</div>
       <div class="ts danger"><div class="tn">2</div><div class="tt">광고 집행<br>즉시 중단</div></div>
       <div class="ts-arrow">→</div>
@@ -640,8 +664,11 @@
     <div class="callout callout-purple">
       <div class="co-icon">📋</div>
       <div class="co-body">
-        <strong>이관 UI 체크리스트 필요</strong>
-        <p>이관 시 환불 계좌 삭제, 세금계산서 수신처 변경, 정산 담당자 재지정을 순서대로 빠짐없이 처리할 수 있도록 체크리스트 형태의 UI 안내가 필요하다. 누락 시 세금계산서 오발행 또는 환불 계좌 오지급 문제 발생.</p>
+        <strong>이관 UI 설계 필요</strong>
+        <p>이관 시작 화면에서 이관 유형을 먼저 선택해야 한다.</p>
+        <p>① <strong>대행사 교체</strong> — 새 대행사 멤버를 초대하여 대행사를 지정하는 화면 필요</p>
+        <p>② <strong>계정 책임자 직접 운영 전환</strong> — 대행사 연결 해제 후 계정 책임자가 직접 운영</p>
+        <p>이후 환불 계좌 삭제 → 세금계산서 수신처 변경 → 정산 담당자 재지정 순서로 체크리스트 형태 안내 필요. 누락 시 세금계산서 오발행 또는 환불 계좌 오지급 문제 발생.</p>
       </div>
     </div>
   </section>
@@ -671,12 +698,12 @@
       </div>
       <div class="flow-row">
         <div class="fc-left"><div class="fc-circle orange">3</div><div class="fc-line"></div></div>
-        <div class="fc-content"><div class="fc-title">해당 광고계정 광고주에게 사실 통보 및 동의 요청</div></div>
+        <div class="fc-content"><div class="fc-title">해당 광고계정 계정 책임자에게 사실 통보 및 동의 요청</div></div>
       </div>
       <div class="flow-row">
         <div class="fc-left"><div class="fc-circle green">4</div></div>
         <div class="fc-content">
-          <div class="fc-title">광고주 동의 시 → 등록된 환불 계좌로 환불 처리</div>
+          <div class="fc-title">계정 책임자 동의 시 → 등록된 환불 계좌로 환불 처리</div>
           <div class="fc-body">⚠️ 잘못 입금한 사람에게 직접 환불 불가 — 약관 명시 필요</div>
         </div>
       </div>
@@ -692,7 +719,7 @@
       <tr>
         <td>가상계좌 신청 접수</td>
         <td style="color:var(--gray-400);">Sales팀이 Google Sheets 수동 입력</td>
-        <td class="ok">광고주가 광고센터에서 직접 신청 → BM팀 알림 자동</td>
+        <td class="ok">계정 책임자가 광고센터에서 직접 신청 → BM팀 알림 자동</td>
       </tr>
       <tr>
         <td>사업자등록증 수령</td>
@@ -712,7 +739,7 @@
       <tr>
         <td>환불 계좌 등록 승인</td>
         <td style="color:var(--gray-400);">해당 없음</td>
-        <td class="new-feat">광고주가 직접 광고센터에서 승인 (BM팀 불개입)</td>
+        <td class="new-feat">계정 책임자가 직접 광고센터에서 승인 (BM팀 불개입)</td>
       </tr>
       <tr>
         <td>벌크 발주</td>
@@ -745,7 +772,7 @@
       </div>
       <div class="pg-item">
         <div class="pg-dot urg"></div>
-        <div class="pg-text">세금계산서 수신처 미설정 시 광고 집행 차단 로직 설계 및 UX 확정</div>
+        <div class="pg-text">세금계산서 수신처 미설정 상태 고지 UX 설계 (광고 집행 차단 없음, 세금계산서 발행 불가 안내 방식)</div>
         <div class="pg-owner">ADM팀</div>
       </div>
       <div class="pg-item">
