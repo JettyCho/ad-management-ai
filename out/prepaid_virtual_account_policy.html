@@ -267,26 +267,27 @@
     ul.plist li { font-size: 13px; color: var(--gray-700); margin-bottom: 3px; }
 
     /* 타사 비교 툴팁 */
-    .tip { display: inline-flex; align-items: center; position: relative; vertical-align: middle; }
+    .tip { display: inline-flex; align-items: center; vertical-align: middle; }
     .tip-icon {
       display: inline-flex; align-items: center; justify-content: center;
-      width: 16px; height: 16px; border-radius: 50%;
+      width: 20px; height: 20px; border-radius: 50%;
       background: var(--primary); color: white;
-      font-size: 11px; font-weight: 700; cursor: help;
-      flex-shrink: 0; margin-left: 5px; line-height: 1; user-select: none;
+      font-size: 12px; font-weight: 700; cursor: help;
+      flex-shrink: 0; margin-left: 6px; line-height: 1; user-select: none;
+      box-shadow: 0 1px 4px rgba(26,86,219,0.35);
     }
+    .tip-icon:hover { background: var(--primary-dark); }
     .tip-box {
-      position: absolute; bottom: calc(100% + 8px); left: 0;
-      width: 264px; background: white;
+      position: fixed;
+      width: 272px; background: white;
       border: 1px solid var(--gray-200); border-radius: 8px;
-      padding: 10px 13px;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.13);
+      padding: 11px 14px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.14);
       font-size: 13px; line-height: 1.6; color: var(--gray-700);
-      z-index: 300; display: none; pointer-events: none;
+      z-index: 9999; display: none; pointer-events: none;
       text-align: left; font-weight: 400; white-space: normal;
     }
     .tip-box .tq { color: var(--primary); font-weight: 700; margin-bottom: 5px; font-size: 12px; display: block; }
-    .tip:hover .tip-box { display: block; }
   </style>
 </head>
 <body>
@@ -869,5 +870,22 @@
   </section>
 
 </main>
+<script>
+  document.querySelectorAll('.tip-icon').forEach(icon => {
+    const box = icon.nextElementSibling;
+    icon.addEventListener('mouseenter', () => {
+      box.style.display = 'block';
+      const ir = icon.getBoundingClientRect();
+      const br = box.getBoundingClientRect();
+      const left = Math.min(ir.left, window.innerWidth - br.width - 12);
+      const top = ir.top - br.height - 10;
+      box.style.left = Math.max(8, left) + 'px';
+      box.style.top = (top < 8 ? ir.bottom + 8 : top) + 'px';
+    });
+    icon.addEventListener('mouseleave', () => {
+      box.style.display = 'none';
+    });
+  });
+</script>
 </body>
 </html>
