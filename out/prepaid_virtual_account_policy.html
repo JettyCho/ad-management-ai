@@ -29,7 +29,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans KR', 'Segoe UI', sans-serif;
-      font-size: 14px;
+      font-size: 15px;
       line-height: 1.7;
       color: var(--gray-900);
       background: var(--gray-50);
@@ -53,24 +53,24 @@
       border-bottom: 1px solid var(--gray-200);
       margin-bottom: 12px;
     }
-    nav .logo h2 { font-size: 12px; font-weight: 700; color: var(--primary); line-height: 1.4; }
-    nav .logo .ver { font-size: 11px; color: var(--gray-400); background: var(--gray-100); padding: 2px 6px; border-radius: 4px; display: inline-block; margin-top: 4px; }
+    nav .logo h2 { font-size: 13px; font-weight: 700; color: var(--primary); line-height: 1.4; }
+    nav .logo .ver { font-size: 12px; color: var(--gray-400); background: var(--gray-100); padding: 2px 6px; border-radius: 4px; display: inline-block; margin-top: 4px; }
     nav ul { list-style: none; }
     nav ul li a {
       display: block; padding: 5px 16px;
-      font-size: 12px; color: var(--gray-700); text-decoration: none;
+      font-size: 13px; color: var(--gray-700); text-decoration: none;
       border-left: 2px solid transparent; transition: all 0.15s;
     }
     nav ul li a:hover { color: var(--primary); background: var(--primary-light); border-left-color: var(--primary); }
-    nav ul li.group { padding: 12px 16px 4px; font-size: 10px; font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.06em; }
+    nav ul li.group { padding: 12px 16px 4px; font-size: 11px; font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.06em; }
 
     /* 메인 */
     main { flex: 1; padding: 40px 48px; max-width: 880px; }
 
     .doc-header { margin-bottom: 36px; padding-bottom: 20px; border-bottom: 2px solid var(--gray-200); }
-    .doc-header h1 { font-size: 22px; font-weight: 800; color: var(--gray-900); line-height: 1.3; margin-bottom: 12px; }
+    .doc-header h1 { font-size: 23px; font-weight: 800; color: var(--gray-900); line-height: 1.3; margin-bottom: 12px; }
     .doc-meta { display: flex; gap: 8px; flex-wrap: wrap; }
-    .badge { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 10px; }
+    .badge { font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 10px; }
     .badge-blue { background: var(--primary-light); color: var(--primary); }
     .badge-green { background: var(--accent-light); color: var(--accent); }
     .badge-gray { background: var(--gray-100); color: var(--gray-500); }
@@ -79,17 +79,17 @@
 
     section { margin-bottom: 44px; scroll-margin-top: 24px; }
     h2 {
-      font-size: 17px; font-weight: 700; color: var(--gray-900);
+      font-size: 18px; font-weight: 700; color: var(--gray-900);
       margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--gray-200);
       display: flex; align-items: center; gap: 10px;
     }
     h2 .sn {
       display: inline-flex; align-items: center; justify-content: center;
       width: 26px; height: 26px; background: var(--primary); color: white;
-      border-radius: 50%; font-size: 12px; font-weight: 700; flex-shrink: 0;
+      border-radius: 50%; font-size: 13px; font-weight: 700; flex-shrink: 0;
     }
-    h3 { font-size: 14px; font-weight: 700; color: var(--gray-900); margin: 20px 0 8px; }
-    p { margin-bottom: 8px; color: var(--gray-700); font-size: 13px; }
+    h3 { font-size: 15px; font-weight: 700; color: var(--gray-900); margin: 20px 0 8px; }
+    p { margin-bottom: 8px; color: var(--gray-700); font-size: 14px; }
 
     /* 역할별 권한 도식 */
     .role-grid {
@@ -101,10 +101,10 @@
     .role-card { border-radius: 10px; overflow: hidden; border: 1px solid var(--gray-200); }
     .role-card .rc-head {
       padding: 12px 14px;
-      font-size: 13px; font-weight: 700;
+      font-size: 14px; font-weight: 700;
       display: flex; align-items: center; gap: 8px;
     }
-    .role-card .rc-head .rc-icon { font-size: 18px; }
+    .role-card .rc-head .rc-icon { font-size: 19px; }
     .role-card.advertiser .rc-head { background: var(--primary-light); color: var(--primary); }
     .role-card.agency .rc-head { background: var(--accent-light); color: var(--accent); }
     .role-card.billing .rc-head { background: var(--purple-light); color: var(--purple); }
@@ -112,10 +112,10 @@
     .rc-item {
       display: flex; align-items: center; gap: 8px;
       padding: 5px 0; border-bottom: 1px solid var(--gray-100);
-      font-size: 12px; color: var(--gray-700);
+      font-size: 13px; color: var(--gray-700);
     }
     .rc-item:last-child { border-bottom: none; }
-    .rc-item .ic { font-size: 14px; flex-shrink: 0; }
+    .rc-item .ic { font-size: 15px; flex-shrink: 0; }
     .rc-ok { color: var(--accent); font-weight: 700; }
     .rc-no { color: var(--gray-300); }
     .rc-owner { color: var(--warning); font-weight: 700; }
@@ -139,21 +139,21 @@
       width: 30px; height: 30px; border-radius: 50%;
       background: var(--primary); color: white;
       display: flex; align-items: center; justify-content: center;
-      font-size: 12px; font-weight: 700; flex-shrink: 0;
+      font-size: 13px; font-weight: 700; flex-shrink: 0;
     }
     .fc-circle.green { background: var(--accent); }
     .fc-circle.orange { background: var(--warning); }
     .fc-circle.gray { background: var(--gray-300); }
     .fc-line { flex: 1; width: 2px; background: var(--gray-200); margin: 4px 0; min-height: 18px; }
     .fc-content { flex: 1; padding-bottom: 16px; }
-    .fc-title { font-size: 13px; font-weight: 700; color: var(--gray-900); padding-top: 4px; margin-bottom: 3px; }
-    .fc-body { font-size: 12px; color: var(--gray-500); }
+    .fc-title { font-size: 14px; font-weight: 700; color: var(--gray-900); padding-top: 4px; margin-bottom: 3px; }
+    .fc-body { font-size: 13px; color: var(--gray-500); }
     .fc-branch {
       margin-top: 8px; padding: 8px 12px;
       background: var(--gray-50); border-radius: 6px;
       border-left: 3px solid var(--gray-200);
     }
-    .fc-branch .bi { font-size: 12px; color: var(--gray-700); padding: 2px 0; }
+    .fc-branch .bi { font-size: 13px; color: var(--gray-700); padding: 2px 0; }
     .fc-branch .bi::before { content: "└─ "; color: var(--gray-400); }
 
     /* 게이팅 조건 */
@@ -167,11 +167,11 @@
     }
     .gate-item.required { border-color: var(--primary); background: var(--primary-light); }
     .gate-item.optional { border-color: var(--gray-200); background: white; }
-    .gate-item .gt-label { font-size: 11px; font-weight: 700; margin-bottom: 4px; }
+    .gate-item .gt-label { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
     .gate-item.required .gt-label { color: var(--primary); }
     .gate-item.optional .gt-label { color: var(--gray-400); }
-    .gate-item .gt-text { font-size: 13px; font-weight: 600; color: var(--gray-900); }
-    .gate-item .gt-sub { font-size: 11px; color: var(--gray-500); margin-top: 4px; }
+    .gate-item .gt-text { font-size: 14px; font-weight: 600; color: var(--gray-900); }
+    .gate-item .gt-sub { font-size: 12px; color: var(--gray-500); margin-top: 4px; }
 
     /* 테이블 */
     table {
@@ -179,8 +179,8 @@
       background: white; border-radius: 8px; overflow: hidden;
       box-shadow: 0 1px 3px rgba(0,0,0,0.07);
     }
-    th { background: var(--gray-100); padding: 9px 13px; text-align: left; font-size: 12px; font-weight: 700; color: var(--gray-700); }
-    td { padding: 9px 13px; border-top: 1px solid var(--gray-100); font-size: 12px; color: var(--gray-700); vertical-align: top; }
+    th { background: var(--gray-100); padding: 9px 13px; text-align: left; font-size: 13px; font-weight: 700; color: var(--gray-700); }
+    td { padding: 9px 13px; border-top: 1px solid var(--gray-100); font-size: 13px; color: var(--gray-700); vertical-align: top; }
     td strong { color: var(--gray-900); }
     td.ok { color: var(--accent); font-weight: 700; }
     td.no { color: var(--gray-300); }
@@ -194,8 +194,8 @@
     }
     .co-icon { font-size: 18px; flex-shrink: 0; line-height: 1.5; }
     .co-body { flex: 1; }
-    .co-body strong { display: block; margin-bottom: 3px; font-size: 13px; }
-    .co-body p { font-size: 12px; margin: 0; }
+    .co-body strong { display: block; margin-bottom: 3px; font-size: 14px; }
+    .co-body p { font-size: 13px; margin: 0; }
     .callout-info { background: var(--primary-light); }
     .callout-info strong { color: var(--primary); }
     .callout-warn { background: var(--warning-light); }
@@ -214,32 +214,32 @@
     .rm-dot {
       width: 44px; height: 44px; border-radius: 50%; margin: 0 auto 10px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 12px; font-weight: 700; border: 3px solid white;
+      font-size: 13px; font-weight: 700; border: 3px solid white;
     }
     .rm-dot.active { background: var(--primary); color: white; box-shadow: 0 0 0 3px var(--primary-light); }
     .rm-dot.pending { background: white; color: var(--gray-300); border: 2px solid var(--gray-200); box-shadow: 0 0 0 3px var(--gray-100); }
-    .rm-tag { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 8px; display: inline-block; margin-bottom: 5px; }
+    .rm-tag { font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 8px; display: inline-block; margin-bottom: 5px; }
     .rm-tag.now { background: var(--accent-light); color: var(--accent); }
     .rm-tag.cond { background: var(--warning-light); color: var(--warning); }
-    .rm-label { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+    .rm-label { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
     .rm-label.active { color: var(--primary); }
     .rm-label.pending { color: var(--gray-400); }
-    .rm-desc { font-size: 11px; color: var(--gray-500); line-height: 1.5; }
+    .rm-desc { font-size: 12px; color: var(--gray-500); line-height: 1.5; }
 
     /* 이관 스텝 */
     .transfer-steps { display: flex; gap: 6px; flex-wrap: wrap; margin: 12px 0; align-items: flex-start; }
     .ts { flex: 1; min-width: 100px; border: 1px solid var(--gray-200); border-radius: 8px; padding: 10px 12px; text-align: center; background: white; }
     .ts.danger { border-color: var(--danger); background: var(--danger-light); }
     .ts.success { border-color: var(--accent); background: var(--accent-light); }
-    .ts .tn { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: var(--gray-100); color: var(--gray-700); border-radius: 50%; font-size: 11px; font-weight: 700; margin-bottom: 6px; }
+    .ts .tn { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: var(--gray-100); color: var(--gray-700); border-radius: 50%; font-size: 12px; font-weight: 700; margin-bottom: 6px; }
     .ts.danger .tn { background: var(--danger); color: white; }
     .ts.success .tn { background: var(--accent); color: white; }
-    .ts .tt { font-size: 11px; color: var(--gray-700); line-height: 1.4; }
-    .ts-arrow { color: var(--gray-300); font-size: 16px; padding-top: 22px; flex-shrink: 0; }
+    .ts .tt { font-size: 12px; color: var(--gray-700); line-height: 1.4; }
+    .ts-arrow { color: var(--gray-300); font-size: 17px; padding-top: 22px; flex-shrink: 0; }
 
     /* 미결 항목 */
     .pending-list { background: white; border: 1px solid var(--gray-200); border-radius: 10px; overflow: hidden; }
-    .pg-title { padding: 8px 14px; font-size: 11px; font-weight: 700; border-bottom: 1px solid var(--gray-100); }
+    .pg-title { padding: 8px 14px; font-size: 12px; font-weight: 700; border-bottom: 1px solid var(--gray-100); }
     .pg-title.urg { background: var(--danger-light); color: var(--danger); }
     .pg-title.lng { background: var(--gray-50); color: var(--gray-400); }
     .pg-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--gray-100); }
@@ -247,14 +247,14 @@
     .pg-dot { width: 7px; height: 7px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
     .pg-dot.urg { background: var(--danger); }
     .pg-dot.lng { background: var(--gray-300); }
-    .pg-text { font-size: 12px; color: var(--gray-700); flex: 1; }
-    .pg-owner { font-size: 10px; background: var(--gray-100); color: var(--gray-500); padding: 2px 7px; border-radius: 8px; white-space: nowrap; flex-shrink: 0; }
+    .pg-text { font-size: 13px; color: var(--gray-700); flex: 1; }
+    .pg-owner { font-size: 11px; background: var(--gray-100); color: var(--gray-500); padding: 2px 7px; border-radius: 8px; white-space: nowrap; flex-shrink: 0; }
 
     /* 알림 테이블 */
-    .alert-sms { background: var(--warning-light); color: var(--warning); padding: 1px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; margin-left: 4px; }
+    .alert-sms { background: var(--warning-light); color: var(--warning); padding: 1px 6px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-left: 4px; }
 
     /* 인라인 태그 */
-    .tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 6px; margin-left: 4px; }
+    .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 1px 6px; border-radius: 6px; margin-left: 4px; }
     .tag-impl { background: var(--accent-light); color: var(--accent); }
     .tag-new { background: var(--purple-light); color: var(--purple); }
     .tag-pend { background: var(--warning-light); color: var(--warning); }
@@ -262,7 +262,7 @@
     .tag-opt { background: var(--gray-100); color: var(--gray-500); }
 
     ul.plist { padding-left: 18px; margin: 6px 0; }
-    ul.plist li { font-size: 12px; color: var(--gray-700); margin-bottom: 3px; }
+    ul.plist li { font-size: 13px; color: var(--gray-700); margin-bottom: 3px; }
   </style>
 </head>
 <body>
@@ -326,7 +326,7 @@
           <div class="rc-item"><span class="rc-ok">✓</span>충전</div>
           <div class="rc-item"><span class="rc-owner">★</span>환불 계좌 등록·승인</div>
           <div class="rc-item"><span class="rc-ok">✓</span>환불 신청</div>
-          <div class="rc-owner" style="font-size:10px;padding:8px 0 2px;display:block;">★ 광고주 단독 권한</div>
+          <div class="rc-owner" style="font-size:11px;padding:8px 0 2px;display:block;">★ 광고주 단독 권한</div>
         </div>
       </div>
       <div class="role-card agency">
@@ -336,28 +336,21 @@
           <div class="rc-item"><span class="rc-ok">✓</span>충전</div>
           <div class="rc-item"><span class="rc-ok">✓</span>환불 계좌 등록 신청</div>
           <div class="rc-item"><span class="rc-ok">✓</span>환불 신청</div>
-          <div style="font-size:10px;color:var(--gray-400);padding-top:8px;">환불 계좌 등록은 광고주 승인 필요</div>
+          <div style="font-size:11px;color:var(--gray-400);padding-top:8px;">환불 계좌 등록은 광고주 승인 필요</div>
         </div>
       </div>
       <div class="role-card billing">
-        <div class="rc-head"><span class="rc-icon">👤</span>정산 담당자</div>
+        <div class="rc-head"><span class="rc-icon">📊</span>정산 담당자 (역할)</div>
         <div class="rc-body">
-          <div class="rc-item"><span class="rc-no">—</span>가상계좌 발급 불가</div>
-          <div class="rc-item"><span class="rc-ok">✓</span>충전</div>
-          <div class="rc-item"><span class="rc-no">—</span>환불 계좌 등록 불가</div>
-          <div class="rc-item"><span class="rc-ok">✓</span>환불 신청</div>
-          <div style="font-size:10px;color:var(--gray-400);padding-top:8px;">대행사 직원 중 1명 지정</div>
+          <div class="rc-item"><span class="rc-owner">★</span>정산금액 검토 및 확정 (고유 권한)</div>
+          <div class="rc-item" style="border-bottom:none;color:var(--gray-500);">그 외 권한은 소속 그룹과 동일</div>
+          <div style="font-size:11px;color:var(--gray-400);padding-top:8px;">광고주·대행사 중 누구든 1명 지정<br>별도 위계가 아닌 역할 구분</div>
         </div>
       </div>
     </div>
 
     <h3>광고 집행 게이팅 조건</h3>
     <div class="gate-box">
-      <div class="gate-item required">
-        <div class="gt-label">필수</div>
-        <div class="gt-text">가상계좌 발급 완료</div>
-        <div class="gt-sub">광고주가 최초 1회 발급</div>
-      </div>
       <div class="gate-item required">
         <div class="gt-label">필수</div>
         <div class="gt-text">세금계산서 수신처 설정</div>
@@ -368,6 +361,11 @@
         <div class="gt-text">환불 계좌 등록</div>
         <div class="gt-sub">환불 신청 시에만 필요</div>
       </div>
+      <div class="gate-item optional">
+        <div class="gt-label">참고</div>
+        <div class="gt-text">가상계좌 발급</div>
+        <div class="gt-sub">집행 전 언제든 발급 가능 — 광고 세팅과 무관</div>
+      </div>
     </div>
 
     <h3>정책 한눈에 보기</h3>
@@ -375,7 +373,7 @@
       <tr><th>항목</th><th>정책</th></tr>
       <tr><td>가상계좌 발급</td><td><strong>광고주(계정 책임자)만</strong> 가능 / 광고계정당 1개, 변경 불가</td></tr>
       <tr><td>가상계좌 예금주</td><td><strong>(주)버즈빌</strong> (신한은행 벌크 발급 고정)</td></tr>
-      <tr><td>충전 주체</td><td>광고계정 내 <strong>누구나</strong> 가능 (광고주·대행사·정산 담당자)</td></tr>
+      <tr><td>충전 주체</td><td>광고계정 내 <strong>누구나</strong> 가능 (광고주·대행사)</td></tr>
       <tr><td>환불 계좌 등록</td><td>대행사 신청 → <strong>광고주 승인</strong> / 신한은행 계좌실명조회 API 인증 필수</td></tr>
       <tr><td>환불 계좌 변경</td><td><strong>변경도 승인제</strong> (광고주 승인 필수)</td></tr>
       <tr><td>환불 방식</td><td><strong>전액 환불만</strong> (부분 환불 불가) / 환불 즉시 광고 중단</td></tr>
@@ -457,7 +455,7 @@
         <div class="fc-left"><div class="fc-circle">③</div><div class="fc-line"></div></div>
         <div class="fc-content">
           <div class="fc-title">정산 담당자 지정</div>
-          <div class="fc-body">대행사 직원 중 1명 지정 — 충전·환불 실행 담당</div>
+          <div class="fc-body">광고주 또는 대행사 중 1명 지정 — 정산금액 검토 및 확정 담당</div>
         </div>
       </div>
       <div class="flow-row">
@@ -593,7 +591,7 @@
         <div class="rm-label active">Phase 1</div>
         <div class="rm-desc">신한은행 가상계좌<br>(은행 이체)</div>
       </div>
-      <div style="color:var(--gray-300);font-size:20px;padding-top:10px;">→</div>
+      <div style="color:var(--gray-300);font-size:21px;padding-top:10px;">→</div>
       <div class="rm-phase">
         <div class="rm-dot pending">P2</div>
         <div class="rm-tag cond">조건부</div>
@@ -654,9 +652,7 @@
     <table>
       <tr><th>케이스</th><th>처리</th></tr>
       <tr><td>풀 소진 임박</td><td>BM팀·ADM팀 알림 → BM팀이 신한은행에 추가 발주 <span class="tag tag-pend">임계치 기준 협의</span></td></tr>
-      <tr><td>동일 광고계정 재신청</td><td>기존 가상계좌 안내 (재발급 없음)</td></tr>
       <tr><td>동일 사업자 신규 광고계정</td><td>신규 가상계좌 발급 (광고계정 단위 독립 관리)</td></tr>
-      <tr><td>발급 실패</td><td>고객 안내 + BM팀 수동 처리 병행</td></tr>
       <tr><td>무상 광고머니</td><td>환불 불가, 소멸</td></tr>
       <tr><td>이상거래 감지</td><td>ADM팀 판단으로 환불 보류 가능</td></tr>
     </table>
