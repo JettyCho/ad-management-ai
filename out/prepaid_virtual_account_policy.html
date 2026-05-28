@@ -3,28 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>광고센터 선불충전 가상계좌 자동 발급 운영정책 v6</title>
+  <title>광고센터 선불충전 가상계좌 자동 발급 운영정책 v2</title>
   <style>
     :root {
       --primary: #1a56db;
       --primary-light: #e8f0fe;
+      --primary-dark: #1e40af;
       --accent: #0e9f6e;
       --accent-light: #def7ec;
-      --warning: #e3a008;
-      --warning-light: #fdf6b2;
-      --danger: #e02424;
-      --danger-light: #fde8e8;
+      --warning: #d97706;
+      --warning-light: #fef3c7;
+      --danger: #dc2626;
+      --danger-light: #fee2e2;
+      --purple: #7c3aed;
+      --purple-light: #ede9fe;
       --gray-50: #f9fafb;
       --gray-100: #f3f4f6;
       --gray-200: #e5e7eb;
       --gray-300: #d1d5db;
+      --gray-400: #9ca3af;
       --gray-500: #6b7280;
       --gray-700: #374151;
       --gray-900: #111827;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans KR', 'Segoe UI', sans-serif;
       font-size: 14px;
@@ -36,1278 +38,788 @@
 
     /* 사이드바 */
     nav {
-      width: 240px;
-      min-width: 240px;
+      width: 230px;
+      min-width: 230px;
       height: 100vh;
       position: sticky;
       top: 0;
       background: white;
       border-right: 1px solid var(--gray-200);
       overflow-y: auto;
-      padding: 24px 0;
+      padding: 20px 0;
     }
-
     nav .logo {
-      padding: 0 20px 20px;
+      padding: 0 16px 16px;
       border-bottom: 1px solid var(--gray-200);
-      margin-bottom: 16px;
-    }
-
-    nav .logo h2 {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--primary);
-      line-height: 1.4;
-    }
-
-    nav .logo span {
-      font-size: 11px;
-      color: var(--gray-500);
-      background: var(--gray-100);
-      padding: 2px 6px;
-      border-radius: 4px;
-    }
-
-    nav ul { list-style: none; }
-
-    nav ul li a {
-      display: block;
-      padding: 6px 20px;
-      font-size: 12px;
-      color: var(--gray-700);
-      text-decoration: none;
-      border-left: 2px solid transparent;
-      transition: all 0.15s;
-    }
-
-    nav ul li a:hover {
-      color: var(--primary);
-      background: var(--primary-light);
-      border-left-color: var(--primary);
-    }
-
-    nav ul li.section-header a {
-      font-weight: 700;
-      font-size: 11px;
-      color: var(--gray-500);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding-top: 16px;
-      cursor: default;
-    }
-
-    nav ul li.section-header a:hover {
-      color: var(--gray-500);
-      background: none;
-      border-left-color: transparent;
-    }
-
-    /* 메인 */
-    main {
-      flex: 1;
-      padding: 40px 48px;
-      max-width: 900px;
-    }
-
-    .doc-header {
-      margin-bottom: 40px;
-      padding-bottom: 24px;
-      border-bottom: 2px solid var(--gray-200);
-    }
-
-    .doc-header h1 {
-      font-size: 24px;
-      font-weight: 800;
-      color: var(--gray-900);
-      line-height: 1.3;
       margin-bottom: 12px;
     }
-
-    .doc-meta {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
+    nav .logo h2 { font-size: 12px; font-weight: 700; color: var(--primary); line-height: 1.4; }
+    nav .logo .ver { font-size: 11px; color: var(--gray-400); background: var(--gray-100); padding: 2px 6px; border-radius: 4px; display: inline-block; margin-top: 4px; }
+    nav ul { list-style: none; }
+    nav ul li a {
+      display: block; padding: 5px 16px;
+      font-size: 12px; color: var(--gray-700); text-decoration: none;
+      border-left: 2px solid transparent; transition: all 0.15s;
     }
+    nav ul li a:hover { color: var(--primary); background: var(--primary-light); border-left-color: var(--primary); }
+    nav ul li.group { padding: 12px 16px 4px; font-size: 10px; font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.06em; }
 
-    .badge {
-      font-size: 11px;
-      font-weight: 600;
-      padding: 3px 10px;
-      border-radius: 12px;
-    }
+    /* 메인 */
+    main { flex: 1; padding: 40px 48px; max-width: 880px; }
 
+    .doc-header { margin-bottom: 36px; padding-bottom: 20px; border-bottom: 2px solid var(--gray-200); }
+    .doc-header h1 { font-size: 22px; font-weight: 800; color: var(--gray-900); line-height: 1.3; margin-bottom: 12px; }
+    .doc-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+    .badge { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 10px; }
     .badge-blue { background: var(--primary-light); color: var(--primary); }
     .badge-green { background: var(--accent-light); color: var(--accent); }
     .badge-gray { background: var(--gray-100); color: var(--gray-500); }
     .badge-yellow { background: var(--warning-light); color: var(--warning); }
+    .badge-red { background: var(--danger-light); color: var(--danger); }
 
-    section {
-      margin-bottom: 48px;
-      scroll-margin-top: 24px;
-    }
-
+    section { margin-bottom: 44px; scroll-margin-top: 24px; }
     h2 {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--gray-900);
-      margin-bottom: 16px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid var(--gray-200);
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      font-size: 17px; font-weight: 700; color: var(--gray-900);
+      margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--gray-200);
+      display: flex; align-items: center; gap: 10px;
     }
-
-    h2 .sec-num {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 28px;
-      height: 28px;
-      background: var(--primary);
-      color: white;
-      border-radius: 50%;
-      font-size: 13px;
-      font-weight: 700;
-      flex-shrink: 0;
+    h2 .sn {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 26px; height: 26px; background: var(--primary); color: white;
+      border-radius: 50%; font-size: 12px; font-weight: 700; flex-shrink: 0;
     }
+    h3 { font-size: 14px; font-weight: 700; color: var(--gray-900); margin: 20px 0 8px; }
+    p { margin-bottom: 8px; color: var(--gray-700); font-size: 13px; }
 
-    h3 {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--gray-900);
-      margin: 24px 0 10px;
+    /* 역할별 권한 도식 */
+    .role-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 16px 0;
     }
+    .role-card { border-radius: 10px; overflow: hidden; border: 1px solid var(--gray-200); }
+    .role-card .rc-head {
+      padding: 12px 14px;
+      font-size: 13px; font-weight: 700;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .role-card .rc-head .rc-icon { font-size: 18px; }
+    .role-card.advertiser .rc-head { background: var(--primary-light); color: var(--primary); }
+    .role-card.agency .rc-head { background: var(--accent-light); color: var(--accent); }
+    .role-card.billing .rc-head { background: var(--purple-light); color: var(--purple); }
+    .role-card .rc-body { background: white; padding: 12px 14px; }
+    .rc-item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 5px 0; border-bottom: 1px solid var(--gray-100);
+      font-size: 12px; color: var(--gray-700);
+    }
+    .rc-item:last-child { border-bottom: none; }
+    .rc-item .ic { font-size: 14px; flex-shrink: 0; }
+    .rc-ok { color: var(--accent); font-weight: 700; }
+    .rc-no { color: var(--gray-300); }
+    .rc-owner { color: var(--warning); font-weight: 700; }
 
-    p { margin-bottom: 10px; color: var(--gray-700); }
-
-    /* 핵심 원칙 도식 */
-    .policy-core {
+    /* 정책 흐름 */
+    .flow-box {
       background: white;
       border: 1px solid var(--gray-200);
-      border-radius: 12px;
-      padding: 28px;
-      margin-bottom: 20px;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 12px 0;
     }
-
-    .flow-diagram {
+    .flow-row {
       display: flex;
       align-items: flex-start;
-      gap: 24px;
-      margin: 16px 0;
-    }
-
-    .billing-entity-box {
-      background: var(--primary);
-      color: white;
-      border-radius: 10px;
-      padding: 16px 20px;
-      text-align: center;
-      min-width: 120px;
-      flex-shrink: 0;
-    }
-
-    .billing-entity-box .label {
-      font-size: 11px;
-      opacity: 0.8;
-      margin-bottom: 4px;
-    }
-
-    .billing-entity-box .title {
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .billing-entity-box .sub {
-      font-size: 11px;
-      opacity: 0.7;
-      margin-top: 4px;
-    }
-
-    .arrow-right {
-      display: flex;
-      align-items: center;
-      color: var(--primary);
-      font-size: 20px;
-      padding-top: 16px;
-      flex-shrink: 0;
-    }
-
-    .ad-account-box {
-      flex: 1;
-      border: 2px solid var(--primary-light);
-      border-radius: 10px;
-      overflow: hidden;
-    }
-
-    .ad-account-box .title-bar {
-      background: var(--primary-light);
-      padding: 8px 16px;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--primary);
-    }
-
-    .ad-account-flow {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      padding: 16px;
-    }
-
-    .flow-step {
-      display: flex;
-      align-items: center;
       gap: 10px;
-      padding: 8px 12px;
-      border-radius: 8px;
-      background: var(--gray-50);
       margin-bottom: 4px;
     }
-
-    .flow-step .step-num {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 22px;
-      height: 22px;
-      background: var(--primary);
-      color: white;
-      border-radius: 50%;
-      font-size: 11px;
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-
-    .flow-step .step-text {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--gray-900);
-    }
-
-    .flow-step .step-sub {
-      font-size: 11px;
-      color: var(--gray-500);
-      margin-left: auto;
-    }
-
-    .flow-arrow {
-      text-align: center;
-      color: var(--gray-300);
-      font-size: 16px;
-      line-height: 1;
-      margin: 2px 0;
-      padding-left: 27px;
-    }
-
-    .flow-note {
-      margin-top: 12px;
-      padding: 8px 12px;
-      background: var(--warning-light);
-      border-left: 3px solid var(--warning);
-      border-radius: 0 6px 6px 0;
-      font-size: 12px;
-      color: var(--gray-700);
-    }
-
-    /* 케이스 비교 */
-    .case-compare {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin: 20px 0;
-    }
-
-    .case-box {
-      border-radius: 10px;
-      overflow: hidden;
-      border: 1px solid var(--gray-200);
-    }
-
-    .case-box .case-header {
-      padding: 12px 16px;
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .case-box.case1 .case-header {
-      background: var(--primary-light);
-      color: var(--primary);
-    }
-
-    .case-box.case2 .case-header {
-      background: var(--accent-light);
-      color: var(--accent);
-    }
-
-    .case-body {
-      padding: 16px;
-      background: white;
-    }
-
-    .case-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 6px 0;
-      border-bottom: 1px solid var(--gray-100);
-      font-size: 13px;
-    }
-
-    .case-row:last-child { border-bottom: none; }
-    .case-row .key { color: var(--gray-500); }
-    .case-row .val { font-weight: 600; color: var(--gray-900); }
-    .case-row .val.highlight { color: var(--primary); }
-
-    /* 발급 조건 테이블 */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 12px 0;
-      background: white;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-    }
-
-    th {
-      background: var(--gray-100);
-      padding: 10px 14px;
-      text-align: left;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--gray-700);
-    }
-
-    td {
-      padding: 10px 14px;
-      border-top: 1px solid var(--gray-100);
-      font-size: 13px;
-      color: var(--gray-700);
-      vertical-align: top;
-    }
-
-    td strong { color: var(--gray-900); }
-
-    tr:last-child td { border-bottom: none; }
-
-    /* 플로우 차트 */
-    .flowchart {
-      background: white;
-      border: 1px solid var(--gray-200);
-      border-radius: 10px;
-      padding: 24px;
-      margin: 16px 0;
-    }
-
-    .fc-step {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 4px;
-    }
-
-    .fc-left {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 32px;
-      flex-shrink: 0;
-    }
-
+    .fc-left { display: flex; flex-direction: column; align-items: center; width: 30px; flex-shrink: 0; }
     .fc-circle {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: var(--primary);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      font-weight: 700;
-      flex-shrink: 0;
+      width: 30px; height: 30px; border-radius: 50%;
+      background: var(--primary); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700; flex-shrink: 0;
     }
-
-    .fc-line {
-      flex: 1;
-      width: 2px;
-      background: var(--gray-200);
-      margin: 4px 0;
-      min-height: 20px;
-    }
-
-    .fc-content {
-      flex: 1;
-      padding-bottom: 20px;
-    }
-
-    .fc-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--gray-900);
-      margin-bottom: 4px;
-      line-height: 1.5;
-      padding-top: 4px;
-    }
-
-    .fc-body {
-      font-size: 12px;
-      color: var(--gray-500);
-    }
-
+    .fc-circle.green { background: var(--accent); }
+    .fc-circle.orange { background: var(--warning); }
+    .fc-circle.gray { background: var(--gray-300); }
+    .fc-line { flex: 1; width: 2px; background: var(--gray-200); margin: 4px 0; min-height: 18px; }
+    .fc-content { flex: 1; padding-bottom: 16px; }
+    .fc-title { font-size: 13px; font-weight: 700; color: var(--gray-900); padding-top: 4px; margin-bottom: 3px; }
+    .fc-body { font-size: 12px; color: var(--gray-500); }
     .fc-branch {
-      margin-top: 8px;
-      padding: 10px 14px;
-      background: var(--gray-50);
-      border-radius: 8px;
+      margin-top: 8px; padding: 8px 12px;
+      background: var(--gray-50); border-radius: 6px;
       border-left: 3px solid var(--gray-200);
     }
+    .fc-branch .bi { font-size: 12px; color: var(--gray-700); padding: 2px 0; }
+    .fc-branch .bi::before { content: "└─ "; color: var(--gray-400); }
 
-    .fc-branch .branch-item {
-      font-size: 12px;
-      color: var(--gray-700);
-      padding: 2px 0;
+    /* 게이팅 조건 */
+    .gate-box {
+      display: flex; gap: 10px; margin: 12px 0; flex-wrap: wrap;
     }
-
-    .fc-branch .branch-item::before {
-      content: "├─ ";
-      color: var(--gray-400);
+    .gate-item {
+      flex: 1; min-width: 160px;
+      border-radius: 8px; padding: 14px 16px;
+      border: 2px solid;
     }
+    .gate-item.required { border-color: var(--primary); background: var(--primary-light); }
+    .gate-item.optional { border-color: var(--gray-200); background: white; }
+    .gate-item .gt-label { font-size: 11px; font-weight: 700; margin-bottom: 4px; }
+    .gate-item.required .gt-label { color: var(--primary); }
+    .gate-item.optional .gt-label { color: var(--gray-400); }
+    .gate-item .gt-text { font-size: 13px; font-weight: 600; color: var(--gray-900); }
+    .gate-item .gt-sub { font-size: 11px; color: var(--gray-500); margin-top: 4px; }
 
-    .fc-branch .branch-item:last-child::before {
-      content: "└─ ";
-      color: var(--gray-400);
+    /* 테이블 */
+    table {
+      width: 100%; border-collapse: collapse; margin: 10px 0;
+      background: white; border-radius: 8px; overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.07);
     }
-
-    /* 로드맵 */
-    .roadmap {
-      display: flex;
-      gap: 0;
-      margin: 16px 0;
-      position: relative;
-    }
-
-    .roadmap::before {
-      content: '';
-      position: absolute;
-      top: 40px;
-      left: 40px;
-      right: 40px;
-      height: 2px;
-      background: var(--gray-200);
-      z-index: 0;
-    }
-
-    .phase-box {
-      flex: 1;
-      text-align: center;
-      position: relative;
-      z-index: 1;
-      padding: 0 12px;
-    }
-
-    .phase-dot {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      font-weight: 700;
-      margin: 0 auto 12px;
-      border: 3px solid white;
-    }
-
-    .phase-dot.active {
-      background: var(--primary);
-      color: white;
-      box-shadow: 0 0 0 3px var(--primary-light);
-    }
-
-    .phase-dot.pending {
-      background: white;
-      color: var(--gray-300);
-      border-color: var(--gray-200);
-      box-shadow: 0 0 0 3px var(--gray-100);
-    }
-
-    .phase-label {
-      font-size: 12px;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-
-    .phase-label.active { color: var(--primary); }
-    .phase-label.pending { color: var(--gray-400); }
-
-    .phase-desc {
-      font-size: 11px;
-      color: var(--gray-500);
-      line-height: 1.5;
-    }
-
-    .phase-tag {
-      display: inline-block;
-      font-size: 10px;
-      padding: 2px 7px;
-      border-radius: 10px;
-      margin-bottom: 6px;
-      font-weight: 600;
-    }
-
-    .phase-tag.now { background: var(--accent-light); color: var(--accent); }
-    .phase-tag.cond { background: var(--warning-light); color: var(--warning); }
-
-    /* 이관 스텝 */
-    .transfer-steps {
-      display: flex;
-      gap: 8px;
-      align-items: flex-start;
-      margin: 16px 0;
-      flex-wrap: wrap;
-    }
-
-    .transfer-step {
-      background: white;
-      border: 1px solid var(--gray-200);
-      border-radius: 8px;
-      padding: 12px 14px;
-      flex: 1;
-      min-width: 120px;
-      text-align: center;
-    }
-
-    .transfer-step .t-num {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 24px;
-      height: 24px;
-      background: var(--gray-100);
-      color: var(--gray-700);
-      border-radius: 50%;
-      font-size: 12px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .transfer-step .t-text {
-      font-size: 12px;
-      color: var(--gray-700);
-      line-height: 1.4;
-    }
-
-    .transfer-arrow {
-      color: var(--gray-300);
-      font-size: 16px;
-      padding-top: 24px;
-      flex-shrink: 0;
-    }
-
-    .transfer-step.highlight {
-      border-color: var(--danger);
-      background: var(--danger-light);
-    }
-
-    .transfer-step.highlight .t-num {
-      background: var(--danger);
-      color: white;
-    }
+    th { background: var(--gray-100); padding: 9px 13px; text-align: left; font-size: 12px; font-weight: 700; color: var(--gray-700); }
+    td { padding: 9px 13px; border-top: 1px solid var(--gray-100); font-size: 12px; color: var(--gray-700); vertical-align: top; }
+    td strong { color: var(--gray-900); }
+    td.ok { color: var(--accent); font-weight: 700; }
+    td.no { color: var(--gray-300); }
+    td.warn { color: var(--warning); font-weight: 600; }
+    td.new-feat { color: var(--purple); font-weight: 600; }
 
     /* callout */
     .callout {
-      border-radius: 8px;
-      padding: 14px 16px;
-      margin: 12px 0;
-      display: flex;
-      gap: 10px;
+      border-radius: 8px; padding: 12px 14px; margin: 10px 0;
+      display: flex; gap: 10px;
     }
-
-    .callout-icon {
-      font-size: 18px;
-      flex-shrink: 0;
-      line-height: 1.4;
-    }
-
-    .callout-body { flex: 1; }
-    .callout-body strong { display: block; margin-bottom: 4px; font-size: 13px; }
-    .callout-body p { font-size: 12px; margin: 0; }
-
+    .co-icon { font-size: 18px; flex-shrink: 0; line-height: 1.5; }
+    .co-body { flex: 1; }
+    .co-body strong { display: block; margin-bottom: 3px; font-size: 13px; }
+    .co-body p { font-size: 12px; margin: 0; }
     .callout-info { background: var(--primary-light); }
     .callout-info strong { color: var(--primary); }
-
     .callout-warn { background: var(--warning-light); }
     .callout-warn strong { color: var(--warning); }
-
-    .callout-pending { background: var(--danger-light); }
-    .callout-pending strong { color: var(--danger); }
-
+    .callout-danger { background: var(--danger-light); }
+    .callout-danger strong { color: var(--danger); }
     .callout-success { background: var(--accent-light); }
     .callout-success strong { color: var(--accent); }
+    .callout-purple { background: var(--purple-light); }
+    .callout-purple strong { color: var(--purple); }
+
+    /* 로드맵 */
+    .roadmap { display: flex; align-items: flex-start; gap: 0; margin: 16px 0; position: relative; }
+    .roadmap::before { content: ''; position: absolute; top: 38px; left: 55px; right: 55px; height: 2px; background: var(--gray-200); z-index: 0; }
+    .rm-phase { flex: 1; text-align: center; position: relative; z-index: 1; padding: 0 8px; }
+    .rm-dot {
+      width: 44px; height: 44px; border-radius: 50%; margin: 0 auto 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700; border: 3px solid white;
+    }
+    .rm-dot.active { background: var(--primary); color: white; box-shadow: 0 0 0 3px var(--primary-light); }
+    .rm-dot.pending { background: white; color: var(--gray-300); border: 2px solid var(--gray-200); box-shadow: 0 0 0 3px var(--gray-100); }
+    .rm-tag { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 8px; display: inline-block; margin-bottom: 5px; }
+    .rm-tag.now { background: var(--accent-light); color: var(--accent); }
+    .rm-tag.cond { background: var(--warning-light); color: var(--warning); }
+    .rm-label { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+    .rm-label.active { color: var(--primary); }
+    .rm-label.pending { color: var(--gray-400); }
+    .rm-desc { font-size: 11px; color: var(--gray-500); line-height: 1.5; }
+
+    /* 이관 스텝 */
+    .transfer-steps { display: flex; gap: 6px; flex-wrap: wrap; margin: 12px 0; align-items: flex-start; }
+    .ts { flex: 1; min-width: 100px; border: 1px solid var(--gray-200); border-radius: 8px; padding: 10px 12px; text-align: center; background: white; }
+    .ts.danger { border-color: var(--danger); background: var(--danger-light); }
+    .ts.success { border-color: var(--accent); background: var(--accent-light); }
+    .ts .tn { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: var(--gray-100); color: var(--gray-700); border-radius: 50%; font-size: 11px; font-weight: 700; margin-bottom: 6px; }
+    .ts.danger .tn { background: var(--danger); color: white; }
+    .ts.success .tn { background: var(--accent); color: white; }
+    .ts .tt { font-size: 11px; color: var(--gray-700); line-height: 1.4; }
+    .ts-arrow { color: var(--gray-300); font-size: 16px; padding-top: 22px; flex-shrink: 0; }
 
     /* 미결 항목 */
-    .pending-list {
-      background: white;
-      border: 1px solid var(--gray-200);
-      border-radius: 10px;
-      overflow: hidden;
-    }
+    .pending-list { background: white; border: 1px solid var(--gray-200); border-radius: 10px; overflow: hidden; }
+    .pg-title { padding: 8px 14px; font-size: 11px; font-weight: 700; border-bottom: 1px solid var(--gray-100); }
+    .pg-title.urg { background: var(--danger-light); color: var(--danger); }
+    .pg-title.lng { background: var(--gray-50); color: var(--gray-400); }
+    .pg-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--gray-100); }
+    .pg-item:last-child { border-bottom: none; }
+    .pg-dot { width: 7px; height: 7px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+    .pg-dot.urg { background: var(--danger); }
+    .pg-dot.lng { background: var(--gray-300); }
+    .pg-text { font-size: 12px; color: var(--gray-700); flex: 1; }
+    .pg-owner { font-size: 10px; background: var(--gray-100); color: var(--gray-500); padding: 2px 7px; border-radius: 8px; white-space: nowrap; flex-shrink: 0; }
 
-    .pending-group-title {
-      padding: 10px 16px;
-      font-size: 12px;
-      font-weight: 700;
-      background: var(--gray-50);
-      border-bottom: 1px solid var(--gray-200);
-    }
+    /* 알림 테이블 */
+    .alert-sms { background: var(--warning-light); color: var(--warning); padding: 1px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; margin-left: 4px; }
 
-    .pending-group-title.urgent {
-      background: var(--danger-light);
-      color: var(--danger);
-    }
-
-    .pending-group-title.long-term {
-      background: var(--gray-50);
-      color: var(--gray-500);
-    }
-
-    .pending-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--gray-100);
-    }
-
-    .pending-item:last-child { border-bottom: none; }
-
-    .pending-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      margin-top: 5px;
-      flex-shrink: 0;
-    }
-
-    .pending-dot.urgent { background: var(--danger); }
-    .pending-dot.long { background: var(--gray-300); }
-
-    .pending-text { font-size: 13px; color: var(--gray-700); flex: 1; }
-    .pending-owner {
-      font-size: 11px;
-      background: var(--gray-100);
-      color: var(--gray-500);
-      padding: 2px 8px;
-      border-radius: 10px;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    /* BM 워크플로우 */
-    .workflow-table th:first-child { width: 25%; }
-    .workflow-table td.asis { color: var(--gray-500); }
-    .workflow-table td.tobe { color: var(--accent); font-weight: 600; }
-
-    /* 역할 테이블 */
-    .role-table td:first-child {
-      font-weight: 700;
-      color: var(--primary);
-      white-space: nowrap;
-    }
-
-    ul.policy-list {
-      padding-left: 20px;
-      margin: 8px 0;
-    }
-
-    ul.policy-list li {
-      font-size: 13px;
-      color: var(--gray-700);
-      margin-bottom: 4px;
-    }
-
-    .tag-inline {
-      display: inline-block;
-      font-size: 11px;
-      padding: 1px 7px;
-      border-radius: 8px;
-      font-weight: 600;
-      margin-left: 4px;
-    }
-
+    /* 인라인 태그 */
+    .tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 6px; margin-left: 4px; }
     .tag-impl { background: var(--accent-light); color: var(--accent); }
-    .tag-pending { background: var(--warning-light); color: var(--warning); }
-    .tag-fixed { background: var(--primary-light); color: var(--primary); }
+    .tag-new { background: var(--purple-light); color: var(--purple); }
+    .tag-pend { background: var(--warning-light); color: var(--warning); }
+    .tag-req { background: var(--danger-light); color: var(--danger); }
+    .tag-opt { background: var(--gray-100); color: var(--gray-500); }
 
-    @media print {
-      nav { display: none; }
-      main { padding: 20px; }
-    }
+    ul.plist { padding-left: 18px; margin: 6px 0; }
+    ul.plist li { font-size: 12px; color: var(--gray-700); margin-bottom: 3px; }
   </style>
 </head>
 <body>
 
-<!-- 사이드바 -->
 <nav>
   <div class="logo">
     <h2>광고센터 선불충전<br>가상계좌 운영정책</h2>
-    <span>v6 · 2026-05-27</span>
+    <span class="ver">v2 · 2026-05-28</span>
   </div>
   <ul>
+    <li class="group">핵심 정책</li>
     <li><a href="#s1">1. 도입 배경</a></li>
     <li><a href="#s2">2. 핵심 정책 요약</a></li>
-    <li><a href="#s3">3. 정산 주체 지정 정책</a></li>
-    <li><a href="#s4">4. 가상계좌 자동 할당 플로우</a></li>
-    <li><a href="#s5">5. 결제 수단 로드맵</a></li>
-    <li><a href="#s6">6. 환불 정책</a></li>
-    <li><a href="#s7">7. 세금계산서 발행 정책</a></li>
-    <li><a href="#s8">8. 이관(Transfer) 정책</a></li>
-    <li><a href="#s9">9. 예외 처리</a></li>
-    <li><a href="#s10">10. BM팀 워크플로우</a></li>
-    <li><a href="#s11">11. 미결 항목</a></li>
-    <li><a href="#s12">12. 담당팀 및 역할</a></li>
+    <li><a href="#s3">3. 가상계좌 발급</a></li>
+    <li><a href="#s4">4. 충전</a></li>
+    <li class="group">대행사 운영</li>
+    <li><a href="#s5">5. 대행권 설정</a></li>
+    <li><a href="#s6">6. 환불 계좌</a></li>
+    <li><a href="#s7">7. 세금계산서</a></li>
+    <li class="group">재정</li>
+    <li><a href="#s8">8. 환불</a></li>
+    <li><a href="#s9">9. 결제수단 로드맵</a></li>
+    <li><a href="#s10">10. 이관</a></li>
+    <li class="group">운영</li>
+    <li><a href="#s11">11. 예외 처리</a></li>
+    <li><a href="#s12">12. BM팀 워크플로우</a></li>
+    <li><a href="#s13">13. 미결 항목</a></li>
+    <li><a href="#s14">14. 담당팀</a></li>
   </ul>
 </nav>
 
-<!-- 메인 -->
 <main>
-  <!-- 헤더 -->
   <div class="doc-header">
     <h1>광고센터 선불충전<br>가상계좌 자동 발급 운영정책</h1>
     <div class="doc-meta">
-      <span class="badge badge-blue">v6</span>
-      <span class="badge badge-gray">2026-05-27</span>
+      <span class="badge badge-blue">v2</span>
+      <span class="badge badge-gray">2026-05-28</span>
       <span class="badge badge-green">ADM팀 내부문서</span>
-      <span class="badge badge-yellow">BM팀 협의 필요 항목 포함</span>
+      <span class="badge badge-yellow">협의 필요 항목 포함</span>
+      <span class="badge badge-red">SMS 기능 신규 개발 필요</span>
     </div>
   </div>
 
   <!-- 1. 도입 배경 -->
   <section id="s1">
-    <h2><span class="sec-num">1</span>도입 배경 및 목적</h2>
-
-    <h3>PG 가상계좌 사용 불가</h3>
-    <p>선불충전 도입 시 일반 PG 가상계좌를 활용하려 했으나 PG사가 거절하였다. 거절 사유: 광고업 특성(비가시적 상품), 고금액 거래, 환불 건수 다수. 이에 따라 신한은행과 직접 계약으로 벌크 가상계좌를 선발급받아 운영하는 방식을 채택하였다.</p>
-
-    <h3>현재 수동 프로세스의 한계</h3>
-    <ul class="policy-list">
-      <li>Sales팀이 Google Sheets에 업체 정보를 수동 입력 → BM팀이 가상계좌 수동 매칭</li>
-      <li>처리 지연, 담당자 의존, 스케일 한계 — 고객 증가 시 대응 불가</li>
-    </ul>
-
-    <h3>자동화 목표</h3>
-    <ul class="policy-list">
-      <li>정산 주체가 광고센터에서 직접 선불충전을 신청하면 가상계좌 자동 할당</li>
-      <li>신한은행 웹훅으로 입금 감지 → 광고머니 자동 반영 <span class="tag-inline tag-impl">구현 완료</span></li>
-      <li>BM팀의 수동 매칭 업무 제거, Sales팀 시트 관리 불필요</li>
-    </ul>
+    <h2><span class="sn">1</span>도입 배경 및 목적</h2>
+    <p>버즈빌 광고센터에 선불충전 도입 시 일반 PG 가상계좌를 활용하려 했으나 PG사가 광고업 특성(비가시적 상품)·고금액·환불 건수 다수를 이유로 거절하였다. 이에 신한은행과 직접 계약하여 벌크 가상계좌를 선발급받아 풀로 운영하는 방식을 채택한다.</p>
+    <p>현재 수동 프로세스(Sales팀 시트 입력 → BM팀 수동 매칭)를 자동화하여 운영 공수를 제거하고, 대행사 운영 환경에서의 충전·환불·세금계산서 정책을 명확히 정립한다.</p>
   </section>
 
   <!-- 2. 핵심 정책 요약 -->
   <section id="s2">
-    <h2><span class="sec-num">2</span>핵심 정책 요약</h2>
+    <h2><span class="sn">2</span>핵심 정책 요약</h2>
 
-    <div class="policy-core">
-      <h3 style="margin-top:0;">광고계정 재정 구조 한 눈에 보기</h3>
-
-      <div class="flow-diagram">
-        <div class="billing-entity-box">
-          <div class="label">정산 주체</div>
-          <div class="title">1개 기업만</div>
-          <div class="sub">광고주 또는 대행사</div>
-        </div>
-        <div class="arrow-right">→</div>
-        <div class="ad-account-box">
-          <div class="title-bar">광고계정 (Ad Account)</div>
-          <div class="ad-account-flow">
-            <div class="flow-step">
-              <span class="step-num">①</span>
-              <span class="step-text">충전 (가상계좌 입금)</span>
-              <span class="step-sub">정산 주체만 가능</span>
-            </div>
-            <div class="flow-arrow">↓</div>
-            <div class="flow-step">
-              <span class="step-num" style="background:var(--gray-300);">—</span>
-              <span class="step-text">광고머니 잔액</span>
-              <span class="step-sub">광고 집행에 소진</span>
-            </div>
-            <div class="flow-arrow">↓</div>
-            <div class="flow-step">
-              <span class="step-num">②</span>
-              <span class="step-text">세금계산서 발행</span>
-              <span class="step-sub">전월 소진분 → 익월 1~10일</span>
-            </div>
-            <div class="flow-arrow">↓</div>
-            <div class="flow-step">
-              <span class="step-num">③</span>
-              <span class="step-text">환불 (전액만)</span>
-              <span class="step-sub">대표 환불 계좌로만</span>
-            </div>
-          </div>
+    <h3>역할별 권한</h3>
+    <div class="role-grid">
+      <div class="role-card advertiser">
+        <div class="rc-head"><span class="rc-icon">🏢</span>광고주 (계정 책임자)</div>
+        <div class="rc-body">
+          <div class="rc-item"><span class="rc-owner">★</span>가상계좌 발급</div>
+          <div class="rc-item"><span class="rc-ok">✓</span>충전</div>
+          <div class="rc-item"><span class="rc-owner">★</span>환불 계좌 등록·승인</div>
+          <div class="rc-item"><span class="rc-ok">✓</span>환불 신청</div>
+          <div class="rc-owner" style="font-size:10px;padding:8px 0 2px;display:block;">★ 광고주 단독 권한</div>
         </div>
       </div>
-
-      <div class="flow-note">
-        ①②③ 모두 <strong>정산 주체만</strong> 수행 가능 &nbsp;·&nbsp; 광고 운영 권한(캠페인 관리 등)은 대행사와 공유 가능
-      </div>
-    </div>
-
-    <h3>운영 형태별 비교</h3>
-    <div class="case-compare">
-      <div class="case-box case1">
-        <div class="case-header">Case 1 · 광고주 직접 운영</div>
-        <div class="case-body">
-          <div class="case-row"><span class="key">정산 주체</span><span class="val highlight">광고주</span></div>
-          <div class="case-row"><span class="key">충전</span><span class="val">광고주만 가능</span></div>
-          <div class="case-row"><span class="key">환불</span><span class="val">광고주 대표 환불 계좌</span></div>
-          <div class="case-row"><span class="key">세금계산서</span><span class="val">광고주 수신</span></div>
-          <div class="case-row"><span class="key">광고 운영</span><span class="val">광고주</span></div>
+      <div class="role-card agency">
+        <div class="rc-head"><span class="rc-icon">🤝</span>대행사</div>
+        <div class="rc-body">
+          <div class="rc-item"><span class="rc-no">—</span>가상계좌 발급 불가</div>
+          <div class="rc-item"><span class="rc-ok">✓</span>충전</div>
+          <div class="rc-item"><span class="rc-ok">✓</span>환불 계좌 등록 신청</div>
+          <div class="rc-item"><span class="rc-ok">✓</span>환불 신청</div>
+          <div style="font-size:10px;color:var(--gray-400);padding-top:8px;">환불 계좌 등록은 광고주 승인 필요</div>
         </div>
       </div>
-      <div class="case-box case2">
-        <div class="case-header">Case 2 · 대행사 대행 운영</div>
-        <div class="case-body">
-          <div class="case-row"><span class="key">정산 주체</span><span class="val" style="color:var(--accent);">대행사</span></div>
-          <div class="case-row"><span class="key">충전</span><span class="val">대행사만 가능</span></div>
-          <div class="case-row"><span class="key">환불</span><span class="val">대행사 대표 환불 계좌</span></div>
-          <div class="case-row"><span class="key">세금계산서</span><span class="val">대행사 수신</span></div>
-          <div class="case-row"><span class="key">광고 운영</span><span class="val">대행사 + 광고주</span></div>
+      <div class="role-card billing">
+        <div class="rc-head"><span class="rc-icon">👤</span>정산 담당자</div>
+        <div class="rc-body">
+          <div class="rc-item"><span class="rc-no">—</span>가상계좌 발급 불가</div>
+          <div class="rc-item"><span class="rc-ok">✓</span>충전</div>
+          <div class="rc-item"><span class="rc-no">—</span>환불 계좌 등록 불가</div>
+          <div class="rc-item"><span class="rc-ok">✓</span>환불 신청</div>
+          <div style="font-size:10px;color:var(--gray-400);padding-top:8px;">대행사 직원 중 1명 지정</div>
         </div>
       </div>
     </div>
 
-    <h3>가상계좌 발급 조건</h3>
-    <table>
-      <tr><th>항목</th><th>내용</th></tr>
-      <tr><td>발급 단위</td><td>광고계정 1개 = 가상계좌 1개 (1:1 고정)</td></tr>
-      <tr><td>발급 시점</td><td>정산 주체가 선불 충전 최초 신청 시 자동 할당</td></tr>
-      <tr><td>가상계좌 예금주</td><td><strong>(주)버즈빌</strong> — 신한은행 벌크 발급 시 고정 (정산 주체 ≠ 예금주)</td></tr>
-      <tr><td>사전 조건</td><td>정산 주체의 사업자등록증(비즈니스 정보) 승인 완료</td></tr>
-      <tr><td>대표 환불 계좌</td><td>정산 주체 명의 사업자 계좌 — 최초 발급 시 필수 등록</td></tr>
-    </table>
-  </section>
-
-  <!-- 3. 정산 주체 지정 정책 -->
-  <section id="s3">
-    <h2><span class="sec-num">3</span>정산 주체 지정 정책</h2>
-
-    <h3>정산 주체(Billing Entity)란?</h3>
-    <p>광고계정의 광고비 지불·환불·세금계산서 수신을 책임지는 단일 기업. 광고계정당 정확히 1개만 지정된다.</p>
-
-    <div class="callout callout-info">
-      <div class="callout-icon">💡</div>
-      <div class="callout-body">
-        <strong>대행사 초대 ≠ 정산 주체 변경</strong>
-        <p>대행사를 광고계정에 초대해 운영 권한을 위임하는 것과, 정산 주체를 대행사로 지정하는 것은 별개다. 대행사가 초대되어도 정산 주체는 별도로 명시적으로 확정해야 한다. 광고주가 정산 주체를 유지하면서 대행사에게 광고 운영 권한만 위임하는 것도 가능하다.</p>
+    <h3>광고 집행 게이팅 조건</h3>
+    <div class="gate-box">
+      <div class="gate-item required">
+        <div class="gt-label">필수</div>
+        <div class="gt-text">가상계좌 발급 완료</div>
+        <div class="gt-sub">광고주가 최초 1회 발급</div>
+      </div>
+      <div class="gate-item required">
+        <div class="gt-label">필수</div>
+        <div class="gt-text">세금계산서 수신처 설정</div>
+        <div class="gt-sub">미설정 시 광고 집행 불가</div>
+      </div>
+      <div class="gate-item optional">
+        <div class="gt-label">선택</div>
+        <div class="gt-text">환불 계좌 등록</div>
+        <div class="gt-sub">환불 신청 시에만 필요</div>
       </div>
     </div>
 
-    <h3>정산 주체 지정 시점</h3>
-    <ul class="policy-list">
-      <li>선불 충전 <strong>최초 신청 시</strong> UI에서 명시적으로 확정</li>
-      <li>대행사 없이 직접 운영: 광고주 = 정산 주체로 자동 확정</li>
-      <li>대행사가 초대된 계정: UI에서 명시적 선택 (광고주 정산 / 대행사 정산)</li>
-      <li>일단 확정되면 이후 변경은 이관(Transfer) 기능으로만 가능</li>
-    </ul>
-
-    <h3>충전 주체 제한</h3>
-    <ul class="policy-list">
-      <li>정산 주체만 광고머니 충전 가능 (기술적 제한)</li>
-      <li><strong>Phase 1 제약</strong>: 신한은행 가상계좌는 입금 주체를 기술적으로 차단 불가</li>
-    </ul>
-
-    <div class="callout callout-warn">
-      <div class="callout-icon">⚠️</div>
-      <div class="callout-body">
-        <strong>Phase 1 고지 의무</strong>
-        <p>약관 및 광고센터 UI에 다음 문구 명시 필요: "정산 주체 외 타사가 입금하더라도 광고머니로 전환됩니다. 환불은 사전 등록된 정산 주체의 대표 환불 계좌로만 지급됩니다."</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 4. 가상계좌 자동 할당 플로우 -->
-  <section id="s4">
-    <h2><span class="sec-num">4</span>가상계좌 자동 할당 플로우</h2>
-
-    <div class="flowchart">
-      <div class="fc-step">
-        <div class="fc-left">
-          <div class="fc-circle">S</div>
-          <div class="fc-line"></div>
-        </div>
-        <div class="fc-content">
-          <div class="fc-title">정산 주체가 광고센터에서 선불충전 신청</div>
-        </div>
-      </div>
-
-      <div class="fc-step">
-        <div class="fc-left">
-          <div class="fc-circle">①</div>
-          <div class="fc-line"></div>
-        </div>
-        <div class="fc-content">
-          <div class="fc-title">정산 주체 확정</div>
-          <div class="fc-branch">
-            <div class="branch-item">대행사 없이 직접 운영 → 광고주 = 정산 주체 자동 확정</div>
-            <div class="branch-item">대행사 초대된 계정 → UI에서 명시적 선택 (광고주 정산 / 대행사 정산)</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="fc-step">
-        <div class="fc-left">
-          <div class="fc-circle">②</div>
-          <div class="fc-line"></div>
-        </div>
-        <div class="fc-content">
-          <div class="fc-title">정산 주체 비즈니스 정보 확인</div>
-          <div class="fc-body">사업자등록증(비즈니스 정보) 승인 완료 여부 — 미승인 시 진행 불가</div>
-        </div>
-      </div>
-
-      <div class="fc-step">
-        <div class="fc-left">
-          <div class="fc-circle">③</div>
-          <div class="fc-line"></div>
-        </div>
-        <div class="fc-content">
-          <div class="fc-title">대표 환불 계좌 등록</div>
-          <div class="fc-body">정산 주체 명의 사업자 은행 계좌 필수 등록 <span class="tag-inline tag-pending">본인 확인 방식 협의 필요</span></div>
-        </div>
-      </div>
-
-      <div class="fc-step">
-        <div class="fc-left">
-          <div class="fc-circle">④</div>
-          <div class="fc-line"></div>
-        </div>
-        <div class="fc-content">
-          <div class="fc-title">풀에서 미할당 가상계좌 자동 할당</div>
-          <div class="fc-body">예금주 (주)버즈빌, 정산 주체 식별자 등록 / 광고센터 UI에 가상계좌 정보 표시</div>
-        </div>
-      </div>
-
-      <div class="fc-step">
-        <div class="fc-left">
-          <div class="fc-circle" style="background:var(--accent);">⑤</div>
-        </div>
-        <div class="fc-content">
-          <div class="fc-title">BM팀 알림 발송</div>
-          <div class="fc-body"><strong>신규 거래처인 경우에 한해</strong> 위하고·아이큐브 거래처 등록 처리 (동일 사업자의 추가 광고계정은 재등록 불필요)</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="callout callout-warn">
-      <div class="callout-icon">📦</div>
-      <div class="callout-body">
-        <strong>풀 소진 임박 알림</strong>
-        <p>잔여 가상계좌 임계치 도달 시 BM팀·ADM팀에 자동 알림 발송 → BM팀이 신한은행에 추가 발주. 임계치 기준은 BM팀 협의 필요.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5. 결제 수단 로드맵 -->
-  <section id="s5">
-    <h2><span class="sec-num">5</span>결제 수단 로드맵</h2>
-
-    <div class="roadmap">
-      <div class="phase-box">
-        <div class="phase-dot active">P1</div>
-        <div class="phase-tag now">현재 적용</div>
-        <div class="phase-label active">Phase 1</div>
-        <div class="phase-desc">신한은행 가상계좌<br>(은행 이체)</div>
-      </div>
-      <div class="transfer-arrow" style="padding-top:12px; font-size:20px;">→</div>
-      <div class="phase-box">
-        <div class="phase-dot pending">P2</div>
-        <div class="phase-tag cond">조건부</div>
-        <div class="phase-label pending">Phase 2</div>
-        <div class="phase-desc">PG 가상계좌<br>(실시간 발급)</div>
-      </div>
-    </div>
-
-    <h3>Phase 1 — 신한은행 가상계좌 (은행 이체)</h3>
-    <ul class="policy-list">
-      <li>BM팀이 신한은행으로부터 300개 단위 벌크 발급 → 시스템 풀에 등록</li>
-      <li>정산 주체 최초 충전 신청 시 풀에서 자동 할당 (1 광고계정 = 1 가상계좌)</li>
-      <li>입금 감지: 신한은행 실시간 웹훅 콜백 <span class="tag-inline tag-impl">구현 완료</span></li>
-    </ul>
-
-    <h3>Phase 2 — PG 가상계좌 연동 (조건부)</h3>
-    <ul class="policy-list">
-      <li><strong>장점</strong>: 실시간 발급 API (벌크 풀 관리 불필요), 다양한 은행 지원 가능</li>
-      <li><strong>현재 제약</strong>: PG사가 광고업·고금액·환불 건수 이유로 거절 중</li>
-      <li><strong>트리거</strong>: 적합한 PG사 발굴 또는 계약 성사 시 Phase 1과 병행 운영</li>
-      <li><strong>마이그레이션</strong>: 기존 신한 가상계좌 고객 유지, 신규 고객부터 PG 가상계좌 적용 가능</li>
-    </ul>
-  </section>
-
-  <!-- 6. 환불 정책 -->
-  <section id="s6">
-    <h2><span class="sec-num">6</span>환불 정책</h2>
-
-    <div class="callout callout-info">
-      <div class="callout-icon">🏦</div>
-      <div class="callout-body">
-        <strong>버즈빌은 에스크로가 아님</strong>
-        <p>버즈빌은 광고 플랫폼이다. 입금 출처별 잔액을 추적하거나 각 입금자에게 환불액을 분배할 의무가 없다. 정산 주체와의 계약 관계에 따라 정산 주체에게만 환불한다. 대행사와 광고주 간의 자금 정산은 양 당사자가 해결한다.</p>
-      </div>
-    </div>
-
-    <h3>대표 환불 계좌</h3>
-    <ul class="policy-list">
-      <li>가상계좌 최초 발급 시 <strong>정산 주체 명의 사업자 계좌</strong> 필수 등록</li>
-      <li>이후 변경은 이관(Transfer) 기능으로만 가능</li>
-      <li>본인 확인 방식: <span class="tag-inline tag-pending">BM팀·ADM팀 협의 필요</span></li>
-    </ul>
-
-    <h3>환불 방식</h3>
+    <h3>정책 한눈에 보기</h3>
     <table>
       <tr><th>항목</th><th>정책</th></tr>
-      <tr><td>환불 단위</td><td><strong>전액 환불만</strong> — 부분 환불 불가</td></tr>
-      <tr><td>환불 계좌</td><td>사전 등록된 대표 환불 계좌로만 지급 (다른 계좌 지정 불가)</td></tr>
-      <tr><td>광고 집행</td><td>환불 신청 즉시 <strong>광고 집행 중단</strong></td></tr>
-      <tr><td>무상 광고머니</td><td>버즈빌이 제공한 크레딧은 환불 불가 — 만료 시 소멸 <span class="tag-inline tag-pending">만료 기준일 협의 필요</span></td></tr>
-      <tr><td>이상거래 감지</td><td>ADM팀 판단으로 환불 보류 가능</td></tr>
+      <tr><td>가상계좌 발급</td><td><strong>광고주(계정 책임자)만</strong> 가능 / 광고계정당 1개, 변경 불가</td></tr>
+      <tr><td>가상계좌 예금주</td><td><strong>(주)버즈빌</strong> (신한은행 벌크 발급 고정)</td></tr>
+      <tr><td>충전 주체</td><td>광고계정 내 <strong>누구나</strong> 가능 (광고주·대행사·정산 담당자)</td></tr>
+      <tr><td>환불 계좌 등록</td><td>대행사 신청 → <strong>광고주 승인</strong> / 신한은행 계좌실명조회 API 인증 필수</td></tr>
+      <tr><td>환불 계좌 변경</td><td><strong>변경도 승인제</strong> (광고주 승인 필수)</td></tr>
+      <tr><td>환불 방식</td><td><strong>전액 환불만</strong> (부분 환불 불가) / 환불 즉시 광고 중단</td></tr>
+      <tr><td>세금계산서</td><td>계정 단위 사전 설정 / <strong>위임발행 지원</strong> (대행사 앞으로 발행 가능)</td></tr>
+      <tr><td>입금 감지</td><td>신한은행 실시간 웹훅 콜백 <span class="tag tag-impl">구현 완료</span></td></tr>
     </table>
-
-    <h3>정산 주체 외 입금 시나리오</h3>
-    <p>신한은행 가상계좌 특성상 정산 주체 외 타사가 입금하는 것을 기술적으로 완전히 차단하기 어렵다. 이 경우:</p>
-    <ul class="policy-list">
-      <li>입금 즉시 광고머니로 전환 (입금자와 무관)</li>
-      <li>환불 시 정산 주체의 대표 환불 계좌로 전액 지급</li>
-      <li>입금자-정산 주체 간 자금 정산은 버즈빌 불개입</li>
-      <li>입금 이력 로그는 보관 (분쟁 시 조회 가능)</li>
-    </ul>
   </section>
 
-  <!-- 7. 세금계산서 발행 정책 -->
-  <section id="s7">
-    <h2><span class="sec-num">7</span>세금계산서 발행 정책</h2>
+  <!-- 3. 가상계좌 발급 -->
+  <section id="s3">
+    <h2><span class="sn">3</span>가상계좌 발급 정책</h2>
 
     <table>
       <tr><th>항목</th><th>내용</th></tr>
-      <tr><td>발행 기준</td><td><strong>소진 기준</strong> — 충전 기준 아님</td></tr>
-      <tr><td>발행 대상</td><td>정산 주체에게 발행</td></tr>
+      <tr><td>발급 권한</td><td><strong>광고주(계정 책임자)만</strong> 가능</td></tr>
+      <tr><td>발급 단위</td><td>광고계정 1개 = 가상계좌 1개</td></tr>
+      <tr><td>변경 가능 여부</td><td><strong>변경 불가</strong> (발급 후 고정)</td></tr>
+      <tr><td>예금주</td><td>(주)버즈빌 — 신한은행 벌크 발급 시 고정. 정산 담당자 식별 목적으로만 활용</td></tr>
+      <tr><td>사전 조건</td><td>광고주의 비즈니스 정보(사업자등록증) 승인 완료</td></tr>
+    </table>
+
+    <div class="callout callout-warn">
+      <div class="co-icon">⚠️</div>
+      <div class="co-body">
+        <strong>가상계좌 번호 유출 리스크</strong>
+        <p>가상계좌 번호가 유출되어도 해당 계좌로 입금이 들어오는 것이므로 금전적 피해는 없다. 단, 잘못 입금된 경우 환불은 등록된 환불 계좌로만 가능하므로 약관에 명시 필요. 잘못 입금 사고 프로토콜은 11절 참조.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. 충전 -->
+  <section id="s4">
+    <h2><span class="sn">4</span>충전 정책</h2>
+
+    <p>가상계좌에 입금하면 신한은행 실시간 웹훅을 통해 즉시 광고머니로 전환된다. <span class="tag tag-impl">웹훅 구현 완료</span></p>
+
+    <table>
+      <tr><th>항목</th><th>내용</th></tr>
+      <tr><td>충전 주체</td><td>광고계정 내 <strong>누구나</strong> — 광고주, 대행사, 정산 담당자 모두 가능</td></tr>
+      <tr><td>충전 방법</td><td>발급된 신한은행 가상계좌로 은행 이체</td></tr>
+      <tr><td>충전 즉시 반영</td><td>신한은행 웹훅 → 광고머니 자동 반영</td></tr>
+    </table>
+
+    <div class="callout callout-info">
+      <div class="co-icon">💡</div>
+      <div class="co-body">
+        <strong>실무 관행</strong>
+        <p>대행사가 운영을 대행하는 경우 일반적으로 대행사가 대행사 자금으로 충전하고 환불도 대행사가 수령한다. 광고주가 직접 충전하는 것도 기술적으로 가능하나, 환불은 등록된 환불 계좌로만 나간다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. 대행권 설정 -->
+  <section id="s5">
+    <h2><span class="sn">5</span>대행권 설정 <span class="tag tag-new">신규 기능</span></h2>
+
+    <p>대행사와 함께 광고계정을 운영하고 선불충전을 사용할 때, 정산에 필요한 정보를 설정하는 기능이다. <strong>세금계산서 수신처 설정이 완료되어야 광고 집행이 가능하다.</strong></p>
+
+    <div class="flow-box">
+      <div class="flow-row">
+        <div class="fc-left"><div class="fc-circle">①</div><div class="fc-line"></div></div>
+        <div class="fc-content">
+          <div class="fc-title">대행사 계정 초대</div>
+          <div class="fc-body">대행사 선택 및 광고 운영 권한 위임</div>
+        </div>
+      </div>
+      <div class="flow-row">
+        <div class="fc-left"><div class="fc-circle">②</div><div class="fc-line"></div></div>
+        <div class="fc-content">
+          <div class="fc-title">세금계산서 수신처 설정 <span class="tag tag-req">필수</span></div>
+          <div class="fc-body">광고주 직접 수신 또는 대행사 위임발행 선택</div>
+          <div class="fc-branch">
+            <div class="bi">광고주 직접 수신 → 광고주 앞으로 발행</div>
+            <div class="bi">대행사 위임발행 → 대행사 앞으로 발행</div>
+          </div>
+        </div>
+      </div>
+      <div class="flow-row">
+        <div class="fc-left"><div class="fc-circle">③</div><div class="fc-line"></div></div>
+        <div class="fc-content">
+          <div class="fc-title">정산 담당자 지정</div>
+          <div class="fc-body">대행사 직원 중 1명 지정 — 충전·환불 실행 담당</div>
+        </div>
+      </div>
+      <div class="flow-row">
+        <div class="fc-left"><div class="fc-circle gray">④</div></div>
+        <div class="fc-content">
+          <div class="fc-title">환불 계좌 등록 <span class="tag tag-opt">선택</span></div>
+          <div class="fc-body">대행사가 신청 → 광고주 승인 → 신한은행 계좌실명조회 인증 (환불 신청 전까지 등록)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-danger">
+      <div class="co-icon">🚫</div>
+      <div class="co-body">
+        <strong>세금계산서 수신처 미설정 시 광고 집행 차단</strong>
+        <p>월 말일까지 ①②③이 완료되지 않으면 해당 광고계정의 광고 집행이 차단된다. 세금계산서 수신처(②)는 필수 조건이며, 환불 계좌(④)는 선택 사항이다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. 환불 계좌 -->
+  <section id="s6">
+    <h2><span class="sn">6</span>환불 계좌 정책</h2>
+
+    <h3>등록 프로세스</h3>
+    <div class="flow-box">
+      <div class="flow-row">
+        <div class="fc-left"><div class="fc-circle">1</div><div class="fc-line"></div></div>
+        <div class="fc-content">
+          <div class="fc-title">대행사가 환불 계좌 등록 신청</div>
+          <div class="fc-body">대행사 비즈그룹 사업자 계좌 정보 입력 (계좌번호 + 은행)</div>
+        </div>
+      </div>
+      <div class="flow-row">
+        <div class="fc-left"><div class="fc-circle">2</div><div class="fc-line"></div></div>
+        <div class="fc-content">
+          <div class="fc-title">신한은행 계좌실명조회 API 자동 인증 <span class="tag tag-new">신규 개발</span></div>
+          <div class="fc-body">입력한 계좌의 예금주명 조회 → 등록 신청자 비즈그룹 사업자명/대표자명과 일치 확인</div>
+          <div class="fc-branch">
+            <div class="bi">일치 → 인증 통과, 광고주 승인 요청으로 진행</div>
+            <div class="bi">불일치 → 등록 불가 안내</div>
+          </div>
+        </div>
+      </div>
+      <div class="flow-row">
+        <div class="fc-left"><div class="fc-circle">3</div><div class="fc-line"></div></div>
+        <div class="fc-content">
+          <div class="fc-title">광고주(계정 책임자) 승인</div>
+          <div class="fc-body">이메일 알림 수신 → 광고센터에서 승인/거부</div>
+        </div>
+      </div>
+      <div class="flow-row">
+        <div class="fc-left"><div class="fc-circle green">✓</div></div>
+        <div class="fc-content">
+          <div class="fc-title">환불 계좌 등록 완료</div>
+          <div class="fc-body">이후 환불 신청 시 이 계좌로만 지급</div>
+        </div>
+      </div>
+    </div>
+
+    <h3>변경 정책</h3>
+    <div class="callout callout-danger">
+      <div class="co-icon">🔒</div>
+      <div class="co-body">
+        <strong>환불 계좌 변경도 광고주 승인 필수</strong>
+        <p>변경 시 동일한 승인 절차를 반복한다. 변경 이벤트 발생 시 광고주에게 이메일 + SMS로 즉시 통보. 본인이 요청하지 않은 경우 즉시 고객센터에 연락하도록 안내.</p>
+      </div>
+    </div>
+
+    <h3>알림 정책</h3>
+    <table>
+      <tr><th>이벤트</th><th>알림 대상</th><th>채널</th></tr>
+      <tr><td>환불 계좌 등록 신청</td><td>광고주</td><td>이메일 + 광고센터 알림</td></tr>
+      <tr><td>등록 승인 완료</td><td>대행사(신청자)</td><td>이메일</td></tr>
+      <tr><td>환불 계좌 <strong>변경</strong></td><td>광고주 + 기존 등록자</td><td><strong>이메일 + SMS</strong><span class="alert-sms">SMS 미구현</span></td></tr>
+      <tr><td>환불 실행</td><td>광고주 + 정산 담당자</td><td>이메일</td></tr>
+    </table>
+
+    <div class="callout callout-warn">
+      <div class="co-icon">📱</div>
+      <div class="co-body">
+        <strong>SMS 발송 기능 신규 개발 필요</strong>
+        <p>환불 계좌 변경 이벤트는 보안상 중요도가 높아 SMS 알림이 반드시 필요하다. 현재 SMS 발송 인프라 미구현 상태로 신규 개발이 요구된다. (ADM팀 + 인프라팀 협의 필요)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. 세금계산서 -->
+  <section id="s7">
+    <h2><span class="sn">7</span>세금계산서 발행 정책</h2>
+
+    <table>
+      <tr><th>항목</th><th>내용</th></tr>
+      <tr><td>발행 기준</td><td><strong>소진 기준</strong> (충전 기준 아님)</td></tr>
       <tr><td>발행 시기</td><td>전월 소진분 → 익월 1~10일</td></tr>
+      <tr><td>수신처 설정</td><td>대행권 설정 시 계정 단위로 사전 설정 (필수)</td></tr>
+      <tr><td>위임발행</td><td><strong>지원</strong> — 대행사 앞으로 발행 가능 (대행권 설정에서 선택)</td></tr>
       <tr><td>위하고·아이큐브 등록</td><td><strong>신규 거래처에 한함</strong> — 동일 사업자의 신규 광고계정 추가 시 재등록 불필요</td></tr>
     </table>
 
-    <div class="callout callout-success">
-      <div class="callout-icon">✅</div>
-      <div class="callout-body">
-        <strong>위하고·아이큐브 등록 시점</strong>
-        <p>BM팀이 가상계좌 자동 할당 알림 수신 후 등록. 신규 거래처 여부 확인 후 필요한 경우에만 등록. SLA 기준: <span class="tag-inline tag-pending">BM팀 협의 필요</span></p>
+    <div class="callout callout-info">
+      <div class="co-icon">📋</div>
+      <div class="co-body">
+        <strong>위임발행 구조</strong>
+        <p>대행사 앞으로 위임발행 선택 시, 버즈빌이 대행사 사업자등록번호로 세금계산서를 발행한다. 대행사가 이를 광고주에게 재청구하거나 자사 비용으로 처리한다. 위임발행의 세법 적합성은 법무팀 확인 필요.</p>
       </div>
     </div>
   </section>
 
-  <!-- 8. 이관 정책 -->
+  <!-- 8. 환불 -->
   <section id="s8">
-    <h2><span class="sec-num">8</span>이관(Transfer) 정책</h2>
-
-    <p>이관 = 정산 주체 변경 시 사용하는 전용 기능. 이관 기능 없이 정산 주체 변경 불가.</p>
-
-    <h3>확정된 이관 프로세스</h3>
-
-    <div class="transfer-steps">
-      <div class="transfer-step">
-        <div class="t-num">1</div>
-        <div class="t-text">이관 신청<br><small>광고주 동의<br>ADM팀 확인</small></div>
-      </div>
-      <div class="transfer-arrow">→</div>
-      <div class="transfer-step highlight">
-        <div class="t-num">2</div>
-        <div class="t-text">광고 집행<br>즉시 중단</div>
-      </div>
-      <div class="transfer-arrow">→</div>
-      <div class="transfer-step">
-        <div class="t-num">3</div>
-        <div class="t-text">잔여 광고머니 전액<br>현 정산 주체<br>대표 환불 계좌로 환불</div>
-      </div>
-      <div class="transfer-arrow">→</div>
-      <div class="transfer-step">
-        <div class="t-num">4</div>
-        <div class="t-text">기존 가상계좌 해제<br>새 정산 주체 설정<br>새 가상계좌 발급</div>
-      </div>
-      <div class="transfer-arrow">→</div>
-      <div class="transfer-step">
-        <div class="t-num">5</div>
-        <div class="t-text">새 대표 환불 계좌 등록</div>
-      </div>
-      <div class="transfer-arrow">→</div>
-      <div class="transfer-step" style="border-color:var(--accent); background:var(--accent-light);">
-        <div class="t-num" style="background:var(--accent);">6</div>
-        <div class="t-text">재충전 후<br>광고 재개</div>
-      </div>
-    </div>
-
-    <div class="callout callout-pending">
-      <div class="callout-icon">🚫</div>
-      <div class="callout-body">
-        <strong>이관 기간 중 광고 집행 불가</strong>
-        <p>2단계(광고 중단)부터 6단계(재충전 완료)까지 해당 광고계정의 광고 집행이 불가하다. 이관 신청 전 고객에게 충분히 안내 필요.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 9. 예외 처리 -->
-  <section id="s9">
-    <h2><span class="sec-num">9</span>예외 처리</h2>
+    <h2><span class="sn">8</span>환불 정책</h2>
 
     <table>
-      <tr><th>케이스</th><th>처리 방법</th></tr>
-      <tr><td>풀 소진</td><td>잔여 임박 시 BM팀·ADM팀 알림 → BM팀이 신한은행에 추가 발주 (임계치 기준: BM팀 협의)</td></tr>
-      <tr><td>동일 광고계정 재신청</td><td>기존 발급된 가상계좌 안내 (재발급 없음)</td></tr>
-      <tr><td>동일 사업자 신규 광고계정</td><td>신규 가상계좌 발급 — 광고계정 단위 독립 관리</td></tr>
-      <tr><td>발급 실패</td><td>고객에게 안내 후 BM팀 수동 처리 병행</td></tr>
-      <tr><td>무상 광고머니</td><td>환불 불가, 만료 시 소멸 (만료 기준일: BM팀 협의)</td></tr>
-      <tr><td>이상거래 감지</td><td>ADM팀 판단으로 환불 보류 가능</td></tr>
+      <tr><th>항목</th><th>정책</th></tr>
+      <tr><td>환불 신청 주체</td><td>광고계정 내 <strong>누구나</strong> 신청 가능</td></tr>
+      <tr><td>환불 단위</td><td><strong>전액 환불만</strong> — 부분 환불 불가</td></tr>
+      <tr><td>환불 계좌</td><td>사전 등록된 환불 계좌로만 지급 (다른 계좌 지정 불가)</td></tr>
+      <tr><td>광고 집행</td><td>환불 신청 즉시 <strong>광고 집행 중단</strong></td></tr>
+      <tr><td>무상 광고머니</td><td>버즈빌 제공 크레딧은 환불 불가 — 만료 시 소멸 <span class="tag tag-pend">만료 기준일 협의</span></td></tr>
+      <tr><td>이상거래</td><td>ADM팀 판단으로 환불 보류 가능</td></tr>
     </table>
   </section>
 
-  <!-- 10. BM팀 워크플로우 -->
-  <section id="s10">
-    <h2><span class="sec-num">10</span>BM팀 워크플로우 As-Is / To-Be</h2>
+  <!-- 9. 결제수단 로드맵 -->
+  <section id="s9">
+    <h2><span class="sn">9</span>결제수단 로드맵</h2>
 
-    <table class="workflow-table">
+    <div class="roadmap">
+      <div class="rm-phase">
+        <div class="rm-dot active">P1</div>
+        <div class="rm-tag now">현재 적용</div>
+        <div class="rm-label active">Phase 1</div>
+        <div class="rm-desc">신한은행 가상계좌<br>(은행 이체)</div>
+      </div>
+      <div style="color:var(--gray-300);font-size:20px;padding-top:10px;">→</div>
+      <div class="rm-phase">
+        <div class="rm-dot pending">P2</div>
+        <div class="rm-tag cond">조건부</div>
+        <div class="rm-label pending">Phase 2</div>
+        <div class="rm-desc">PG 가상계좌<br>(실시간 발급)</div>
+      </div>
+    </div>
+
+    <h3>Phase 1 — 신한은행 가상계좌</h3>
+    <ul class="plist">
+      <li>BM팀이 신한은행으로부터 300개 단위 벌크 발급 → 시스템 풀에 등록</li>
+      <li>광고주 최초 신청 시 풀에서 자동 할당</li>
+      <li>입금 감지: 신한은행 실시간 웹훅 <span class="tag tag-impl">구현 완료</span></li>
+    </ul>
+
+    <h3>Phase 2 — PG 가상계좌 (조건부)</h3>
+    <ul class="plist">
+      <li><strong>장점</strong>: 실시간 발급 API, 벌크 풀 관리 불필요</li>
+      <li><strong>현재 제약</strong>: PG사가 광고업·고금액·환불 건수 이유로 거절</li>
+      <li><strong>트리거</strong>: 적합한 PG사 발굴 또는 계약 성사 시 Phase 1과 병행 운영</li>
+    </ul>
+  </section>
+
+  <!-- 10. 이관 -->
+  <section id="s10">
+    <h2><span class="sn">10</span>이관(Transfer) 정책</h2>
+
+    <p>대행사 교체, 대행사 → 광고주 직접 전환 등 정산 담당자 또는 세금계산서 수신처가 변경되는 경우 이관 기능을 통해 처리한다.</p>
+
+    <div class="transfer-steps">
+      <div class="ts"><div class="tn">1</div><div class="tt">이관 신청<br>광고주 동의<br>ADM팀 확인</div></div>
+      <div class="ts-arrow">→</div>
+      <div class="ts danger"><div class="tn">2</div><div class="tt">광고 집행<br>즉시 중단</div></div>
+      <div class="ts-arrow">→</div>
+      <div class="ts"><div class="tn">3</div><div class="tt">잔여 광고머니 전액<br>환불 계좌로<br>환불</div></div>
+      <div class="ts-arrow">→</div>
+      <div class="ts"><div class="tn">4</div><div class="tt">환불 계좌 삭제<br>세금계산서<br>수신처 변경</div></div>
+      <div class="ts-arrow">→</div>
+      <div class="ts"><div class="tn">5</div><div class="tt">정산 담당자<br>재지정<br>새 환불 계좌 등록</div></div>
+      <div class="ts-arrow">→</div>
+      <div class="ts success"><div class="tn">6</div><div class="tt">재충전 후<br>광고 재개</div></div>
+    </div>
+
+    <div class="callout callout-purple">
+      <div class="co-icon">📋</div>
+      <div class="co-body">
+        <strong>이관 UI 체크리스트 필요</strong>
+        <p>이관 시 환불 계좌 삭제, 세금계산서 수신처 변경, 정산 담당자 재지정을 순서대로 빠짐없이 처리할 수 있도록 체크리스트 형태의 UI 안내가 필요하다. 누락 시 세금계산서 오발행 또는 환불 계좌 오지급 문제 발생.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. 예외 처리 -->
+  <section id="s11">
+    <h2><span class="sn">11</span>예외 처리</h2>
+
+    <h3>일반 예외</h3>
+    <table>
+      <tr><th>케이스</th><th>처리</th></tr>
+      <tr><td>풀 소진 임박</td><td>BM팀·ADM팀 알림 → BM팀이 신한은행에 추가 발주 <span class="tag tag-pend">임계치 기준 협의</span></td></tr>
+      <tr><td>동일 광고계정 재신청</td><td>기존 가상계좌 안내 (재발급 없음)</td></tr>
+      <tr><td>동일 사업자 신규 광고계정</td><td>신규 가상계좌 발급 (광고계정 단위 독립 관리)</td></tr>
+      <tr><td>발급 실패</td><td>고객 안내 + BM팀 수동 처리 병행</td></tr>
+      <tr><td>무상 광고머니</td><td>환불 불가, 소멸</td></tr>
+      <tr><td>이상거래 감지</td><td>ADM팀 판단으로 환불 보류 가능</td></tr>
+    </table>
+
+    <h3>잘못 입금 사고 프로토콜</h3>
+    <div class="flow-box">
+      <div class="flow-row">
+        <div class="fc-left"><div class="fc-circle orange">1</div><div class="fc-line"></div></div>
+        <div class="fc-content"><div class="fc-title">입금자가 버즈빌 CS에 신고</div></div>
+      </div>
+      <div class="flow-row">
+        <div class="fc-left"><div class="fc-circle orange">2</div><div class="fc-line"></div></div>
+        <div class="fc-content"><div class="fc-title">버즈빌이 해당 가상계좌 및 광고계정 확인</div></div>
+      </div>
+      <div class="flow-row">
+        <div class="fc-left"><div class="fc-circle orange">3</div><div class="fc-line"></div></div>
+        <div class="fc-content"><div class="fc-title">해당 광고계정 광고주에게 사실 통보 및 동의 요청</div></div>
+      </div>
+      <div class="flow-row">
+        <div class="fc-left"><div class="fc-circle green">4</div></div>
+        <div class="fc-content">
+          <div class="fc-title">광고주 동의 시 → 등록된 환불 계좌로 환불 처리</div>
+          <div class="fc-body">⚠️ 잘못 입금한 사람에게 직접 환불 불가 — 약관 명시 필요</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12. BM팀 워크플로우 -->
+  <section id="s12">
+    <h2><span class="sn">12</span>BM팀 워크플로우 As-Is / To-Be</h2>
+
+    <table>
       <tr><th>업무</th><th>As-Is (수동)</th><th>To-Be (자동화 후)</th></tr>
       <tr>
         <td>가상계좌 신청 접수</td>
-        <td class="asis">Sales팀이 Google Sheets에 수동 입력</td>
-        <td class="tobe">고객이 광고센터에서 직접 신청 → BM팀에 알림 자동 발송</td>
+        <td style="color:var(--gray-400);">Sales팀이 Google Sheets 수동 입력</td>
+        <td class="ok">광고주가 광고센터에서 직접 신청 → BM팀 알림 자동</td>
       </tr>
       <tr>
         <td>사업자등록증 수령</td>
-        <td class="asis">Sales팀이 Drive 폴더에 업로드 후 BM팀 확인</td>
-        <td class="tobe">광고센터 비즈니스 정보 승인 단계에서 이미 확인됨 → 별도 업로드 불필요</td>
+        <td style="color:var(--gray-400);">Sales팀이 Drive 업로드 후 BM팀 확인</td>
+        <td class="ok">광고센터 비즈니스 정보 승인 단계에서 이미 확인됨</td>
       </tr>
       <tr>
         <td>가상계좌 매칭</td>
-        <td class="asis">BM팀이 시트에서 미할당 계좌 수동 매칭</td>
-        <td class="tobe">시스템이 풀에서 자동 할당 → BM팀 개입 불필요</td>
+        <td style="color:var(--gray-400);">BM팀 시트에서 수동 매칭</td>
+        <td class="ok">시스템 자동 할당 → BM팀 개입 불필요</td>
       </tr>
       <tr>
-        <td>중복 기준</td>
-        <td class="asis">사업자등록번호 단위 (시트 붉은색 표시)</td>
-        <td class="tobe"><strong>광고계정 단위</strong> — 같은 사업자도 광고계정 추가 시 신규 발급</td>
+        <td>위하고·아이큐브 등록</td>
+        <td style="color:var(--gray-400);">수동 매칭 후 BM팀 직접 등록</td>
+        <td class="warn">알림 수신 후 등록 / <strong>신규 거래처에 한함</strong> <span class="tag tag-pend">SLA 협의</span></td>
       </tr>
       <tr>
-        <td>위하고·아이큐브 거래처 등록</td>
-        <td class="asis">수동 매칭 후 BM팀이 직접 등록</td>
-        <td class="tobe">알림 수신 후 등록 / <strong>신규 거래처에 한해서만</strong> 등록 필요</td>
-      </tr>
-      <tr>
-        <td>완료 표시</td>
-        <td class="asis">시트에 'o' 또는 링크 표시</td>
-        <td class="tobe">시스템에서 자동 관리 → 시트 불필요</td>
+        <td>환불 계좌 등록 승인</td>
+        <td style="color:var(--gray-400);">해당 없음</td>
+        <td class="new-feat">광고주가 직접 광고센터에서 승인 (BM팀 불개입)</td>
       </tr>
       <tr>
         <td>벌크 발주</td>
-        <td class="asis">주기적으로 신한은행에 300개 요청</td>
-        <td class="tobe">유지 — 풀 잔여량 임박 시 시스템 알림 수신 후 추가 발주</td>
+        <td style="color:var(--gray-400);">주기적으로 신한은행에 300개 요청</td>
+        <td class="warn">유지 — 풀 잔여량 임박 시 시스템 알림 후 추가 발주</td>
       </tr>
     </table>
-
-    <h3>BM팀이 새로 수행해야 하는 업무</h3>
-    <ul class="policy-list">
-      <li>초기 세팅: 신한은행 발급 벌크 계좌를 시스템 풀에 등록 (기존 시트 입력 대신)</li>
-      <li>알림 수신 후 신규 거래처 위하고·아이큐브 등록</li>
-      <li>풀 잔여량 모니터링 및 추가 발주 (시스템 알림 기반)</li>
-    </ul>
-
-    <h3>BM팀이 더 이상 하지 않아도 되는 업무</h3>
-    <ul class="policy-list">
-      <li>Google Sheets 수동 입력 및 관리</li>
-      <li>사업자등록증 Drive 폴더 업로드 확인</li>
-      <li>가상계좌 수동 매칭 및 완료 표시</li>
-    </ul>
   </section>
 
-  <!-- 11. 미결 항목 -->
-  <section id="s11">
-    <h2><span class="sec-num">11</span>미결 항목 (협의 필요)</h2>
+  <!-- 13. 미결 항목 -->
+  <section id="s13">
+    <h2><span class="sn">13</span>미결 항목 (협의 필요)</h2>
 
     <div class="pending-list">
-      <div class="pending-group-title urgent">즉시 협의 필요</div>
-      <div class="pending-item">
-        <div class="pending-dot urgent"></div>
-        <div class="pending-text">대표 환불 계좌 본인 확인 방식 (1원 인증 vs 서류 등)</div>
-        <div class="pending-owner">BM팀·ADM팀</div>
+      <div class="pg-title urg">즉시 협의 / 개발 필요</div>
+      <div class="pg-item">
+        <div class="pg-dot urg"></div>
+        <div class="pg-text">신한은행 계좌실명조회 API 계약 및 연동 — 환불 계좌 예금주 인증에 필수<br><small style="color:var(--gray-400)">API 문서: api.shinhan.com/shbaas/guide/introGuide</small></div>
+        <div class="pg-owner">BM팀·ADM팀</div>
       </div>
-      <div class="pending-item">
-        <div class="pending-dot urgent"></div>
-        <div class="pending-text">환불 신청 가능 조건 (집행 중인 캠페인 있을 때 처리 방식)</div>
-        <div class="pending-owner">ADM팀</div>
+      <div class="pg-item">
+        <div class="pg-dot urg"></div>
+        <div class="pg-text">SMS 발송 인프라 구축 — 환불 계좌 변경 시 필수 알림 채널 (현재 미구현)</div>
+        <div class="pg-owner">ADM팀·인프라</div>
       </div>
-      <div class="pending-item">
-        <div class="pending-dot urgent"></div>
-        <div class="pending-text">무상 광고머니 만료 기준일 및 소멸 방식</div>
-        <div class="pending-owner">BM팀</div>
+      <div class="pg-item">
+        <div class="pg-dot urg"></div>
+        <div class="pg-text">위임발행 세법 적합성 검토 — 충전자 ≠ 세금계산서 수신자 케이스 금융실명법 적용 여부</div>
+        <div class="pg-owner">법무팀</div>
       </div>
-      <div class="pending-item">
-        <div class="pending-dot urgent"></div>
-        <div class="pending-text">정산 주체 지정 UI 시점 확정 (광고계정 생성 시 vs 첫 충전 신청 시)</div>
-        <div class="pending-owner">ADM팀</div>
+      <div class="pg-item">
+        <div class="pg-dot urg"></div>
+        <div class="pg-text">세금계산서 수신처 미설정 시 광고 집행 차단 로직 설계 및 UX 확정</div>
+        <div class="pg-owner">ADM팀</div>
       </div>
-      <div class="pending-item">
-        <div class="pending-dot urgent"></div>
-        <div class="pending-text">풀 소진 임박 알림 임계치 기준 (잔여 계좌 수 기준)</div>
-        <div class="pending-owner">BM팀</div>
+      <div class="pg-item">
+        <div class="pg-dot urg"></div>
+        <div class="pg-text">이관 체크리스트 UI 상세 설계 (환불 계좌 삭제 → 수신처 변경 → 정산 담당자 재지정 순서)</div>
+        <div class="pg-owner">ADM팀</div>
       </div>
-      <div class="pending-item">
-        <div class="pending-dot urgent"></div>
-        <div class="pending-text">위하고·아이큐브 거래처 등록 SLA (자동 할당 후 몇 영업일 내 완료)</div>
-        <div class="pending-owner">BM팀</div>
+      <div class="pg-item">
+        <div class="pg-dot urg"></div>
+        <div class="pg-text">잘못 입금 처리 약관 문구 확정 및 광고센터 UI 내 고지 위치 결정</div>
+        <div class="pg-owner">법무팀·ADM팀</div>
+      </div>
+      <div class="pg-item">
+        <div class="pg-dot urg"></div>
+        <div class="pg-text">위하고·아이큐브 거래처 등록 SLA 기준 (가상계좌 할당 후 몇 영업일 내 완료)</div>
+        <div class="pg-owner">BM팀</div>
+      </div>
+      <div class="pg-item">
+        <div class="pg-dot urg"></div>
+        <div class="pg-text">풀 소진 임박 알림 임계치 기준 (잔여 계좌 수)</div>
+        <div class="pg-owner">BM팀</div>
       </div>
 
-      <div class="pending-group-title long-term">장기 검토</div>
-      <div class="pending-item">
-        <div class="pending-dot long"></div>
-        <div class="pending-text">PG 가상계좌 연동 가능 PG사 발굴 및 계약</div>
-        <div class="pending-owner">BM팀·ADM팀</div>
+      <div class="pg-title lng">장기 검토</div>
+      <div class="pg-item">
+        <div class="pg-dot lng"></div>
+        <div class="pg-text">PG 가상계좌 연동 가능 PG사 발굴 및 계약</div>
+        <div class="pg-owner">BM팀·ADM팀</div>
       </div>
-      <div class="pending-item">
-        <div class="pending-dot long"></div>
-        <div class="pending-text">위하고·아이큐브 API 연동 자동화 가능 여부 확인</div>
-        <div class="pending-owner">BM팀</div>
+      <div class="pg-item">
+        <div class="pg-dot lng"></div>
+        <div class="pg-text">위하고·아이큐브 API 연동 자동화 가능 여부</div>
+        <div class="pg-owner">BM팀</div>
       </div>
-      <div class="pending-item">
-        <div class="pending-dot long"></div>
-        <div class="pending-text">장기 미사용 광고머니 처리 기준 (1년 vs 3년 등)</div>
-        <div class="pending-owner">BM팀</div>
+      <div class="pg-item">
+        <div class="pg-dot lng"></div>
+        <div class="pg-text">무상 광고머니 만료 기준일 및 소멸 방식</div>
+        <div class="pg-owner">BM팀</div>
       </div>
-      <div class="pending-item">
-        <div class="pending-dot long"></div>
-        <div class="pending-text">환불 정책 법무 검토 (특금법 적용 여부)</div>
-        <div class="pending-owner">법무팀</div>
+      <div class="pg-item">
+        <div class="pg-dot lng"></div>
+        <div class="pg-text">장기 미사용 광고머니 처리 기준 (1년 vs 3년 등)</div>
+        <div class="pg-owner">BM팀</div>
       </div>
     </div>
   </section>
 
-  <!-- 12. 담당팀 및 역할 -->
-  <section id="s12">
-    <h2><span class="sec-num">12</span>담당팀 및 역할</h2>
+  <!-- 14. 담당팀 -->
+  <section id="s14">
+    <h2><span class="sn">14</span>담당팀 및 역할</h2>
 
-    <table class="role-table">
+    <table>
       <tr><th>팀</th><th>역할</th></tr>
       <tr>
-        <td>BM팀</td>
-        <td>신한은행 계약 및 벌크 발주, 시스템 풀 등록, 위하고·아이큐브 거래처 등록(신규), 환불 정책 협의, 장기 미사용 충전금 처리</td>
+        <td><strong style="color:var(--primary);">BM팀</strong></td>
+        <td>신한은행 계약·벌크 발주, 시스템 풀 등록, 위하고·아이큐브 거래처 등록(신규), 환불 정책 협의, 장기 미사용 충전금 처리</td>
       </tr>
       <tr>
-        <td>ADM팀</td>
-        <td>시스템 개발·운영, 운영정책 수립, 자동 할당 로직, 알림 발송, 이관 기능, 고객 문의 대응</td>
+        <td><strong style="color:var(--primary);">ADM팀</strong></td>
+        <td>시스템 개발·운영, 운영정책 수립, 대행권 설정 기능, 계좌실명조회 API 연동, 환불 계좌 승인 워크플로우, SMS 알림 인프라, 이관 체크리스트 UI, 고객 문의 대응</td>
       </tr>
       <tr>
-        <td>Sales팀</td>
-        <td>고객 온보딩 시 선불 충전 및 정산 주체 지정 안내</td>
+        <td><strong style="color:var(--primary);">Sales팀</strong></td>
+        <td>고객 온보딩 시 선불충전 안내, 대행권 설정 프로세스 가이드</td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--primary);">법무팀</strong></td>
+        <td>위임발행 세법 적합성 검토, 잘못 입금 처리 약관 확인, 금융실명법 관련 검토</td>
       </tr>
     </table>
   </section>
 
 </main>
-
 </body>
 </html>
